@@ -29,4 +29,5 @@ let rotate = matrix => {
   return matrix;
 };
 
+// Test
 console.log(rotate(matrix));
