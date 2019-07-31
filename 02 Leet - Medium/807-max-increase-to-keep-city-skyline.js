@@ -71,6 +71,7 @@ let maxOutGrid = (grid, TB, LR, i, j) => {
   }
 };
 
+// Test
 console.log(maxGrid(grid));
 
 // Data structure for top and bottom skyline
