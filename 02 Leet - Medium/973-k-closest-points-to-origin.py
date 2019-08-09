@@ -44,3 +44,11 @@ K = 1
 
 # sol = Solution()
 # print(sol.kClosest(points, K))
+
+# Optimal
+class Solution():
+    def kClosest(self, points, K):
+        points.sort(key=lambda P: P[0]**2 + P[1]**2)
+        return points[:K]
+
+print(Solution().kClosest(points, K))
