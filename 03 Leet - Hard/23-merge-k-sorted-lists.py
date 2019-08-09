@@ -34,4 +34,3 @@ class Solution:
             point.next = ListNode(x)
             point = point.next
         return head.next
-
