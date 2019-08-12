@@ -11,100 +11,72 @@ Could you do both operations in O(1) time complexity?
 '''
 
 
-class DLinkedNode():
+class DLNode:
     def __init__(self):
         self.key = 0
         self.value = 0
-        self.prev = None
         self.next = None
+        self.prev = None
 
 
-class LRUCache():
-    def _add_node(self, node):
-        """
-        Always add the new node right after head.
-        """
-        node.prev = self.head
-        node.next = self.head.next
-
-        self.head.next.prev = node
-        self.head.next = node
-
-    def _remove_node(self, node):
-        """
-        Remove an existing node from the linked list.
-        """
-        prev = node.prev
-        new = node.next
-
-        prev.next = new
-        new.prev = prev
-
-    def _move_to_head(self, node):
-        """
-        Move certain node in between to the head.
-        """
-        self._remove_node(node)
-        self._add_node(node)
-
-    def _pop_tail(self):
-        """
-        Pop the current tail.
-        """
-        res = self.tail.prev
-        self._remove_node(res)
-        return res
-
+class LRUCache:
     def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
         self.cache = {}
         self.size = 0
         self.capacity = capacity
-        self.head, self.tail = DLinkedNode(), DLinkedNode()
+        self.head, self.tail = DLNode(), DLNode()
 
-        self.head.next = self.tail
-        self.tail.prev = self.head
+        self.head.next, self.tail.prev = self.tail, self.head
+
+    # Always adds to the front of cache
+    def add_node(self, node):
+        node.prev, node.next = self.head, self.head.next
+        self.head.next.prev, self.head.next = node, node
+
+    # Remove node in constant time no matter where in the linked list
+    def remove_node(self, node):
+        prev, new = node.prev, node.next
+        prev.next, new.prev = new, prev
+
+    # Simply becomes remove from list and add back (recall that adding a node always puts the node back to the front of the cache)
+    def to_front(self, node):
+        self.remove_node(node)
+        self.add_node(node)
+
+    # Remove last node (least recently used)
+    def remove_last(self):
+        last = self.tail.prev
+        self.remove_node(last)
+        return last
 
     def get(self, key):
-        """
-        :type key: int
-        :rtype: int
-        """
-        node = self.cache.get(key, None)
+        node = self.cache.get(key)
+        # If node does not exist
         if not node:
             return -1
-
-        # move the accessed node to the head;
-        self._move_to_head(node)
+        self.to_front(node)
 
         return node.value
 
     def put(self, key, value):
-        """
-        :type key: int
-        :type value: int
-        :rtype: void
-        """
         node = self.cache.get(key)
-
+        #  If node does not exist, add to list
         if not node:
-            newNode = DLinkedNode()
+            newNode = DLNode()
             newNode.key = key
             newNode.value = value
 
             self.cache[key] = newNode
-            self._add_node(newNode)
+            self.add_node(newNode)
 
             self.size += 1
 
+            # If capacity has been reached, remove the last node
             if self.size > self.capacity:
-                # pop the tail
-                tail = self._pop_tail()
-                del self.cache[tail.key]
+                last = self.remove_last
+                del self.cache[last.key]
                 self.size -= 1
+        # Otherwise, node exists and should be updated and moved to the front of the list
         else:
-            # update the value.
             node.value = value
-            self._move_to_head(node)
+            self.to_front(node)
