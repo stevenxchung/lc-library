@@ -73,7 +73,7 @@ class LRUCache:
 
             # If capacity has been reached, remove the last node
             if self.size > self.capacity:
-                last = self.remove_last
+                last = self.remove_last()
                 del self.cache[last.key]
                 self.size -= 1
         # Otherwise, node exists and should be updated and moved to the front of the list
