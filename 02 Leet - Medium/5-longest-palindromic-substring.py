@@ -23,4 +23,4 @@ class Solution:
 
 
 sol = Solution()
-print(sol.longestPalindrome('cbbd'))
+print(sol.longestPalindrome('alibaba'))
