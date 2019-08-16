@@ -8,14 +8,23 @@ class ListNode:
         self.val = x
         self.next = None
 
+# Iterative
+# class Solution:
+#     def reverseList(self, head: ListNode) -> ListNode:
+#         prev = None
+#         while head:
+#             temp = head
+#             head = head.next
+#             temp.next = prev
+#             prev = temp
+#         return prev
 
+# Recursive
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        prev = None
-        while head:
-            temp = head
-            head = head.next
-            temp.next = prev
-            prev = temp
-
-        return prev
+        if not head or not head.next:
+            return head
+        p = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return p
