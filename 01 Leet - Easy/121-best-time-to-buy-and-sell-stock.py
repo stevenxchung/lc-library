@@ -9,8 +9,20 @@ Note that you cannot sell a stock before you buy one.
 
 class Solution:
     def maxProfit(self, prices):
+        minPrice = (2**31)-1
+        maxProfit = 0
+        for price in prices:
+            if price < minPrice:
+                minPrice = price
+            elif price - minPrice > maxProfit:
+                maxProfit = price - minPrice
+
+        return maxProfit
 
 
-input = [7, 1, 5, 3, 6, 4]
+# input = [7, 1, 5, 3, 6, 4]
+# input = [9, 8, 7, 6, 5, 4, 3, 2, 1]
+# input = []
+input = [2, 4, 1]
 sol = Solution()
 print(sol.maxProfit(input))
