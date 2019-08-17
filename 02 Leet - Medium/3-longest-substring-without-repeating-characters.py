@@ -10,5 +10,5 @@ class Solution:
 input = 'abcabcbb'
 # input = 'bbbbb'
 # input = 'pwwkew'
-sol - Solution()
+sol = Solution()
 print(sol.lengthOfLongestSubstring(input))
