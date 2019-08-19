@@ -10,8 +10,11 @@ class Solution:
         observed = {}
         while i < len(s):
             if s[i] in observed and start <= observed[s[i]]:
+                # Since we saw s[i] already, increment start
                 start = observed[s[i]] + 1
             else:
+                # Longest is either previous value or i - start + 1
+                # Add one since we've already seen pass this point
                 longest = max(longest, i - start + 1)
             observed[s[i]] = i
             i += 1
