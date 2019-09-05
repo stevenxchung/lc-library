@@ -59,9 +59,20 @@ class Solution:
             q1, q2 = q2, []
             dist += 1
 
+    def numSquaresShort(self, n):
+        sums = {0}
+        while n not in sums:
+            sums = {
+                sum + i * i
+                for sum in sums
+                for i in range(1, int((n - sum) ** 0.5 + 1))
+            }
+        return min(sums)
+
 
 input = 12
 # input = 13
 sol = Solution()
 print(sol.numSquares(input))
 print(sol.numSquaresBFS(input))
+print(sol.numSquaresShort(input))
