@@ -21,10 +21,13 @@ class Node(object):
         print()
 
     def _isMirror(self, left, right):
+        # Leaf node reached
         if left is None and right is None:
             return True
+        # Run symmetric checks
         elif left is not None and right is not None:
             return left.data == right.data and self._isMirror(left.left, right.right) and self._isMirror(left.right, right.left)
+        # Otherwise, tree must not be symmetric
         else:
             False
 
