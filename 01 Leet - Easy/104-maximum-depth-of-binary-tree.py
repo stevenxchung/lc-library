@@ -14,7 +14,7 @@ class Node(object):
         self.right = right
 
     def printTree(self):
-        print('--- Printing binary tree using preorder DFS')
+        print('--- Printing binary tree using preorder DFS ---')
         self._preorderDFS(self)
         print()
 
@@ -23,6 +23,7 @@ class Node(object):
             print(node.data, end=' ')
             self._preorderDFS(node.left)
             self._preorderDFS(node.right)
+
 
 head = Node(3)
 head.left = Node(9)
