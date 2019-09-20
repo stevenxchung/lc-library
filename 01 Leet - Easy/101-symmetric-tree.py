@@ -50,8 +50,10 @@ For example, this binary tree [1,2,2,3,4,4,3] is symmetric
 
 class Solution:
     def isSymmetric(self, root):
+        # Tree is symmetric if there is no tree
         if root is None:
           return True
+        # Otherwise, defer to helper function to check for symmetry
         else:
           return self._isMirror(root.left, root.right)
 
