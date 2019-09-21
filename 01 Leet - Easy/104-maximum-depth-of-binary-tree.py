@@ -18,6 +18,21 @@ class Node(object):
         self._preorderDFS(self)
         print()
 
+    def printMaxDepth(self):
+        print('Maximum depth of binary tree is:', self._maxDepth(self) - 1)
+
+    def _maxDepth(self, node):
+        if not node:
+            return 0
+        else:
+            leftDepth = self._maxDepth(node.left)
+            rightDepth = self._maxDepth(node.right)
+
+        if leftDepth > rightDepth:
+            return leftDepth + 1
+        else:
+            return rightDepth + 1
+
     def _preorderDFS(self, node):
         if node:
             print(node.data, end=' ')
@@ -31,3 +46,4 @@ head.right = Node(20)
 head.right.left = Node(15)
 head.right.right = Node(7)
 head.printTree()
+head.printMaxDepth()
