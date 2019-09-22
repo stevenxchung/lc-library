@@ -19,6 +19,7 @@ class Node(object):
         print()
 
     def printMaxDepth(self):
+        # Max depth helper function start with head node at 0 so subtract 1
         print('Maximum depth of binary tree is:', self._maxDepth(self) - 1)
 
     def _maxDepth(self, node):
