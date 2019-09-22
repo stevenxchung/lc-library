@@ -26,6 +26,7 @@ class Node(object):
         if not node:
             return 0
         else:
+            # Continue until leaf node is reached
             leftDepth = self._maxDepth(node.left)
             rightDepth = self._maxDepth(node.right)
 
