@@ -37,11 +37,13 @@ class Node(object):
 
     def _isMirrorIterative(self):
         node = self
+        # Check for edge case
         if node.left is None and node.right is None:
             return True
 
         queue = []
 
+        # Initialize twice for left and right subtrees
         queue.append(node)
         queue.append(node)
         left = 0
