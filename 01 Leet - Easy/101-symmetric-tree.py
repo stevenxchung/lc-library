@@ -50,6 +50,7 @@ class Node(object):
         right = 0
 
         while len(queue) > 0:
+            # Each time we pop off the beginning of the queue and set it to left and right
             left = queue.pop(0)
             right = queue.pop(0)
 
@@ -59,6 +60,7 @@ class Node(object):
                 return False
             if left.data != right.data:
                 return False
+            # Order is important here! Append to queue if the above cases were false
             queue.append(left.left)
             queue.append(right.right)
             queue.append(left.right)
