@@ -52,12 +52,15 @@ Note: A leaf is a node with no children.
 
 class Solution:
     def maxDepth(self, root):
+        # Return a depth if the root node does not exist
         if root is None:
             return 0
+        # Otherwise traverse through the tree
         else:
             leftDepth = self.maxDepth(root.left)
             rightDepth = self.maxDepth(root.right)
 
+        # Compare which depth is greater once the leaf node is reached
         if leftDepth > rightDepth:
             return leftDepth + 1
         else:
