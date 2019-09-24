@@ -30,6 +30,7 @@ class Node(object):
             leftDepth = self._maxDepth(node.left)
             rightDepth = self._maxDepth(node.right)
 
+        # Compare which is greater
         if leftDepth > rightDepth:
             return leftDepth + 1
         else:
