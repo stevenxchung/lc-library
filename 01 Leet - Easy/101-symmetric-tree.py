@@ -15,6 +15,10 @@ class Node(object):
         print('Is this tree symmetric?', end=' ')
         print(self is None or self._isMirror(self.left, self.right))
 
+    def isSymmetricIterative(self):
+        print('Is this tree symmetric?', end=' ')
+        print(self is None or self._isMirrorIterative())
+
     def printTree(self):
         print('--- Printing tree with preorder DFS ---')
         self._preorderDFS(self)
@@ -30,6 +34,35 @@ class Node(object):
         # Otherwise, tree must not be symmetric
         else:
             False
+
+    def _isMirrorIterative(self):
+        node = self
+        if node.left is None and node.right is None:
+            return True
+
+        queue = []
+
+        queue.append(node)
+        queue.append(node)
+        left = 0
+        right = 0
+
+        while len(queue) > 0:
+            left = queue.pop(0)
+            right = queue.pop(0)
+
+            if left is None and right is None:
+                continue
+            if left is None or right is None:
+                return False
+            if left.data != right.data:
+                return False
+            queue.append(left.left)
+            queue.append(right.right)
+            queue.append(left.right)
+            queue.append(right.left)
+
+        return True
 
     def _preorderDFS(self, node):
         if node:
@@ -47,6 +80,7 @@ right.left = Node(4)
 node1 = Node(1, left, right)
 node1.printTree()
 node1.isSymmetric()
+node1.isSymmetricIterative()
 
 # class Solution:
 #     def isSymmetric(self, root):
