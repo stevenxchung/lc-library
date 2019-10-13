@@ -30,16 +30,20 @@ class Node:
 
 class Solution:
     def __init__(self):
+        # This will be used to reference to the previous node branch
         self.prev = None
 
     def flatten(self, node):
         if node is None:
             return
+        # Since we want to branch right, start with right first then left
         self.flatten(node.right)
         self.flatten(node.left)
 
+        # Right of current node becomes prev node branch
         node.right = self.prev
         node.left = None
+        # Set prev node branch to equal current node
         self.prev = node
 
 
@@ -52,5 +56,6 @@ class Solution:
 head = Node(1, Node(3), Node(4))
 head.printTree()  # 1, 3, 4
 
+# Test flatten()
 sol = Solution()
 sol.flatten(head)
