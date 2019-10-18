@@ -29,3 +29,14 @@ class KthLargest:
         print('List after:', self.pool)
         print()
         return self.pool[0]
+
+
+# Test
+k = 4
+arr = [4, 5, 8, 2]
+kthLargest = KthLargest(k, arr)
+kthLargest.add(3)   # Returns 3
+kthLargest.add(5)   # Returns 4
+kthLargest.add(10)  # Returns 5
+kthLargest.add(9)   # Returns 5
+kthLargest.add(4)   # Returns 5
