@@ -11,72 +11,72 @@ Could you do both operations in O(1) time complexity?
 '''
 
 
-# class DLNode:
-#     def __init__(self):
-#         self.key = 0
-#         self.value = 0
-#         self.next = None
-#         self.prev = None
+class DLNode:
+    def __init__(self):
+        self.key = 0
+        self.value = 0
+        self.next = None
+        self.prev = None
 
 
-# class LRUCache:
-#     def __init__(self, capacity):
-#         self.cache = {}
-#         self.size = 0
-#         self.capacity = capacity
-#         self.head, self.tail = DLNode(), DLNode()
+class LRUCache:
+    def __init__(self, capacity):
+        self.cache = {}
+        self.size = 0
+        self.capacity = capacity
+        self.head, self.tail = DLNode(), DLNode()
 
-#         self.head.next, self.tail.prev = self.tail, self.head
+        self.head.next, self.tail.prev = self.tail, self.head
 
-#     # Always adds to the front of cache
-#     def add_node(self, node):
-#         node.prev, node.next = self.head, self.head.next
-#         self.head.next.prev, self.head.next = node, node
+    # Always adds to the front of cache
+    def add_node(self, node):
+        node.prev, node.next = self.head, self.head.next
+        self.head.next.prev, self.head.next = node, node
 
-#     # Remove node in constant time no matter where in the linked list
-#     def remove_node(self, node):
-#         prev, new = node.prev, node.next
-#         prev.next, new.prev = new, prev
+    # Remove node in constant time no matter where in the linked list
+    def remove_node(self, node):
+        prev, new = node.prev, node.next
+        prev.next, new.prev = new, prev
 
-#     # Simply becomes remove from list and add back (recall that adding a node always puts the node back to the front of the cache)
-#     def to_front(self, node):
-#         self.remove_node(node)
-#         self.add_node(node)
+    # Simply becomes remove from list and add back (recall that adding a node always puts the node back to the front of the cache)
+    def to_front(self, node):
+        self.remove_node(node)
+        self.add_node(node)
 
-#     # Remove last node (least recently used)
-#     def remove_last(self):
-#         last = self.tail.prev
-#         self.remove_node(last)
-#         return last
+    # Remove last node (least recently used)
+    def remove_last(self):
+        last = self.tail.prev
+        self.remove_node(last)
+        return last
 
-#     def get(self, key):
-#         node = self.cache.get(key)
-#         # If node does not exist
-#         if not node:
-#             return -1
-#         self.to_front(node)
+    def get(self, key):
+        node = self.cache.get(key)
+        # If node does not exist
+        if not node:
+            return -1
+        self.to_front(node)
 
-#         return node.value
+        return node.value
 
-#     def put(self, key, value):
-#         node = self.cache.get(key)
-#         #  If node does not exist, add to list
-#         if not node:
-#             newNode = DLNode()
-#             newNode.key = key
-#             newNode.value = value
+    def put(self, key, value):
+        node = self.cache.get(key)
+        #  If node does not exist, add to list
+        if not node:
+            newNode = DLNode()
+            newNode.key = key
+            newNode.value = value
 
-#             self.cache[key] = newNode
-#             self.add_node(newNode)
+            self.cache[key] = newNode
+            self.add_node(newNode)
 
-#             self.size += 1
+            self.size += 1
 
-#             # If capacity has been reached, remove the last node
-#             if self.size > self.capacity:
-#                 last = self.remove_last()
-#                 del self.cache[last.key]
-#                 self.size -= 1
-#         # Otherwise, node exists and should be updated and moved to the front of the list
-#         else:
-#             node.value = value
-#             self.to_front(node)
+            # If capacity has been reached, remove the last node
+            if self.size > self.capacity:
+                last = self.remove_last()
+                del self.cache[last.key]
+                self.size -= 1
+        # Otherwise, node exists and should be updated and moved to the front of the list
+        else:
+            node.value = value
+            self.to_front(node)
