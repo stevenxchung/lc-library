@@ -10,7 +10,6 @@ class Node:
         self.right = right
 
     # Level Order
-
     def printBST(self):
         node = self
         queue = []
@@ -32,4 +31,5 @@ class Node:
 
 # Test
 head = Node(3, Node(9), Node(20, Node(15), Node(7)))
-head.printBST()
+head.printBST() # 3 9 20 15 7
+# head.printZigZag() 3 20 9 15 7
