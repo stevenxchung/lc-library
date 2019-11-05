@@ -20,11 +20,7 @@ class Node:
 
             print(queue[0].val, end=' ')
             node = queue.pop(0)
-
-            if node.left is not None:
-                queue.append(node.left)
-            if node.right is not None:
-                queue.append(node.right)
+            queue.extend(self._appendLeftFirst(node.left, node.right))
 
         print()
 
@@ -41,35 +37,42 @@ class Node:
             if count == 0:
                 print(queue[0].val, end=' ')
                 node = queue.pop(0)
-
-                if node.right is not None:
-                    queue.append(node.right)
-                if node.left is not None:
-                    queue.append(node.left)
+                queue.extend(self._appendRightFirst(node.left, node.right))
 
             elif count % 2 != 0:
                 print(queue[0].val, end=' ')
                 node = queue.pop(0)
+                queue.extend(self._appendLeftFirst(node.left, node.right))
 
-                if node.left is not None:
-                    queue.append(node.left)
-                if node.right is not None:
-                    queue.append(node.right)
             else:
                 print(queue[0].val, end=' ')
                 node = queue.pop(0)
-
-                if node.right is not None:
-                    queue.append(node.right)
-                if node.left is not None:
-                    queue.append(node.left)
+                queue.extend(self._appendRightFirst(node.left, node.right))
 
             count += 1
 
         print()
 
+    def _appendLeftFirst(self, left, right):
+        queue = []
+        if left is not None:
+            queue.append(left)
+        if right is not None:
+            queue.append(right)
+
+        return queue
+
+    def _appendRightFirst(self, left, right):
+        queue = []
+        if right is not None:
+            queue.append(right)
+        if left is not None:
+            queue.append(left)
+
+        return queue
+
 
 # Test
 head = Node(3, Node(9), Node(20, Node(15), Node(7)))
-head.printBST() # 3 9 20 15 7
-head.printZigZag() # 3 20 9 15 7
+head.printBST()  # 3 9 20 15 7
+head.printZigZag()  # 3 20 9 15 7
