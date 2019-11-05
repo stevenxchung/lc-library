@@ -53,6 +53,7 @@ class Node:
 
         print()
 
+    # Helper function to append left node first
     def _appendLeftFirst(self, left, right):
         queue = []
         if left is not None:
@@ -62,6 +63,7 @@ class Node:
 
         return queue
 
+    # Helper function to append right node first
     def _appendRightFirst(self, left, right):
         queue = []
         if right is not None:
