@@ -1,6 +1,7 @@
 '''
 Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 '''
+from time import time
 
 
 class Solution:
@@ -13,6 +14,15 @@ class Solution:
                 return True
         return False
 
+    def reference(self, nums) -> bool:
+        hashset = set()
+
+        for n in nums:
+            if n in hashset:
+                return True
+            hashset.add(n)
+        return False
+
 
 if __name__ == '__main__':
     test = Solution()
@@ -22,5 +32,12 @@ if __name__ == '__main__':
         [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
     ]
 
+    sol_start = time()
     for case in test_cases:
         print(test.containsDuplicate(case))
+    print(f'Runtime for our solution: {time() - sol_start}')
+
+    ref_start = time()
+    for case in test_cases:
+        print(test.reference(case))
+    print(f'Runtime for reference: {time() - ref_start}')
