@@ -23,6 +23,25 @@ class Solution:
             hashset.add(n)
         return False
 
+    def quantify(self, test_cases, runs=100000):
+        sol_start = time()
+        for i in range(runs):
+            for case in test_cases:
+                if i == 0:
+                    print(self.containsDuplicate(case))
+                else:
+                    self.containsDuplicate(case)
+        print(f'Runtime for our solution: {time() - sol_start}')
+
+        ref_start = time()
+        for i in range(0, runs):
+            for case in test_cases:
+                if i == 0:
+                    print(self.reference(case))
+                else:
+                    self.reference(case)
+        print(f'Runtime for reference: {time() - ref_start}')
+
 
 if __name__ == '__main__':
     test = Solution()
@@ -31,13 +50,4 @@ if __name__ == '__main__':
         [1, 2, 3, 4],
         [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
     ]
-
-    sol_start = time()
-    for case in test_cases:
-        print(test.containsDuplicate(case))
-    print(f'Runtime for our solution: {time() - sol_start}')
-
-    ref_start = time()
-    for case in test_cases:
-        print(test.reference(case))
-    print(f'Runtime for reference: {time() - ref_start}')
+    test.quantify(test_cases)

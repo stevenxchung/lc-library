@@ -28,6 +28,25 @@ class Solution:
                 return False
         return True
 
+    def quantify(self, test_cases, runs=100000):
+        sol_start = time()
+        for i in range(runs):
+            for case in test_cases:
+                if i == 0:
+                    print(self.isAnagram(case[0], case[1]))
+                else:
+                    self.isAnagram(case[0], case[1])
+        print(f'Runtime for our solution: {time() - sol_start}')
+
+        ref_start = time()
+        for i in range(0, runs):
+            for case in test_cases:
+                if i == 0:
+                    print(self.reference(case[0], case[1]))
+                else:
+                    self.reference(case[0], case[1])
+        print(f'Runtime for reference: {time() - ref_start}')
+
 
 if __name__ == '__main__':
     test = Solution()
@@ -35,13 +54,4 @@ if __name__ == '__main__':
         ('anagram', 'nagaram'),
         ('rat', 'car')
     ]
-
-    sol_start = time()
-    for case in test_cases:
-        print(test.isAnagram(case[0], case[1]))
-    print(f'Runtime for our solution: {time() - sol_start}')
-
-    ref_start = time()
-    for case in test_cases:
-        print(test.reference(case[0], case[1]))
-    print(f'Runtime for reference: {time() - ref_start}')
+    test.quantify(test_cases)

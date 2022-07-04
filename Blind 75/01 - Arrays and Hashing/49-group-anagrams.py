@@ -35,6 +35,25 @@ class Solution:
             ans[tuple(count)].append(s)
         return ans.values()
 
+    def quantify(self, test_cases, runs=100000):
+        sol_start = time()
+        for i in range(runs):
+            for case in test_cases:
+                if i == 0:
+                    print(self.groupAnagrams(case))
+                else:
+                    self.groupAnagrams(case)
+        print(f'Runtime for our solution: {time() - sol_start}')
+
+        ref_start = time()
+        for i in range(0, runs):
+            for case in test_cases:
+                if i == 0:
+                    print(self.reference(case))
+                else:
+                    self.reference(case)
+        print(f'Runtime for reference: {time() - ref_start}')
+
 
 if __name__ == '__main__':
     test = Solution()
@@ -43,13 +62,4 @@ if __name__ == '__main__':
         [""],
         ["a"],
     ]
-
-    sol_start = time()
-    for case in test_cases:
-        print(test.groupAnagrams(case))
-    print(f'Runtime for our solution: {time() - sol_start}')
-
-    ref_start = time()
-    for case in test_cases:
-        print(test.reference(case))
-    print(f'Runtime for reference: {time() - ref_start}')
+    test.quantify(test_cases)
