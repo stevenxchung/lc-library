@@ -32,12 +32,12 @@ class Solution:
         for w in words:
             root.add_word(w)
 
-        rows, cols = len(board), len(board[0])
+        ROWS, COLS = len(board), len(board[0])
         output = set()
 
         def dfs(r, c, node, word, board):
             if (r < 0 or c < 0
-                or r >= rows or c >= cols
+                or r >= ROWS or c >= COLS
                     or board[r][c] not in node.children or board[r][c] == '#'):
                 return
 
@@ -56,8 +56,8 @@ class Solution:
             dfs(r, c + 1, node, word, board)
             board[r][c] = temp
 
-        for r in range(rows):
-            for c in range(cols):
+        for r in range(ROWS):
+            for c in range(COLS):
                 dfs(r, c, root.root, '', board)
 
         return list(output)
@@ -67,12 +67,12 @@ class Solution:
         for w in words:
             root.add_word(w)
 
-        rows, cols = len(board), len(board[0])
+        ROWS, COLS = len(board), len(board[0])
         output, visit = set(), set()
 
         def dfs_reference(r, c, node, word, board):
             if (r < 0 or c < 0
-                or r == rows or c == cols
+                or r == ROWS or c == COLS
                     or (r, c) in visit
                     or board[r][c] not in node.children):
                 return
@@ -89,8 +89,8 @@ class Solution:
             dfs_reference(r, c + 1, node, word, board)
             visit.remove((r, c))
 
-        for r in range(rows):
-            for c in range(cols):
+        for r in range(ROWS):
+            for c in range(COLS):
                 dfs_reference(r, c, root.root, '', board)
 
         return list(output)
