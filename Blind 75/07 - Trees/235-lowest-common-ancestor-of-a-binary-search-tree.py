@@ -14,7 +14,7 @@ class TreeNode:
 
 
 class Solution:
-    output = None
+    res = None
 
     def search(self, root, p, q):
         if not root:
@@ -27,9 +27,9 @@ class Solution:
         right = self.search(root.right, p, q)
         if mid:
             if left or right:
-                self.output = root
+                self.res = root
         elif left and right:
-            self.output = root
+            self.res = root
         return mid or left or right
 
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
@@ -48,7 +48,7 @@ class Solution:
             return None
 
         self.search(root, p, q)
-        return self.output
+        return self.res
 
     def quantify(self, test_cases, runs=100000):
         sol_start = time()

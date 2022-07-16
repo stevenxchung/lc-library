@@ -12,7 +12,7 @@ class Solution:
         if len(nums) < 3:
             return []
 
-        output = []
+        res = []
         nums.sort()
         for i, n1 in enumerate(nums):
             if i > 0 and n1 == nums[i - 1]:
@@ -28,13 +28,13 @@ class Solution:
                     # increase j if less
                     j += 1
                 else:
-                    output.append([n1, nums[j], nums[k]])
+                    res.append([n1, nums[j], nums[k]])
                     j += 1
                     # Additionally, increment if we encounter same number
                     while nums[j] == nums[j - 1] and j < k:
                         j += 1
 
-        return output
+        return res
 
     def reference(self, nums: List[int]) -> List[List[int]]:
         res = []

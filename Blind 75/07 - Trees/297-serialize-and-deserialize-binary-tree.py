@@ -18,13 +18,13 @@ class TreeNode:
 
 
 class Codec:
-    def dfs_helper_serialize(self, node, output):
+    def dfs_helper_serialize(self, node, res):
         if not node:
-            output.append('N')
+            res.append('N')
             return
-        output.append(str(node.val))
-        self.dfs_helper_serialize(node.left, output)
-        self.dfs_helper_serialize(node.right, output)
+        res.append(str(node.val))
+        self.dfs_helper_serialize(node.left, res)
+        self.dfs_helper_serialize(node.right, res)
 
     def serialize(self, root):
         """Encodes a tree to a single string.
@@ -32,9 +32,9 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        output = []
-        self.dfs_helper_serialize(root, output)
-        return ','.join(output)
+        res = []
+        self.dfs_helper_serialize(root, res)
+        return ','.join(res)
 
     def dfs_helper_deserialize(self, tree_as_str, position):
         if tree_as_str[position[0]] == 'N':

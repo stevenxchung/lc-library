@@ -36,17 +36,17 @@ class MedianFinder:
 
     def findMedian(self) -> float:
         if len(self.small) > len(self.large):
-            output = -self.small[0]
-            print(output)
-            return output
+            res = -self.small[0]
+            print(res)
+            return res
         elif len(self.small) < len(self.large):
-            output = self.large[0]
-            print(output)
-            return output
+            res = self.large[0]
+            print(res)
+            return res
         # Otherwise take average
-        output = float(self.large[0] - self.small[0]) / 2
-        print(output)
-        return output
+        res = float(self.large[0] - self.small[0]) / 2
+        print(res)
+        return res
 
 
 if __name__ == '__main__':

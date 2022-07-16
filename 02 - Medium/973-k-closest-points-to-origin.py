@@ -18,7 +18,7 @@ K = 1
 
 # class Solution:
 #     def kClosest(self, points, K):
-#         output = []
+#         res = []
 #         distArr = []
 #         limit = 0
 
@@ -34,12 +34,12 @@ K = 1
 #         # Append each pair to output array based on distance
 #         for distPair in distArr:
 #             if limit != K:
-#                 output.append(points[distPair[1]])
+#                 res.append(points[distPair[1]])
 #             else:
 #                 break
 #             limit += 1
 
-#         return output
+#         return res
 
 
 # sol = Solution()
@@ -50,5 +50,6 @@ class Solution():
     def kClosest(self, points, K):
         points.sort(key=lambda P: P[0]**2 + P[1]**2)
         return points[:K]
+
 
 print(Solution().kClosest(points, K))

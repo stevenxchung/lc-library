@@ -20,15 +20,15 @@ class Solution:
         # Decrement and check
         self.k -= 1
         if self.k == 0:
-            self.output = node.val
+            self.res = node.val
             return
         self.helper(node.right)
 
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        self.output = None
+        self.res = None
         self.k = k
         self.helper(root)
-        return self.output
+        return self.res
 
     def reference(self, root: Optional[TreeNode], k: int) -> int:
         stack = []

@@ -16,7 +16,7 @@ class Solution:
         :type target: int
         :rtype: List[List[int]]
         """
-        output = []
+        res = []
         candidates.sort()
 
         def dfs(target: int, index: int, path: List):
@@ -24,13 +24,13 @@ class Solution:
                 # Backtracking
                 return
             if target == 0:
-                output.append(path)
+                res.append(path)
                 return
             for i in range(index, len(candidates)):
                 dfs(target - candidates[i], i, path + [candidates[i]])
 
         dfs(target, 0, [])
-        return output
+        return res
 
     def reference(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []

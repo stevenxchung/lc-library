@@ -19,7 +19,7 @@ class Solution:
             return []
 
         queue = [root]
-        output = [[root.val]]
+        res = [[root.val]]
         while queue:
             node_group = []
             for i in range(len(queue)):
@@ -32,9 +32,9 @@ class Solution:
                     node_group.append(node.right.val)
             # Ensure result is not empty
             if node_group:
-                output.append(node_group)
+                res.append(node_group)
 
-        return output
+        return res
 
     def reference(self, root: Optional[TreeNode]) -> List[List[int]]:
         res = []

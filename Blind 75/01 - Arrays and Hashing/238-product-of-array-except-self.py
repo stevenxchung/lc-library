@@ -15,17 +15,17 @@ class Solution:
         suffix = 1
 
         # Forward loop
-        output = {}
+        res = {}
         for i, e in enumerate(nums):
-            output[i] = prefix
+            res[i] = prefix
             prefix *= e
 
         # Reverse loop
         for i, e in reversed(list(enumerate(nums))):
-            output[i] *= suffix
+            res[i] *= suffix
             suffix *= e
 
-        return output.values()
+        return res.values()
 
     def reference(self, nums: List[int]) -> List[int]:
         res = [1] * (len(nums))

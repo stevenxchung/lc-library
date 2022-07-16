@@ -33,7 +33,7 @@ class Solution:
             root.add_word(w)
 
         ROWS, COLS = len(board), len(board[0])
-        output = set()
+        res = set()
 
         def dfs(r, c, node, word, board):
             if (r < 0 or c < 0
@@ -44,7 +44,7 @@ class Solution:
             word += board[r][c]
             node = node.children[board[r][c]]
             if node.is_end:
-                output.add(word)
+                res.add(word)
                 node.is_end = False
 
             temp = board[r][c]
@@ -60,7 +60,7 @@ class Solution:
             for c in range(COLS):
                 dfs(r, c, root.root, '', board)
 
-        return list(output)
+        return list(res)
 
     def reference(self, board: List[List[str]], words: List[str]) -> List[str]:
         root = Trie()
@@ -68,7 +68,7 @@ class Solution:
             root.add_word(w)
 
         ROWS, COLS = len(board), len(board[0])
-        output, visit = set(), set()
+        res, visit = set(), set()
 
         def dfs_reference(r, c, node, word, board):
             if (r < 0 or c < 0
@@ -81,7 +81,7 @@ class Solution:
             node = node.children[board[r][c]]
             word += board[r][c]
             if node.is_end:
-                output.add(word)
+                res.add(word)
 
             dfs_reference(r - 1, c, node, word, board)
             dfs_reference(r + 1, c, node, word, board)
@@ -93,7 +93,7 @@ class Solution:
             for c in range(COLS):
                 dfs_reference(r, c, root.root, '', board)
 
-        return list(output)
+        return list(res)
 
     def quantify(self, test_cases, runs=100000):
         sol_start = time()

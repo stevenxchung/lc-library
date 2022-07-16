@@ -19,16 +19,16 @@ class Solution:
         for key, val in table.items():
             reversed_table[val] = key
 
-        output = set()
+        res = set()
         # The max possible frequency is proportional to input length
         max_freq = len(nums)
         for i in range(max_freq, -1, -1):
-            if max_freq in reversed_table and len(output) < k:
-                output.add(reversed_table[max_freq])
+            if max_freq in reversed_table and len(res) < k:
+                res.add(reversed_table[max_freq])
                 del reversed_table[max_freq]
             max_freq -= 1
 
-        return output
+        return res
 
     def reference(self, nums: List[int], k: int) -> List[int]:
         count = {}

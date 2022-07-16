@@ -19,7 +19,7 @@ class Solution:
     """
 
     def decode(self, str):
-        output = []
+        res = []
         length = 0
         i1, i2 = 0, 0
         while i1 < len(str):
@@ -30,12 +30,12 @@ class Solution:
 
             i1 = i2 + 1
             length = int(prefix)
-            output.append(str[i1:i1 + length])
+            res.append(str[i1:i1 + length])
 
             i1 += length
             i2 = i1
 
-        return output
+        return res
 
     def encode_reference(self, strs):
         res = ""

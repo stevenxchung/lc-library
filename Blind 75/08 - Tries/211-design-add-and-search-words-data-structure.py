@@ -48,9 +48,9 @@ class WordDictionary:
         return node.is_end
 
     def search(self, word: str) -> bool:
-        output = self.dfs_helper(word, 0, self.root)
-        print(output)
-        return output
+        res = self.dfs_helper(word, 0, self.root)
+        print(res)
+        return res
 
 
 if __name__ == '__main__':

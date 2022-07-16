@@ -20,14 +20,14 @@ class Solution:
         temp = board[i][j]
         # To prevent visiting self
         board[i][j] = '#'
-        output = self.dfs_helper(i - 1, j, board, word[1:]) \
+        res = self.dfs_helper(i - 1, j, board, word[1:]) \
             or self.dfs_helper(i + 1, j, board, word[1:]) \
             or self.dfs_helper(i, j - 1, board, word[1:]) \
             or self.dfs_helper(i, j + 1, board, word[1:])
         # Revert
         board[i][j] = temp
 
-        return output
+        return res
 
     def exist(self, board: List[List[str]], word: str) -> bool:
         ROWS, COLS = len(board), len(board[0])
