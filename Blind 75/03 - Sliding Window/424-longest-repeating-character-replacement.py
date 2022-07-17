@@ -68,7 +68,7 @@ if __name__ == '__main__':
     test_cases = [
         ('ABAB', 2),
         ('AABABBA', 1),
-        # Additional tests
+        # Additional
         # ('AAABAAABAAAB', 1),
         # ('BBAABBAABBAA', 2),
         # ('AAAABAAAABAA', 3),
