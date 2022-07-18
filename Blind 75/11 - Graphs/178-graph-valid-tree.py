@@ -1,7 +1,6 @@
 '''
 *LeetCode premium problem
 '''
-from math import inf
 from time import time
 from typing import List
 
