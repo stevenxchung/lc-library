@@ -11,7 +11,7 @@ from typing import List
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        # Set amount to 12 for min upper limit (can also use inf)
+        # Set amount for min upper limit (can also use inf)
         # We also want solution from 0 to amount
         cache = [amount + 1] * (amount + 1)
         cache[0] = 0
@@ -22,7 +22,7 @@ class Solution:
                     cache[a] = min(cache[a], 1 + cache[a - c])
 
         # Solution found or not
-        return cache[amount] if cache[amount] != amount + 1 else - 1
+        return cache[amount] if cache[amount] != amount + 1 else -1
 
     def reference(self, coins: List[int], amount: int) -> int:
         dp = [amount + 1] * (amount + 1)
