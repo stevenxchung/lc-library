@@ -15,23 +15,16 @@ from typing import List
 
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        i, j = 0, len(nums) - 1
-        minimum = nums[0]
-        while i <= j:
-            m = (i + j) // 2
-            if nums[i] < nums[j]:
-                if nums[i] < minimum:
-                    minimum = nums[i]
-                    break
+        l, r = 0, len(nums) - 1
 
-            if nums[m] >= nums[i]:
-                # Search right
-                i = m + 1
+        while l < r:
+            m = (l + r) // 2
+            if nums[m] > nums[r]:
+                l = m + 1
             else:
-                # Otherwise search left
-                j = m - 1
+                r = m
 
-        return minimum
+        return nums[l]
 
     def reference(self, nums: List[int]) -> int:
         res = nums[0]
