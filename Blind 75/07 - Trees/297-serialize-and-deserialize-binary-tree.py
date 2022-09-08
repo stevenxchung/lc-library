@@ -59,10 +59,34 @@ class Codec:
         return self.dfs_helper_deserialize(tree_as_str, position)
 
     def serialize_reference(self, root: Optional[TreeNode]) -> int:
-        return
+        res = []
+
+        def dfs(node):
+            if not node:
+                res.append("N")
+                return
+            res.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+
+        dfs(root)
+        return ",".join(res)
 
     def deserialize_reference(self, root: Optional[TreeNode]) -> int:
-        return
+        vals = root.split(",")
+        self.i = 0
+
+        def dfs():
+            if vals[self.i] == "N":
+                self.i += 1
+                return None
+            node = TreeNode(int(vals[self.i]))
+            self.i += 1
+            node.left = dfs()
+            node.right = dfs()
+            return node
+
+        return dfs()
 
     def quantify(self, test_cases, runs=100000):
         sol_start = time()
@@ -93,7 +117,10 @@ class Codec:
 if __name__ == '__main__':
     test = Codec()
     test_cases = [
-        TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4), TreeNode(5))),
+        TreeNode(1,
+                 TreeNode(2),
+                 TreeNode(3, TreeNode(4), TreeNode(5))
+                 ),
         None
     ]
     test.quantify(test_cases)
