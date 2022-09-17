@@ -13,14 +13,15 @@ class Solution:
             return []
 
         res = []
+        seen = set()
         nums.sort()
-        for i, n1 in enumerate(nums):
-            if i > 0 and n1 == nums[i - 1]:
+        for i, a in enumerate(nums):
+            if a in seen:
                 # Ignore same number
                 continue
             j, k = i + 1, len(nums) - 1
             while j < k:
-                sum = n1 + nums[j] + nums[k]
+                sum = a + nums[j] + nums[k]
                 if sum > 0:
                     # Decrease k if greater
                     k -= 1
@@ -28,12 +29,12 @@ class Solution:
                     # increase j if less
                     j += 1
                 else:
-                    res.append([n1, nums[j], nums[k]])
+                    res.append([a, nums[j], nums[k]])
                     j += 1
                     # Additionally, increment if we encounter same number
-                    while nums[j] == nums[j - 1] and j < k:
+                    while nums[j] in seen and j < k:
                         j += 1
-
+            seen.add(a)
         return res
 
     def reference(self, nums: List[int]) -> List[List[int]]:
