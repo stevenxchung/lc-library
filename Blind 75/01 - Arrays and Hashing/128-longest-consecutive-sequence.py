@@ -30,7 +30,7 @@ class Solution:
         longest = 0
 
         for n in nums:
-            # check if its the start of a sequence
+            # Check if its the start of a sequence
             if (n - 1) not in numSet:
                 length = 1
                 while (n + length) in numSet:
