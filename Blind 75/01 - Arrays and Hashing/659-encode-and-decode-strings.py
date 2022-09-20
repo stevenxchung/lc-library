@@ -5,20 +5,18 @@ from time import time
 
 
 class Solution:
-    """
-    @param: strs: a list of strings
-    @return: encodes a list of strings to a single string.
-    """
-
     def encode(self, strs):
+        """
+        @param: strs: a list of strings
+        @return: encodes a list of strings to a single string.
+        """
         return ''.join([f'{len(s)}#{s}' for s in strs])
 
-    """
-    @param: str: A string
-    @return: decodes a single string to a list of strings
-    """
-
     def decode(self, str):
+        """
+        @param: str: A string
+        @return: decodes a single string to a list of strings
+        """
         res = []
         length = 0
         i1, i2 = 0, 0
@@ -59,32 +57,26 @@ class Solution:
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                encoded = self.encode(case)
+                decoded = self.decode(encoded)
                 if i == 0:
-                    encoded = self.encode(case)
-                    decoded = self.decode(encoded)
                     print(encoded, decoded)
-                else:
-                    self.encode(case)
-                    self.decode(encoded)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                encoded = self.encode_reference(case)
+                decoded = self.decode_reference(encoded)
                 if i == 0:
-                    encoded = self.encode_reference(case)
-                    decoded = self.decode_reference(encoded)
                     print(encoded, decoded)
-                else:
-                    self.encode_reference(case)
-                    self.decode_reference(encoded)
-        print(f'Runtime for reference: {time() - ref_start}\n')
+        print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        ["lint", "code", "love", "you"],
-        ["we", "say", ":", "yes"]
+        ['lint', 'code', 'love', 'you'],
+        ['we', 'say', ':', 'yes']
     ]
     test.quantify(test_cases)
