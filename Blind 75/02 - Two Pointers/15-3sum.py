@@ -26,7 +26,7 @@ class Solution:
                     # Decrease k if greater
                     k -= 1
                 elif sum < 0:
-                    # increase j if less
+                    # Increase j if less
                     j += 1
                 else:
                     res.append([a, nums[j], nums[k]])
