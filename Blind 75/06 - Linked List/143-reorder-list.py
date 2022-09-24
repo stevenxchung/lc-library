@@ -19,16 +19,16 @@ class ListNode:
 
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
-        p1 = head
-        p2 = head.next
+        slow = head
+        fast = head.next
         # Get end of lists
-        while p2.next:
-            p1 = p1.next
-            p2 = p2.next.next
+        while fast.next:
+            slow = slow.next
+            fast = fast.next.next
 
         # Reverse second list
-        l2 = p1.next
-        p1.next = prev = None
+        l2 = slow.next
+        slow.next = prev = None
         while l2:
             temp = l2.next
             l2.next = prev
