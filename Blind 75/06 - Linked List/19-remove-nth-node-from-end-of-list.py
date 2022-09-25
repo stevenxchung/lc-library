@@ -39,7 +39,7 @@ class Solution:
             left = left.next
             right = right.next
 
-        # delete
+        # Delete
         left.next = left.next.next
         return dummy.next
 
