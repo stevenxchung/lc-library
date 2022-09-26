@@ -40,12 +40,12 @@ class Solution:
             return None
 
         while len(lists) > 1:
-            mergedLists = []
+            merged_lists = []
             for i in range(0, len(lists), 2):
                 l1 = lists[i]
                 l2 = lists[i + 1] if (i + 1) < len(lists) else None
-                mergedLists.append(self.mergeTwoLists(l1, l2))
-            lists = mergedLists
+                merged_lists.append(self.mergeTwoLists(l1, l2))
+            lists = merged_lists
 
         return lists[0]
 
