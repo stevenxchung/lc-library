@@ -30,7 +30,7 @@ class Solution:
         if not root:
             return None
 
-        # swap the children
+        # Swap the children
         tmp = root.left
         root.left = root.right
         root.right = tmp
