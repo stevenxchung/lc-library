@@ -56,10 +56,10 @@ class Trie:
 if __name__ == '__main__':
     test = Trie()
     sol_start = time()
-    test.insert("apple")
-    test.search("apple")   # return True
-    test.search("app")     # return False
-    test.startsWith("app")  # return True
-    test.insert("app")
-    test.search("app")     # return True
+    test.insert('apple')
+    test.search('apple')   # return True
+    test.search('app')     # return False
+    test.startsWith('app')  # return True
+    test.insert('app')
+    test.search('app')     # return True
     print(f'Runtime for our solution: {time() - sol_start}')
