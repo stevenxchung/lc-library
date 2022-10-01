@@ -11,13 +11,13 @@ from typing import List
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        complements = {}
+        seen = {}
 
         for i, e in enumerate(nums):
             diff = target - e
-            if diff in complements:
-                return [complements[diff], i]
-            complements[e] = i
+            if diff in seen:
+                return [seen[diff], i]
+            seen[e] = i
 
     def reference(self, nums: List[int], target: int) -> List[int]:
         prevMap = {}  # val -> index
