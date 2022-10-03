@@ -25,7 +25,7 @@ from time import time
 class Node:
     def __init__(self, val=0, neighbors=None):
         self.val = val
-        self.neighbors = neighbors if neighbors is not None else []
+        self.neighbors = neighbors if neighbors != None else []
 
 
 class Solution:
@@ -89,10 +89,10 @@ if __name__ == '__main__':
     node_2 = Node(2)
     node_3 = Node(3)
     node_4 = Node(4)
-    node_1.neighbor = [node_2, node_4]
-    node_2.neighbor = [node_1, node_3]
-    node_3.neighbor = [node_2, node_4]
-    node_4.neighbor = [node_1, node_3]
+    node_1.neighbors = [node_2, node_4]
+    node_2.neighbors = [node_1, node_3]
+    node_3.neighbors = [node_2, node_4]
+    node_4.neighbors = [node_1, node_3]
     test_cases = [
         node_1,
         Node(1),
