@@ -17,10 +17,13 @@ class Solution:
         if not preorder or not inorder:
             return None
 
-        i = inorder.index(preorder.pop(0))
-        root = TreeNode(inorder[i])
-        root.left = self.buildTree(preorder, inorder[:i])
-        root.right = self.buildTree(preorder, inorder[i + 1:])
+        # Get inorder node position based on first preorder
+        n = inorder.index(preorder.pop(0))
+        root = TreeNode(inorder[n])
+        # Left of node uses inorder up to node position
+        root.left = self.buildTree(preorder, inorder[:n])
+        # Right of node uses inorder starting from node position + 1
+        root.right = self.buildTree(preorder, inorder[n + 1:])
 
         return root
 
