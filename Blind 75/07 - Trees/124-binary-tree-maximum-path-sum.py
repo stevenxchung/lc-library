@@ -22,12 +22,15 @@ class Solution:
         if not node:
             return 0
 
+        # Check subtree max
         left_gain = max(self.helper(node.left, max_path), 0)
         right_gain = max(self.helper(node.right, max_path), 0)
-        current_max = node.val + left_gain + right_gain
+        subtree_max = node.val + left_gain + right_gain
 
-        max_path[0] = max(max_path[0], current_max)
+        # Compare paths with current
+        max_path[0] = max(max_path[0], subtree_max)
 
+        # Return the max path after split
         return node.val + max(left_gain, right_gain)
 
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
