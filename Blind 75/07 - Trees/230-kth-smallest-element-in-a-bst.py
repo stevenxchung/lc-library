@@ -13,22 +13,23 @@ class TreeNode:
 
 
 class Solution:
-    def helper(self, node: Optional[TreeNode]) -> int:
-        if not node:
-            return
-        self.helper(node.left)
-        # Decrement and check
-        self.k -= 1
-        if self.k == 0:
-            self.res = node.val
-            return
-        self.helper(node.right)
 
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        self.res = None
-        self.k = k
-        self.helper(root)
-        return self.res
+        res, kth = [0], [0]
+
+        def dfs(node):
+            if not node:
+                return
+
+            dfs(node.left)
+            kth[0] += 1
+            if kth[0] == k:
+                res[0] = node.val
+                return
+            dfs(node.right)
+
+        dfs(root)
+        return res[0]
 
     def reference(self, root: Optional[TreeNode], k: int) -> int:
         stack = []
