@@ -34,7 +34,7 @@ class Solution:
         return self.valid(root, -inf, inf)
 
     def reference(self, root: Optional[TreeNode]) -> bool:
-        return self.valid(root, float("-inf"), float("inf"))
+        return self.valid(root, float('-inf'), float('inf'))
 
     def quantify(self, test_cases, runs=100000):
         sol_start = time()
