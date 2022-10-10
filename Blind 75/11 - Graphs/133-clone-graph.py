@@ -37,11 +37,14 @@ class Solution:
 
         def dfs(node: 'Node'):
             if node in node_map:
+                # Return the new node we inserted earlier
                 return node_map[node]
 
+            # Create new node and add to hashmap
             node_new = Node(node.val)
             node_map[node] = node_new
             for n in node.neighbors:
+                # Recursively add neighbors
                 node_new.neighbors.append(dfs(n))
 
             return node_new
