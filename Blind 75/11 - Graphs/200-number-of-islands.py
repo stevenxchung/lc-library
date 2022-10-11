@@ -22,11 +22,14 @@ class Solution:
 
             while queue:
                 row, col = queue.pop(0)
+
                 directions = [[1, 0], [-1, 0], [0, -1], [0, 1]]
                 for dr, dc in directions:
                     r_new, c_new = (row + dr), (col + dc)
-                    is_in_bounds = r_new in range(
-                        ROWS) and c_new in range(COLS)
+
+                    is_in_bounds = r_new in range(ROWS) \
+                        and c_new in range(COLS)
+
                     if is_in_bounds \
                             and grid[r_new][c_new] == '1' \
                             and (r_new, c_new) not in visited:
@@ -64,8 +67,9 @@ class Solution:
         for r in range(ROWS):
             for c in range(COLS):
                 if grid[r][c] == "1" and (r, c) not in visit:
-                    islands += 1
                     dfs(r, c)
+                    islands += 1
+
         return islands
 
     def quantify(self, test_cases, runs=100000):
@@ -92,16 +96,16 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         [
-            ["1", "1", "1", "1", "0"],
-            ["1", "1", "0", "1", "0"],
-            ["1", "1", "0", "0", "0"],
-            ["0", "0", "0", "0", "0"]
+            ['1', '1', '1', '1', '0'],
+            ['1', '1', '0', '1', '0'],
+            ['1', '1', '0', '0', '0'],
+            ['0', '0', '0', '0', '0']
         ],
         [
-            ["1", "1", "0", "0", "0"],
-            ["1", "1", "0", "0", "0"],
-            ["0", "0", "1", "0", "0"],
-            ["0", "0", "0", "1", "1"]
+            ['1', '1', '0', '0', '0'],
+            ['1', '1', '0', '0', '0'],
+            ['0', '0', '1', '0', '0'],
+            ['0', '0', '0', '1', '1']
         ],
         # Additional
         # [['1']]
