@@ -29,6 +29,7 @@ class Solution:
                     return False
             visited.remove(course)
             prereq_map[course] = []
+
             return True
 
         for k in prereq_map.keys():
@@ -59,11 +60,13 @@ class Solution:
                     return False
             visiting.remove(crs)
             preMap[crs] = []
+
             return True
 
         for c in range(numCourses):
             if not dfs(c):
                 return False
+
         return True
 
     def quantify(self, test_cases, runs=100000):
@@ -89,13 +92,13 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        # (2,
-        #  [[1, 0]]),
-        # (2,
-        #  [
-        #      [1, 0],
-        #      [0, 1]
-        #  ])
+        (2,
+         [[1, 0]]),
+        (2,
+         [
+             [1, 0],
+             [0, 1]
+         ]),
         # Additional
         (5,
          [
