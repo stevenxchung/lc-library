@@ -81,14 +81,13 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        # Additional
-        # (5,
-        #  [
-        #      [0, 1],
-        #      [0, 2],
-        #      [0, 3],
-        #      [1, 4]
-        #  ])
+        (5,
+         [
+             [0, 1],
+             [0, 2],
+             [0, 3],
+             [1, 4]
+         ]),
         # Additional
         (7,
          [
