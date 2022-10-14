@@ -12,25 +12,39 @@ class Solution:
             node_map[a].append(b)
 
         visited = set()
-        res = 0
 
-        def dfs(curr, prev):
-            if curr in visited:
-                return
+        def dfs(node):
+            if node not in visited:
+                visited.add(node)
+                for neighbor in node_map[node]:
+                    dfs(neighbor)
 
-            visited.add(curr)
-            for v in node_map[curr]:
-                if v == prev:
-                    continue
-                dfs(v, curr)
+            return 1
 
-        for k in node_map.keys():
-            if k not in visited:
-                # New component or group found, set to -1 initially
-                dfs(k, -1)
-                res += 1
+        def bfs(q):
+            for node in q:
+                if node not in visited:
+                    q += node_map[node]
+                    visited.add(node)
 
-        return res
+            return 1
+
+        return sum(dfs(i) for i in range(n) if i not in visited)
+        return sum(bfs([i]) for i in range(n) if i not in visited)
+
+    def countComponentsUnionFind(self, n: int, edges: List[List[int]]) -> int:
+        p = range(n)
+
+        def find(v):
+            if p[v] != v:
+                p[v] = find(p[v])
+
+            return p[v]
+
+        for v, w in edges:
+            p[find(v)] = find(w)
+
+        return len(set(map(find, p)))
 
     def reference(self, n: int, edges: List[List[int]]) -> int:
         parent_arr = [i for i in range(n)]
