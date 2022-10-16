@@ -46,34 +46,36 @@ class Solution:
         return ''.join(res)
 
     def reference(self, words: List[str]) -> str:
-        alien_dict = {c: set() for w in words for c in w}
+        adj = {char: set() for word in words for char in word}
+
         for i in range(len(words) - 1):
             w1, w2 = words[i], words[i + 1]
-            min_length = min(len(w1), len(w2))
-            if len(w1) > len(w2) and w1[:min_length] == w2[:min_length]:
+            minLen = min(len(w1), len(w2))
+            if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:
                 return ''
-            for j in range(min_length):
+            for j in range(minLen):
                 if w1[j] != w2[j]:
-                    alien_dict[w1[j]].add(w2[j])
+                    adj[w1[j]].add(w2[j])
                     break
 
-        # False == visited, True == current path
-        visited = {}
+        visited = {}  # {char: bool} False visited, True current path
         res = []
 
-        def dfs(c):
-            if c in visited:
-                return visited[c]
+        def dfs(char):
+            if char in visited:
+                return visited[char]
 
-            visited[c] = True
-            for neighbor in alien_dict[c]:
-                if dfs(neighbor):
+            visited[char] = True
+
+            for neighChar in adj[char]:
+                if dfs(neighChar):
                     return True
-            visited[c] = False
-            res.append(c)
 
-        for c in alien_dict:
-            if dfs(c):
+            visited[char] = False
+            res.append(char)
+
+        for char in adj:
+            if dfs(char):
                 return ''
 
         res.reverse()
