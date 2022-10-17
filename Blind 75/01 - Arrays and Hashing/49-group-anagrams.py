@@ -58,8 +58,8 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        ["eat", "tea", "tan", "ate", "nat", "bat"],
-        [""],
-        ["a"],
+        ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'],
+        [''],
+        ['a'],
     ]
     test.quantify(test_cases)
