@@ -5,24 +5,34 @@ Return the fewest number of coins that you need to make up that amount. If that 
 
 You may assume that you have an infinite number of each kind of coin.
 '''
+from math import inf
 from time import time
 from typing import List
 
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        # Set amount for min upper limit (can also use inf)
-        # We also want solution from 0 to amount
-        cache = [amount + 1] * (amount + 1)
-        cache[0] = 0
+        cache = [0] * amount
 
-        for a in range(1, amount + 1):
+        def dfs(coins, amount):
+            if amount < 0:
+                return -1
+            if amount == 0:
+                return 0
+            if cache[amount - 1] > 0:
+                return cache[amount - 1]
+
+            minimum = inf
             for c in coins:
-                if a - c >= 0:
-                    cache[a] = min(cache[a], 1 + cache[a - c])
+                cost = dfs(coins, amount - c)
+                if not (0 <= cost < minimum):
+                    continue
+                minimum = cost + 1
+            cache[amount - 1] = minimum if minimum != inf else -1
 
-        # Solution found or not
-        return cache[amount] if cache[amount] != amount + 1 else -1
+            return cache[amount - 1]
+
+        return dfs(coins, amount)
 
     def reference(self, coins: List[int], amount: int) -> int:
         dp = [amount + 1] * (amount + 1)
