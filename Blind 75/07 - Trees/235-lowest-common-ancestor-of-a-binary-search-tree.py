@@ -56,18 +56,18 @@ class Solution:
             for case in test_cases:
                 if i == 0:
                     print(self.lowestCommonAncestor(
-                        case[0], case[1], case[2]).val)
+                        *case).val)
                 else:
-                    self.lowestCommonAncestor(case[0], case[1], case[2])
+                    self.lowestCommonAncestor(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1], case[2]).val)
+                    print(self.reference(*case).val)
                 else:
-                    self.reference(case[0], case[1], case[2])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
