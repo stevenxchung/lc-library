@@ -7,6 +7,7 @@ Reorder the list to be on the following form:
 L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 You may not modify the values in the list's nodes. Only nodes themselves may be changed.
 '''
+from copy import deepcopy
 from time import time
 from typing import Optional
 
@@ -71,19 +72,23 @@ class Solution:
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reorderList(case))
+                    print(self.reorderList(copy))
                 else:
-                    self.reorderList(case)
+                    self.reorderList(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
