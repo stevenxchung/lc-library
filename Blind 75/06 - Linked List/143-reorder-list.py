@@ -23,7 +23,7 @@ class Solution:
         slow = head
         fast = head.next
         # Get end of lists
-        while fast.next:
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
@@ -43,6 +43,8 @@ class Solution:
             l1.next = l2
             l2.next = temp1
             l1, l2 = temp1, temp2
+
+        return head
 
     def reference(self, head: Optional[ListNode]) -> None:
         # Find middle
@@ -68,14 +70,16 @@ class Solution:
             second.next = tmp1
             first, second = tmp1, tmp2
 
-    def quantify(self, test_cases, runs=100000):
+        return head
+
+    def quantify(self, test_cases, runs=10000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.reorderList(copy))
+                    print(self.reorderList(copy).__dict__)
                 else:
                     self.reorderList(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
@@ -86,7 +90,7 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(copy))
+                    print(self.reference(copy).__dict__)
                 else:
                     self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
