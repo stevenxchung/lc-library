@@ -27,12 +27,12 @@ class Solution:
 
     def reference(self, prices: List[int]) -> int:
         res = 0
-
         l = 0
         for r in range(1, len(prices)):
             if prices[r] < prices[l]:
                 l = r
             res = max(res, prices[r] - prices[l])
+
         return res
 
     def quantify(self, test_cases, runs=100000):
