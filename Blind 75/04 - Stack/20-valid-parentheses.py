@@ -28,14 +28,14 @@ class Solution:
         return True
 
     def reference(self, s: str) -> bool:
-        Map = {")": "(", "]": "[", "}": "{"}
+        bracket_map = {')': '(', ']': '[', '}': '{'}
         stack = []
 
         for c in s:
-            if c not in Map:
+            if c not in bracket_map:
                 stack.append(c)
                 continue
-            if not stack or stack[-1] != Map[c]:
+            if not stack or stack[-1] != bracket_map[c]:
                 return False
             stack.pop()
 
