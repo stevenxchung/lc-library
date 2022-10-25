@@ -1,6 +1,7 @@
 '''
 Given the head of a singly linked list, reverse the list, and return the reversed list.
 '''
+from copy import deepcopy
 from time import time
 from typing import Optional
 
@@ -35,23 +36,27 @@ class Solution:
 
         return prev
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=10000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reverseList(case))
+                    print(self.reverseList(copy))
                 else:
-                    self.reverseList(case)
+                    self.reverseList(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
