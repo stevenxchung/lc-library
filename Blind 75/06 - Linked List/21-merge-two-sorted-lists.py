@@ -5,6 +5,7 @@ Merge the two lists in a one sorted list. The list should be made by splicing to
 
 Return the head of the merged linked list.
 '''
+from copy import deepcopy
 from time import time
 from typing import Optional
 
@@ -57,23 +58,27 @@ class Solution:
 
         return dummy.next
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=10000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.mergeTwoLists(case[0], case[1]))
+                    print(self.mergeTwoLists(copy[0], copy[1]))
                 else:
-                    self.mergeTwoLists(case[0], case[1])
+                    self.mergeTwoLists(copy[0], copy[1])
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(copy[0], copy[1]))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(copy[0], copy[1])
         print(f'Runtime for reference: {time() - ref_start}')
 
 
