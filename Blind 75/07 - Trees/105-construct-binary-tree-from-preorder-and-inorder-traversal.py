@@ -1,6 +1,7 @@
 '''
 Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
 '''
+from copy import deepcopy
 from time import time
 from typing import List, Optional
 
@@ -38,23 +39,27 @@ class Solution:
 
         return root
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=10000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.buildTree(case[0], case[1]))
+                    print(self.buildTree(copy[0], copy[1]).__dict__)
                 else:
-                    self.buildTree(case[0], case[1])
+                    self.buildTree(copy[0], copy[1])
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(copy[0], copy[1]).__dict__)
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(copy[0], copy[1])
         print(f'Runtime for reference: {time() - ref_start}')
 
 
