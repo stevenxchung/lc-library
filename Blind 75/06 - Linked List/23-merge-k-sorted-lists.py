@@ -3,6 +3,7 @@ You are given an array of k linked-lists lists, each linked-list is sorted in as
 
 Merge all the linked-lists into one sorted linked-list and return it.
 '''
+from copy import deepcopy
 from time import time
 from typing import List, Optional
 
@@ -58,27 +59,31 @@ class Solution:
             for i in range(0, len(lists), 2):
                 l1 = lists[i]
                 l2 = lists[i + 1] if (i + 1) < len(lists) else None
-                mergedLists.append(self.mergeList(l1, l2))
+                mergedLists.append(self.mergeTwoLists(l1, l2))
             lists = mergedLists
         return lists[0]
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=10000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.mergeKLists(case))
+                    print(self.mergeKLists(copy))
                 else:
-                    self.mergeKLists(case)
+                    self.mergeKLists(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
