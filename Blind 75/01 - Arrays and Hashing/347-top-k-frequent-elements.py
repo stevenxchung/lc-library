@@ -1,32 +1,23 @@
 '''
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 '''
+from collections import defaultdict
 from time import time
 from typing import List
 
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        table = {}
-        for e in nums:
-            if e not in table:
-                table[e] = 1
-            elif e in table:
-                table[e] += 1
+        res = []
+        freq = defaultdict()
+        for n in nums:
+            freq[n] = 1 + freq.get(n, 0)
 
-        # Reverse key-value mapping
-        reversed_table = {}
-        for key, val in table.items():
-            reversed_table[val] = key
-
-        res = set()
-        # The max possible frequency is proportional to input length
-        max_freq = len(nums)
-        for i in range(max_freq, -1, -1):
-            if max_freq in reversed_table and len(res) < k:
-                res.add(reversed_table[max_freq])
-                del reversed_table[max_freq]
-            max_freq -= 1
+        for _ in range(k):
+            # Get number corresponding to max count then delete
+            num = max(freq, key=freq.get)
+            res.append(num)
+            del freq[num]
 
         return res
 
