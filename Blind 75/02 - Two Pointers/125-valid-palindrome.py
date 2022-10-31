@@ -3,13 +3,12 @@ A phrase is a palindrome if, after converting all uppercase letters into lowerca
 
 Given a string s, return true if it is a palindrome, or false otherwise.
 '''
-import re
 from time import time
 
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        s_formatted = re.sub(r'[^a-zA-Z0-9]', '', s).lower()
+        s_formatted = ''.join(filter(str.isalnum, s)).lower()
         i = 0
         j = len(s_formatted) - 1
         while i < j:
@@ -17,6 +16,7 @@ class Solution:
                 return False
             i += 1
             j -= 1
+
         return True
 
     def reference(self, s: str) -> bool:
@@ -30,6 +30,7 @@ class Solution:
                 return False
             l += 1
             r -= 1
+
         return True
 
     # Could write own alpha-numeric function
