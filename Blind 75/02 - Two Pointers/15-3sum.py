@@ -85,5 +85,6 @@ if __name__ == '__main__':
         [-1, 0, 1, 2, -1, -4],
         [],
         [0],
+        [0, 0, 0]
     ]
     test.quantify(test_cases)
