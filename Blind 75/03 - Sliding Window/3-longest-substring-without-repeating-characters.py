@@ -6,23 +6,16 @@ from time import time
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        i = 0
-        j = i + 1
+        seen = set()
         longest = 0
-        tracking = set()
+        i, j = 0, 0
         while i < len(s) and j < len(s):
-            sub_s = s[i:j]
-            if len(sub_s) > longest and s[j] not in tracking:
-                longest = len(sub_s)
-            if s[j] in tracking:
-                # Increment indexes and clear set
-                i = j
-                j = i + 1
-                tracking = set()
-
-            # Since j = i + 1 can be > len(s)
-            if j < len(s):
-                tracking.add(s[j])
+            if s[j] in seen:
+                seen.remove(s[i])
+                i += 1
+                continue
+            seen.add(s[j])
+            longest = max(longest, j - i + 1)
             j += 1
 
         return longest
