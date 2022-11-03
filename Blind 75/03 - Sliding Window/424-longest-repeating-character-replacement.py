@@ -8,23 +8,19 @@ from time import time
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        i = 0
-        j = i + 1
-        skips = 0
-        longest = 0
-        while j < len(s):
-            if s[i] != s[j] and skips < k:
-                skips += 1
-            elif s[i] != s[j] and skips == k:
-                skips = 0
-                i = j
+        l, res, most_freq_c = 0, 0, 0
+        count = {}
+        for r in range(len(s)):
+            count[s[r]] = 1 + count.get(s[r], 0)
+            most_freq_c = max(most_freq_c, count[s[r]])
 
-            sub_s = s[i:j + 1]
-            if len(sub_s) > longest and skips <= k:
-                longest = len(sub_s)
-            j += 1
+            if (r - l + 1) - most_freq_c > k:
+                count[s[l]] -= 1
+                l += 1
 
-        return longest
+            res = max(res, r - l + 1)
+
+        return res
 
     def reference(self, s: str, k: int) -> int:
         count = {}
