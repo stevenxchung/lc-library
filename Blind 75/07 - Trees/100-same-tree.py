@@ -16,22 +16,23 @@ class TreeNode:
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        p_stack = [p]
-        q_stack = [q]
-        while p_stack and q_stack:
-            p_top = p_stack.pop()
-            q_top = q_stack.pop()
-            if not p_top and q_top \
-                    or p_top and not q_top \
-                    or (p_top and q_top and p_top.val != q_top.val):
+        q1, q2 = [p], [q]
+        while q1 and q2:
+            node1, node2 = q1.pop(0), q2.pop(0)
+            if (
+                node1 and not node2
+                or not node1 and node2
+                or (node1 and node2 and node1.val != node2.val)
+            ):
                 return False
-            if p_top:
-                p_stack.append(p_top.left)
-                p_stack.append(p_top.right)
-            if q_top:
-                q_stack.append(q_top.left)
-                q_stack.append(q_top.right)
-
+            
+            if node1:
+                q1.append(node1.left)
+                q1.append(node1.right)
+            if node2:
+                q2.append(node2.left)
+                q2.append(node2.right)
+        
         return True
 
     def reference(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
