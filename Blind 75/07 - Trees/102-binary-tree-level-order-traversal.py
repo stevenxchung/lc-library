@@ -17,23 +17,21 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
-
-        queue = [root]
-        res = [[root.val]]
-        while queue:
-            node_group = []
-            for i in range(len(queue)):
-                node = queue.pop(0)
+        
+        res, q = [], [root]
+        while q:
+            layer_values, next_layer = [], []
+            
+            for node in q:
+                layer_values.append(node.val)
                 if node.left:
-                    queue.append(node.left)
-                    node_group.append(node.left.val)
+                    next_layer.append(node.left)
                 if node.right:
-                    queue.append(node.right)
-                    node_group.append(node.right.val)
-            # Ensure result is not empty
-            if node_group:
-                res.append(node_group)
-
+                    next_layer.append(node.right)
+            
+            q = next_layer
+            res.append(layer_values)
+        
         return res
 
     def reference(self, root: Optional[TreeNode]) -> List[List[int]]:
