@@ -82,6 +82,9 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         TreeNode(1, TreeNode(2), TreeNode(3)),
-        TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
+        TreeNode(-10, 
+                 TreeNode(9), 
+                 TreeNode(20, TreeNode(15), TreeNode(7))
+                 )
     ]
     test.quantify(test_cases)
