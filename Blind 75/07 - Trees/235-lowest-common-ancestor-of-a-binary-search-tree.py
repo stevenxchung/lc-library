@@ -14,25 +14,19 @@ class TreeNode:
 
 
 class Solution:
-    res = None
-
-    def search(self, root, p, q):
-        if not root:
-            return False
-        mid = left = right = False
-        if root.val == p.val or root.val == q.val:
-            mid = True
-
-        left = self.search(root.left, p, q)
-        right = self.search(root.right, p, q)
-        if mid:
-            if left or right:
-                self.res = root
-        elif left and right:
-            self.res = root
-        return mid or left or right
-
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+
+        def dfs(node, p, q):
+            if p.val < node.val and q.val < node.val:
+                return dfs(node.left, p, q)
+            if p.val > node.val and q.val > node.val:
+                return dfs(node.right, p, q)
+
+            return node
+
+        return dfs(root, p, q)
+
+    def reference(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         node = root
 
         while node:
@@ -42,13 +36,6 @@ class Solution:
                 node = node.right
             else:
                 return node
-
-    def reference(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if not root or not p or not q:
-            return None
-
-        self.search(root, p, q)
-        return self.res
 
     def quantify(self, test_cases, runs=100000):
         sol_start = time()
