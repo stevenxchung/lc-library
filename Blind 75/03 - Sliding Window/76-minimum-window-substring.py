@@ -40,7 +40,7 @@ class Solution:
                 l += 1
 
         l, r = p_window
-        return s[l : r + 1] if minLen != inf else ''
+        return s[l: r + 1] if minLen != inf else ''
 
     def reference(self, s: str, t: str) -> str:
         if t == '':
@@ -72,9 +72,9 @@ class Solution:
                 l += 1
 
         l, r = res
-        return s[l : r + 1] if resLen != float('infinity') else ''
+        return s[l: r + 1] if resLen != float('infinity') else ''
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
