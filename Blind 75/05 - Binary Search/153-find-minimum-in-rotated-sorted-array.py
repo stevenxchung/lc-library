@@ -42,7 +42,7 @@ class Solution:
                 r = m - 1
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
