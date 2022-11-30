@@ -44,7 +44,7 @@ class Solution:
         left.next = left.next.next
         return dummy.next
 
-    def quantify(self, test_cases, runs=10000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
