@@ -58,7 +58,7 @@ class Solution:
 
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -81,10 +81,7 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        TreeNode(3,
-                 TreeNode(9),
-                 TreeNode(20, TreeNode(15), TreeNode(7)),
-                 ),
-        TreeNode(2, None, TreeNode(1))
+        TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7))),
+        TreeNode(2, None, TreeNode(1)),
     ]
     test.quantify(test_cases)
