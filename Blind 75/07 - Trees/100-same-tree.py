@@ -20,19 +20,21 @@ class Solution:
         while q1 and q2:
             node1, node2 = q1.pop(0), q2.pop(0)
             if (
-                node1 and not node2
-                or not node1 and node2
+                node1
+                and not node2
+                or not node1
+                and node2
                 or (node1 and node2 and node1.val != node2.val)
             ):
                 return False
-            
+
             if node1:
                 q1.append(node1.left)
                 q1.append(node1.right)
             if node2:
                 q2.append(node2.left)
                 q2.append(node2.right)
-        
+
         return True
 
     def reference(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
@@ -41,9 +43,11 @@ class Solution:
         if not p or not q or p.val != q.val:
             return False
 
-        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return self.isSameTree(p.left, q.left) and self.isSameTree(
+            p.right, q.right
+        )
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -68,15 +72,12 @@ if __name__ == '__main__':
     test_cases = [
         (
             TreeNode(1, TreeNode(2), TreeNode(3)),
-            TreeNode(1, TreeNode(2), TreeNode(3))
+            TreeNode(1, TreeNode(2), TreeNode(3)),
         ),
-        (
-            TreeNode(1, TreeNode(2)),
-            TreeNode(1, None, TreeNode(2))
-        ),
+        (TreeNode(1, TreeNode(2)), TreeNode(1, None, TreeNode(2))),
         (
             TreeNode(1, TreeNode(2), TreeNode(1)),
-            TreeNode(1, TreeNode(1), TreeNode(2))
-        )
+            TreeNode(1, TreeNode(1), TreeNode(2)),
+        ),
     ]
     test.quantify(test_cases)
