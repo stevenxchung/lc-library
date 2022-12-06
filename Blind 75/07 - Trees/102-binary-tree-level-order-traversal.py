@@ -17,21 +17,21 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
-        
+
         res, q = [], [root]
         while q:
             layer_values, next_layer = [], []
-            
+
             for node in q:
                 layer_values.append(node.val)
                 if node.left:
                     next_layer.append(node.left)
                 if node.right:
                     next_layer.append(node.right)
-            
+
             q = next_layer
             res.append(layer_values)
-        
+
         return res
 
     def reference(self, root: Optional[TreeNode]) -> List[List[int]]:
@@ -53,7 +53,7 @@ class Solution:
             res.append(val)
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -76,17 +76,11 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        TreeNode(3,
-                 TreeNode(9),
-                 TreeNode(20, TreeNode(15), TreeNode(7)),
-                 ),
+        TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7))),
         TreeNode(1),
         None,
         # Additional
         TreeNode(1, TreeNode(2)),
-        TreeNode(1,
-                 TreeNode(2, TreeNode(4)),
-                 TreeNode(3, None, TreeNode(5))
-                 )
+        TreeNode(1, TreeNode(2, TreeNode(4)), TreeNode(3, None, TreeNode(5))),
     ]
     test.quantify(test_cases)
