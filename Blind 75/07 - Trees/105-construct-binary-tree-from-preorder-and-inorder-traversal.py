@@ -14,7 +14,9 @@ class TreeNode:
 
 
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    def buildTree(
+        self, preorder: List[int], inorder: List[int]
+    ) -> Optional[TreeNode]:
         if not preorder or not inorder:
             return None
 
@@ -24,22 +26,24 @@ class Solution:
         # Left of node uses inorder up to node position
         root.left = self.buildTree(preorder, inorder[:n])
         # Right of node uses inorder starting from node position + 1
-        root.right = self.buildTree(preorder, inorder[n + 1:])
+        root.right = self.buildTree(preorder, inorder[n + 1 :])
 
         return root
 
-    def reference(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    def reference(
+        self, preorder: List[int], inorder: List[int]
+    ) -> Optional[TreeNode]:
         if not preorder or not inorder:
             return None
 
         root = TreeNode(preorder[0])
         mid = inorder.index(preorder[0])
-        root.left = self.reference(preorder[1:mid + 1], inorder[:mid])
-        root.right = self.reference(preorder[mid + 1:], inorder[mid + 1:])
+        root.left = self.reference(preorder[1 : mid + 1], inorder[:mid])
+        root.right = self.reference(preorder[mid + 1 :], inorder[mid + 1 :])
 
         return root
 
-    def quantify(self, test_cases, runs=10000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -65,14 +69,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (
-            [3, 9, 20, 15, 7],
-            [9, 3, 15, 20, 7]
-        ),
-        (
-            [-1],
-            [-1]
-        )
-    ]
+    test_cases = [([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]), ([-1], [-1])]
     test.quantify(test_cases)
