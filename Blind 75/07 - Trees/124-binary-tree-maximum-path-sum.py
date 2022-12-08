@@ -18,25 +18,22 @@ class TreeNode:
 
 
 class Solution:
-    def helper(self, node: Optional[TreeNode], max_path: List[int]) -> int:
-        if not node:
-            return 0
-
-        # Check subtree max
-        left_gain = max(self.helper(node.left, max_path), 0)
-        right_gain = max(self.helper(node.right, max_path), 0)
-        subtree_max = node.val + left_gain + right_gain
-
-        # Compare paths with current
-        max_path[0] = max(max_path[0], subtree_max)
-
-        # Return the max path after split
-        return node.val + max(left_gain, right_gain)
-
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        max_path = [-inf]
-        self.helper(root, max_path)
-        return max_path[0]
+        res = [root.val]
+
+        def dfs(node):
+            if not node:
+                return 0
+
+            path_left = max(0, dfs(node.left))
+            path_right = max(0, dfs(node.right))
+            # Max path could be current node with left AND right branch
+            res[0] = max(res[0], node.val + path_left + path_right)
+            # Recursing up, path can only include left OR right path
+            return node.val + max(path_left, path_right)
+
+        dfs(root)
+        return res[0]
 
     def reference(self, root: Optional[TreeNode]) -> int:
         res = [root.val]
@@ -58,7 +55,7 @@ class Solution:
         dfs(root)
         return res[0]
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -82,9 +79,6 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         TreeNode(1, TreeNode(2), TreeNode(3)),
-        TreeNode(-10, 
-                 TreeNode(9), 
-                 TreeNode(20, TreeNode(15), TreeNode(7))
-                 )
+        TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7))),
     ]
     test.quantify(test_cases)
