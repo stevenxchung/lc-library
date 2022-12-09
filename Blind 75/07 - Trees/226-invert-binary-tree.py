@@ -39,7 +39,7 @@ class Solution:
         self.reference(root.right)
         return root
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -62,11 +62,12 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        TreeNode(4,
-                 TreeNode(2, TreeNode(1), TreeNode(3)),
-                 TreeNode(7, TreeNode(6), TreeNode(9)),
-                 ),
+        TreeNode(
+            4,
+            TreeNode(2, TreeNode(1), TreeNode(3)),
+            TreeNode(7, TreeNode(6), TreeNode(9)),
+        ),
         TreeNode(2, TreeNode(1), TreeNode(3)),
-        None
+        None,
     ]
     test.quantify(test_cases)
