@@ -19,15 +19,16 @@ class Solution:
             for p2 in points:
                 if p1 == p2:
                     continue
-                dist = math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1]) ** 2)
+                dist = math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
                 costs.append(dist)
             min_total_cost += min(costs)
 
         return math.ceil(min_total_cost)
 
     def reference(self, points: List[List[int]]) -> int:
+        # Create adjacency list for all points with (cost, points[i])
         N = len(points)
-        adj = {i: [] for i in range(N)}  # i : list of [cost, node]
+        adj = {i: [] for i in range(N)}
         for i in range(N):
             x1, y1 = points[i]
             for j in range(i + 1, N):
@@ -36,22 +37,22 @@ class Solution:
                 adj[i].append([dist, j])
                 adj[j].append([dist, i])
 
-        # Prim's
-        res = 0
-        visit = set()
-        minH = [[0, 0]]  # [cost, point]
-        while len(visit) < N:
-            cost, i = heapq.heappop(minH)
-            if i in visit:
+        # Prim's algorithm, use min heap to prioritize min cost
+        res, seen, min_heap = 0, set(), [(0, 0)]
+        while len(seen) < N:
+            cost, point = heapq.heappop(min_heap)
+            if point in seen:
                 continue
             res += cost
-            visit.add(i)
-            for neiCost, nei in adj[i]:
-                if nei not in visit:
-                    heapq.heappush(minH, [neiCost, nei])
+            seen.add(point)
+            # Explore neighbors from adjacency list
+            for nei_cost, nei in adj[point]:
+                if nei not in seen:
+                    heapq.heappush(min_heap, (nei_cost, nei))
+
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -75,6 +76,6 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         [[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]],
-        [[3, 12], [-2, 5], [-4, 1]]
+        [[3, 12], [-2, 5], [-4, 1]],
     ]
     test.quantify(test_cases)

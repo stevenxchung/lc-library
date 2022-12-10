@@ -51,7 +51,7 @@ class Solution:
                 res.append(rightSide.val)
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -74,11 +74,10 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        TreeNode(1,
-                 TreeNode(2, None, TreeNode(5)),
-                 TreeNode(3, None, TreeNode(4))
-                 ),
+        TreeNode(
+            1, TreeNode(2, None, TreeNode(5)), TreeNode(3, None, TreeNode(4))
+        ),
         TreeNode(1, None, TreeNode(3)),
-        None
+        None,
     ]
     test.quantify(test_cases)

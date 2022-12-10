@@ -31,6 +31,28 @@ class Node:
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
         if not node:
+            return
+
+        # Initialize clone and queue with first node
+        old_to_new = {node.val: Node(node.val)}
+        q = [node]
+        while q:
+            # Set new node
+            n = q.pop(0)
+            new = old_to_new[n.val]
+
+            for nei in n.neighbors:
+                if nei.val not in old_to_new:
+                    # For each neighbor, set old to new neighbor
+                    old_to_new[nei.val] = Node(nei.val)
+                    q.append(nei)
+                # Add new neighbors to new node
+                new.neighbors.append(old_to_new[nei.val])
+
+        return old_to_new[node.val]
+
+    def reference(self, node: 'Node') -> 'Node':
+        if not node:
             return None
 
         node_map = {}
@@ -51,22 +73,7 @@ class Solution:
 
         return dfs(node)
 
-    def reference(self, node: 'Node') -> 'Node':
-        oldToNew = {}
-
-        def dfs(node):
-            if node in oldToNew:
-                return oldToNew[node]
-
-            copy = Node(node.val)
-            oldToNew[node] = copy
-            for nei in node.neighbors:
-                copy.neighbors.append(dfs(nei))
-            return copy
-
-        return dfs(node) if node else None
-
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -96,9 +103,5 @@ if __name__ == '__main__':
     node_2.neighbors = [node_1, node_3]
     node_3.neighbors = [node_2, node_4]
     node_4.neighbors = [node_1, node_3]
-    test_cases = [
-        node_1,
-        Node(1),
-        None
-    ]
+    test_cases = [node_1, Node(1), None]
     test.quantify(test_cases)

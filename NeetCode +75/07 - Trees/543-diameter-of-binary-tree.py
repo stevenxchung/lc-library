@@ -18,7 +18,7 @@ class TreeNode:
 
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        self.diameter = 0
+        res = [0]
 
         def dfs(node: Optional[TreeNode]):
             if not node:
@@ -26,13 +26,13 @@ class Solution:
 
             left = dfs(node.left)
             right = dfs(node.right)
-            self.diameter = max(self.diameter, left + right)
-            height = 1 + max(left, right)
+            res[0] = max(res[0], left + right)
 
-            return height
+            # Return the height
+            return 1 + max(left, right)
 
         dfs(root)
-        return self.diameter
+        return res[0]
 
     def reference(self, root: Optional[TreeNode]) -> int:
         res = [0]
@@ -49,7 +49,7 @@ class Solution:
         dfs(root)
         return res[0]
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -72,10 +72,7 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        TreeNode(1,
-                 TreeNode(2, TreeNode(4), TreeNode(5)),
-                 TreeNode(3)
-                 ),
-        TreeNode(1, TreeNode(2))
+        TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3)),
+        TreeNode(1, TreeNode(2)),
     ]
     test.quantify(test_cases)

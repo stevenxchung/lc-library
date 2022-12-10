@@ -14,8 +14,9 @@ class TreeNode:
 
 
 class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-
+    def lowestCommonAncestor(
+        self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode'
+    ) -> 'TreeNode':
         def dfs(node, p, q):
             if p.val < node.val and q.val < node.val:
                 return dfs(node.left, p, q)
@@ -26,7 +27,9 @@ class Solution:
 
         return dfs(root, p, q)
 
-    def reference(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+    def reference(
+        self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode'
+    ) -> 'TreeNode':
         node = root
 
         while node:
@@ -37,13 +40,12 @@ class Solution:
             else:
                 return node
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.lowestCommonAncestor(
-                        *case).val)
+                    print(self.lowestCommonAncestor(*case).val)
                 else:
                     self.lowestCommonAncestor(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
@@ -62,42 +64,30 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         (
-            TreeNode(6,
-                     TreeNode(2,
-                              TreeNode(0),
-                              TreeNode(4, TreeNode(3), TreeNode(5))),
-                     TreeNode(8,
-                              TreeNode(7),
-                              TreeNode(9)),
-                     ),
-            TreeNode(2), TreeNode(8)
+            TreeNode(
+                6,
+                TreeNode(2, TreeNode(0), TreeNode(4, TreeNode(3), TreeNode(5))),
+                TreeNode(8, TreeNode(7), TreeNode(9)),
+            ),
+            TreeNode(2),
+            TreeNode(8),
         ),
         (
-            TreeNode(6,
-                     TreeNode(2,
-                              TreeNode(0),
-                              TreeNode(4, TreeNode(3), TreeNode(5))),
-                     TreeNode(8,
-                              TreeNode(7),
-                              TreeNode(9)),
-                     ),
-            TreeNode(2), TreeNode(4)
+            TreeNode(
+                6,
+                TreeNode(2, TreeNode(0), TreeNode(4, TreeNode(3), TreeNode(5))),
+                TreeNode(8, TreeNode(7), TreeNode(9)),
+            ),
+            TreeNode(2),
+            TreeNode(4),
         ),
-        (
-            TreeNode(2, TreeNode(1)),
-            TreeNode(2), TreeNode(1)
-        ),
+        (TreeNode(2, TreeNode(1)), TreeNode(2), TreeNode(1)),
         # Additional
+        (TreeNode(2, TreeNode(1), TreeNode(3)), TreeNode(3), TreeNode(1)),
         (
-            TreeNode(2, TreeNode(1), TreeNode(3)),
-            TreeNode(3), TreeNode(1)
-        ),
-        (
-            TreeNode(3,
-                     TreeNode(1, None, TreeNode(2)),
-                     TreeNode(4)
-                     ),
-            TreeNode(2), TreeNode(4)
+            TreeNode(3, TreeNode(1, None, TreeNode(2)), TreeNode(4)),
+            TreeNode(2),
+            TreeNode(4),
         ),
     ]
     test.quantify(test_cases)

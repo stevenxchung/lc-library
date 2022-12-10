@@ -5,12 +5,47 @@ There are a total of numCourses courses you have to take, labeled from 0 to numC
 
 Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
 '''
+from collections import defaultdict, deque
 from time import time
 from typing import List
 
 
 class Solution:
-    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    def findOrder(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> List[int]:
+        preq = {i: set() for i in range(numCourses)}
+        # Create a graph for adjacency and traversing
+        graph = defaultdict(set)
+        for i, j in prerequisites:
+            preq[i].add(j)
+            graph[j].add(i)
+
+        q = deque([])
+        # Find starting location based on courses with no prereq
+        for k, v in preq.items():
+            if len(v) == 0:
+                q.append(k)
+
+        taken = []
+        while q:
+            pre = q.popleft()
+            taken.append(pre)
+            if len(taken) == numCourses:
+                return taken
+
+            for next_course in graph[pre]:
+                # Remove prereq from the next course
+                preq[next_course].remove(pre)
+                # Taken all requirements so add next course to queue
+                if not preq[next_course]:
+                    q.append(next_course)
+
+        return []
+
+    def reference(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> List[int]:
         prereq_map = {k: [] for k in range(numCourses)}
         for course, prereq in prerequisites:
             prereq_map[course].append(prereq)
@@ -41,35 +76,7 @@ class Solution:
 
         return res
 
-    def reference(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        prereq = {c: [] for c in range(numCourses)}
-        for crs, pre in prerequisites:
-            prereq[crs].append(pre)
-
-        output = []
-        visit, cycle = set(), set()
-
-        def dfs(crs):
-            if crs in cycle:
-                return False
-            if crs in visit:
-                return True
-
-            cycle.add(crs)
-            for pre in prereq[crs]:
-                if dfs(pre) == False:
-                    return False
-            cycle.remove(crs)
-            visit.add(crs)
-            output.append(crs)
-            return True
-
-        for c in range(numCourses):
-            if dfs(c) == False:
-                return []
-        return output
-
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -91,15 +98,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (2,
-         [[1, 0]]),
-        (4,
-         [
-             [1, 0],
-             [2, 0],
-             [3, 1],
-             [3, 2]
-         ])
-    ]
+    test_cases = [(2, [[1, 0]]), (4, [[1, 0], [2, 0], [3, 1], [3, 2]]), (1, [])]
     test.quantify(test_cases)

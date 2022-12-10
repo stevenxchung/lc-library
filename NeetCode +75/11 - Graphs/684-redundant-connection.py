@@ -5,7 +5,6 @@ You are given a graph that started as a tree with n nodes labeled from 1 to n, w
 
 Return an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.
 '''
-import collections
 from time import time
 from typing import List
 
@@ -49,7 +48,7 @@ class Solution:
                 p = par[p]
             return p
 
-        # return False if already unioned
+        # Return False if already unioned
         def union(n1, n2):
             p1, p2 = find(n1), find(n2)
 
@@ -67,7 +66,7 @@ class Solution:
             if not union(n1, n2):
                 return [n1, n2]
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -93,6 +92,6 @@ if __name__ == '__main__':
         [[1, 2], [1, 3], [2, 3]],
         [[1, 2], [2, 3], [3, 4], [1, 4], [1, 5]],
         # Additional
-        [[1, 4], [3, 4], [1, 3], [1, 2], [4, 5]]  # [1, 3]
+        [[1, 4], [3, 4], [1, 3], [1, 2], [4, 5]],  # [1, 3]
     ]
     test.quantify(test_cases)

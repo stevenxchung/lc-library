@@ -3,6 +3,7 @@ Given an m x n integer matrix matrix, if an element is 0, set its entire row and
 
 You must do it in place.
 '''
+from copy import deepcopy
 from time import time
 from typing import List
 
@@ -72,23 +73,27 @@ class Solution:
 
         return matrix
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.setZeroes(case))
+                    print(self.setZeroes(copy))
                 else:
-                    self.setZeroes(case)
+                    self.setZeroes(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

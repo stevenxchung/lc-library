@@ -14,6 +14,7 @@ The linked list is represented in the input/output as a list of n nodes. Each no
 
 Your code will only be given the head of the original linked list.
 '''
+from copy import deepcopy
 from time import time
 from typing import Optional
 
@@ -57,25 +58,30 @@ class Solution:
             copy.next = oldToCopy[cur.next]
             copy.random = oldToCopy[cur.random]
             cur = cur.next
+
         return oldToCopy[head]
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.copyRandomList(case))
+                    print(self.copyRandomList(copy).__dict__)
                 else:
-                    self.copyRandomList(case)
+                    self.copyRandomList(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy).__dict__)
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

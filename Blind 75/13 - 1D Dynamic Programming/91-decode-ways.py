@@ -22,20 +22,20 @@ from time import time
 
 class Solution:
     def numDecodings(self, s: str) -> int:
-        cache = {len(s): 1}
+        if not s or s[0] == '0':
+            return 0
 
-        for i in range(len(s) - 1, -1, -1):
+        prev, curr = 1, 1
+        for i in range(1, len(s)):
+            temp = curr
             if s[i] == '0':
-                cache[i] = 0
-            else:
-                cache[i] = cache[i + 1]
+                curr = 0
+            if s[i - 1] == '1' or (s[i - 1] == '2' and s[i] <= '6'):
+                curr += prev
 
-            if (i + 1 < len(s)
-                    and (s[i] == '1' or s[i] == '2' and s[i + 1] in '0123456')):
-                # If double digit 10-19 or 20-26
-                cache[i] += cache[i + 2]
+            prev = temp
 
-        return cache[0]
+        return curr
 
     def reference(self, s: str) -> int:
         dp = {len(s): 1}
@@ -55,7 +55,7 @@ class Solution:
 
         return dfs(0)
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -80,6 +80,9 @@ if __name__ == '__main__':
     test_cases = [
         '12',
         '226',
-        '06'
+        '06',
+        # Additional
+        '101',
+        '888',
     ]
     test.quantify(test_cases)

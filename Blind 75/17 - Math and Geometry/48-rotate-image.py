@@ -33,7 +33,7 @@ class Solution:
         matrix[:] = zip(*matrix[::-1])
         return matrix
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:

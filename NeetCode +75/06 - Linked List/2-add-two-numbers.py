@@ -55,12 +55,12 @@ class Solution:
 
         return dummy.next
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.addTwoNumbers(case[0], case[1]))
+                    print(self.addTwoNumbers(case[0], case[1]).__dict__)
                 else:
                     self.addTwoNumbers(case[0], case[1])
         print(f'Runtime for our solution: {time() - sol_start}')
@@ -69,7 +69,7 @@ class Solution:
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(case[0], case[1]).__dict__)
                 else:
                     self.reference(case[0], case[1])
         print(f'Runtime for reference: {time() - ref_start}')

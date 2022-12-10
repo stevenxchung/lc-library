@@ -88,7 +88,7 @@ class Codec:
 
         return dfs()
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -117,10 +117,7 @@ class Codec:
 if __name__ == '__main__':
     test = Codec()
     test_cases = [
-        TreeNode(1,
-                 TreeNode(2),
-                 TreeNode(3, TreeNode(4), TreeNode(5))
-                 ),
-        None
+        TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4), TreeNode(5))),
+        None,
     ]
     test.quantify(test_cases)

@@ -18,34 +18,31 @@ class TreeNode:
 
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-
-        def dfs(node: Optional[TreeNode]):
+        def dfs(node):
             if not node:
-                return [True, 0]
+                return 0
 
-            l_bool, l_height = dfs(node.left)
-            r_bool, r_height = dfs(node.right)
+            left = dfs(node.left)
+            right = dfs(node.right)
+            if left == -1 or right == -1 or abs(left - right) > 1:
+                return -1
 
-            is_balanced = l_bool and r_bool \
-                and abs(l_height - r_height) <= 1
-            height = 1 + max(l_height, r_height)
+            return 1 + max(left, right)
 
-            return [is_balanced, height]
-
-        return dfs(root)[0]
+        return dfs(root) != -1
 
     def reference(self, root: Optional[TreeNode]) -> bool:
         def dfs(root):
             if not root:
                 return [True, 0]
 
-            left, right = dfs(root.left), dfs(root.right)
+            (left, right) = dfs(root.left), dfs(root.right)
             balanced = left[0] and right[0] and abs(left[1] - right[1]) <= 1
             return [balanced, 1 + max(left[1], right[1])]
 
         return dfs(root)[0]
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -68,17 +65,12 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        TreeNode(3,
-                 TreeNode(9),
-                 TreeNode(20, TreeNode(15), TreeNode(7))
-                 ),
-        TreeNode(1,
-                 TreeNode(2,
-                          TreeNode(3, TreeNode(4), TreeNode(4)),
-                          TreeNode(3)
-                          ),
-                 TreeNode(2)
-                 ),
-        None
+        TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7))),
+        TreeNode(
+            1,
+            TreeNode(2, TreeNode(3, TreeNode(4), TreeNode(4)), TreeNode(3)),
+            TreeNode(2),
+        ),
+        None,
     ]
     test.quantify(test_cases)

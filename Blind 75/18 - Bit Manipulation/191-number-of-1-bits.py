@@ -24,7 +24,7 @@ class Solution:
             res += 1
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -49,6 +49,6 @@ if __name__ == '__main__':
     test_cases = [
         int('00000000000000000000000000001011', 2),
         int('00000000000000000000000010000000', 2),
-        int('11111111111111111111111111111101', 2)
+        int('11111111111111111111111111111101', 2),
     ]
     test.quantify(test_cases)

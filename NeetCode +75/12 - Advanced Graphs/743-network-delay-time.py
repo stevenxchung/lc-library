@@ -12,32 +12,32 @@ from typing import List
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         # Build adjacency list
-        edges = {}
+        adj = {}
         for u, v, w in times:
-            if u not in edges:
-                edges[u] = [(v, w)]
+            if u not in adj:
+                adj[u] = [(v, w)]
             else:
-                edges[u].append((v, w))
+                adj[u].append((v, w))
 
-        heap = [(0, k)]
-        visited = set()
-        t = 0
-        while heap:
+        time, seen, min_heap = 0, set(), [(0, k)]
+        while min_heap:
             # Prioritize shortest path first
-            w1, n1 = heapq.heappop(heap)
-            if n1 in visited:
+            w1, u1 = heapq.heappop(min_heap)
+            if u1 in seen:
                 continue
-            visited.add(n1)
-            t = max(t, w1)
+            seen.add(u1)
+            # Set time to latest update
+            time = max(time, w1)
 
-            # BFS
-            if n1 in edges:
-                for n2, w2 in edges[n1]:
-                    if n2 not in visited:
+            # Dijkstra's BFS
+            if u1 in adj:
+                for u2, w2 in adj[u1]:
+                    if u2 not in seen:
+                        # Path is cumulative
                         path = w1 + w2
-                        heapq.heappush(heap, (path, n2))
+                        heapq.heappush(min_heap, (path, u2))
 
-        return t if len(visited) == n else -1
+        return time if len(seen) == n else -1
 
     def reference(self, times: List[List[int]], n: int, k: int) -> int:
         edges = collections.defaultdict(list)
@@ -60,43 +60,31 @@ class Solution:
 
         return t if len(visit) == n else -1
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.networkDelayTime(case[0], case[1], case[2]))
+                    print(self.networkDelayTime(*case))
                 else:
-                    self.networkDelayTime(case[0], case[1], case[2])
+                    self.networkDelayTime(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1], case[2]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1], case[2])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        (
-            [[2, 1, 1], [2, 3, 1], [3, 4, 1]],
-            4,
-            2
-        ),
-        (
-            [[1, 2, 1]],
-            2,
-            1
-        ),
-        (
-            [[1, 2, 1]],
-            2,
-            2
-        )
+        ([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2),
+        ([[1, 2, 1]], 2, 1),
+        ([[1, 2, 1]], 2, 2),
     ]
     test.quantify(test_cases)

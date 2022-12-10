@@ -19,7 +19,6 @@ class Node:
 
 
 class LRUCache:
-
     def __init__(self, capacity: int, debug=False):
         self.debug = debug
         self.capacity = capacity
@@ -40,12 +39,20 @@ class LRUCache:
         node.next, node.prev = next, prev
 
     def get(self, key: int) -> int:
+        res = None
         if key in self.cache:
             # Move to front of list
             self.remove(self.cache[key])
             self.insert(self.cache[key])
-            return self.cache[key]
-        return -1
+            res = self.cache[key]
+            if self.debug:
+                print(f'Return: {res.val}')
+            return res
+
+        res = -1
+        if self.debug:
+            print(f'Return: {res}')
+        return res
 
     def put(self, key: int, value: int) -> None:
         if key in self.cache:

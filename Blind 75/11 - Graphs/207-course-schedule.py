@@ -10,24 +10,26 @@ from typing import List
 
 
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> bool:
         prereq_map = {k: [] for k in range(numCourses)}
         for a, b in prerequisites:
             prereq_map[a].append(b)
 
-        visited = set()
+        cycle = set()
 
         def dfs(course):
-            if course in visited:
+            if course in cycle:
                 return False
             if prereq_map[course] == []:
                 return True
 
-            visited.add(course)
+            cycle.add(course)
             for c in prereq_map[course]:
                 if not dfs(c):
                     return False
-            visited.remove(course)
+            cycle.remove(course)
             prereq_map[course] = []
 
             return True
@@ -38,7 +40,9 @@ class Solution:
 
         return True
 
-    def reference(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def reference(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> bool:
         # DFS
         preMap = {i: [] for i in range(numCourses)}
 
@@ -69,7 +73,7 @@ class Solution:
 
         return True
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -92,27 +96,10 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        (2,
-         [[1, 0]]),
-        (2,
-         [
-             [1, 0],
-             [0, 1]
-         ]),
+        (2, [[1, 0]]),
+        (2, [[1, 0], [0, 1]]),
         # Additional
-        (5,
-         [
-             [0, 1],
-             [0, 2],
-             [1, 3],
-             [1, 4],
-             [3, 4]
-         ]),
-        (3,
-         [
-             [0, 1],
-             [1, 2],
-             [2, 0]
-         ])
+        (5, [[0, 1], [0, 2], [1, 3], [1, 4], [3, 4]]),
+        (3, [[0, 1], [1, 2], [2, 0]]),
     ]
     test.quantify(test_cases)

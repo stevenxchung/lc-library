@@ -24,11 +24,12 @@ class Solution:
                 directions = [[1, 0], [-1, 0], [0, -1], [0, 1]]
                 for dr, dc in directions:
                     r_new, c_new = (row + dr), (col + dc)
-                    is_in_bounds = r_new in range(
-                        ROWS) and c_new in range(COLS)
-                    if is_in_bounds \
-                            and grid[r_new][c_new] == 1 \
-                            and (r_new, c_new) not in visited:
+                    is_in_bounds = r_new in range(ROWS) and c_new in range(COLS)
+                    if (
+                        is_in_bounds
+                        and grid[r_new][c_new] == 1
+                        and (r_new, c_new) not in visited
+                    ):
                         visited.add((r_new, c_new))
                         queue.append((r_new, c_new))
                         area += 1
@@ -44,29 +45,36 @@ class Solution:
         return max_area
 
     def reference(self, grid: List[List[int]]) -> int:
+        max_area = 0
+        seen = set()
         ROWS, COLS = len(grid), len(grid[0])
-        visit = set()
 
         def dfs(r, c):
             if (
-                r < 0
-                or r == ROWS
-                or c < 0
-                or c == COLS
+                r not in range(ROWS)
+                or c not in range(COLS)
+                or (r, c) in seen
                 or grid[r][c] == 0
-                or (r, c) in visit
             ):
                 return 0
-            visit.add((r, c))
-            return 1 + dfs(r + 1, c) + dfs(r - 1, c) + dfs(r, c + 1) + dfs(r, c - 1)
 
-        area = 0
+            seen.add((r, c))
+            return (
+                1
+                + dfs(r + 1, c)
+                + dfs(r - 1, c)
+                + dfs(r, c + 1)
+                + dfs(r, c - 1)
+            )
+
         for r in range(ROWS):
             for c in range(COLS):
-                area = max(area, dfs(r, c))
-        return area
+                if (r, c) not in seen and grid[r][c] == 1:
+                    max_area = max(max_area, dfs(r, c))
 
-    def quantify(self, test_cases, runs=100000):
+        return max_area
+
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -97,8 +105,8 @@ if __name__ == '__main__':
             [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
         ],
-        [[0, 0, 0, 0, 0, 0, 0, 0]]
+        [[0, 0, 0, 0, 0, 0, 0, 0]],
     ]
     test.quantify(test_cases)

@@ -27,8 +27,9 @@ class Solution:
             return False
 
         # Pass down parent value as well
-        return (self.valid(node.left, left, node.val) and
-                self.valid(node.right, node.val, right))
+        return self.valid(node.left, left, node.val) and self.valid(
+            node.right, node.val, right
+        )
 
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         return self.valid(root, -inf, inf)
@@ -36,7 +37,7 @@ class Solution:
     def reference(self, root: Optional[TreeNode]) -> bool:
         return self.valid(root, float('-inf'), float('inf'))
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -60,10 +61,7 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         TreeNode(2, TreeNode(1), TreeNode(3)),
-        TreeNode(5,
-                 TreeNode(1),
-                 TreeNode(4, TreeNode(3), TreeNode(6))
-                 ),
+        TreeNode(5, TreeNode(1), TreeNode(4, TreeNode(3), TreeNode(6))),
         # Additional
         TreeNode(),
         TreeNode(1, TreeNode(1)),

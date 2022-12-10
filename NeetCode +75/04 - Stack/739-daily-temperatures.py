@@ -23,12 +23,12 @@ class Solution:
 
         for i, t in enumerate(temperatures):
             while stack and t > stack[-1][0]:
-                stackT, stackInd = stack.pop()
+                _, stackInd = stack.pop()
                 res[stackInd] = i - stackInd
             stack.append((t, i))
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:

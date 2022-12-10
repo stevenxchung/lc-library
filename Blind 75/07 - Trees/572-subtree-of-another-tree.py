@@ -21,16 +21,24 @@ class Solution:
         if not p or not q or p.val != q.val:
             return False
 
-        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return self.isSameTree(p.left, q.left) and self.isSameTree(
+            p.right, q.right
+        )
 
-    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+    def isSubtree(
+        self, root: Optional[TreeNode], subRoot: Optional[TreeNode]
+    ) -> bool:
         if not root:
             return False
         if self.isSameTree(root, subRoot):
             return True
-        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(
+            root.right, subRoot
+        )
 
-    def reference(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+    def reference(
+        self, root: Optional[TreeNode], subRoot: Optional[TreeNode]
+    ) -> bool:
         # Check Edge case
         if not subRoot:
             return True
@@ -39,9 +47,11 @@ class Solution:
 
         if self.isSameTree(root, subRoot):
             return True
-        return self.reference(root.left, subRoot) or self.reference(root.right, subRoot)
+        return self.reference(root.left, subRoot) or self.reference(
+            root.right, subRoot
+        )
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -66,14 +76,15 @@ if __name__ == '__main__':
     test_cases = [
         (
             TreeNode(3, TreeNode(4, TreeNode(1), TreeNode(2)), TreeNode(5)),
-            TreeNode(4, TreeNode(1), TreeNode(2))
+            TreeNode(4, TreeNode(1), TreeNode(2)),
         ),
         (
-            TreeNode(3,
-                     TreeNode(4, TreeNode(1), TreeNode(2, TreeNode(0))),
-                     TreeNode(5)
-                     ),
-            TreeNode(4, TreeNode(1), TreeNode(2))
-        )
+            TreeNode(
+                3,
+                TreeNode(4, TreeNode(1), TreeNode(2, TreeNode(0))),
+                TreeNode(5),
+            ),
+            TreeNode(4, TreeNode(1), TreeNode(2)),
+        ),
     ]
     test.quantify(test_cases)

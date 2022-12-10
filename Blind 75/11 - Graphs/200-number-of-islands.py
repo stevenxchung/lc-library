@@ -9,40 +9,35 @@ from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        if not grid:
-            return 0
-
+        count = 0
+        seen = set()
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         ROWS, COLS = len(grid), len(grid[0])
-        visited = set()
-        islands = 0
 
         def bfs(r, c):
-            queue = [(r, c)]
-            visited.add((r, c))
-
-            while queue:
-                row, col = queue.pop(0)
-
-                directions = [[1, 0], [-1, 0], [0, -1], [0, 1]]
+            seen.add((r, c))
+            q = [(r, c)]
+            while q:
+                r_curr, c_curr = q.pop()
                 for dr, dc in directions:
-                    r_new, c_new = (row + dr), (col + dc)
-
-                    is_in_bounds = r_new in range(ROWS) \
-                        and c_new in range(COLS)
-
-                    if is_in_bounds \
-                            and grid[r_new][c_new] == '1' \
-                            and (r_new, c_new) not in visited:
-                        visited.add((r_new, c_new))
-                        queue.append((r_new, c_new))
+                    r, c = r_curr + dr, c_curr + dc
+                    if (
+                        r not in range(ROWS)
+                        or c not in range(COLS)
+                        or grid[r][c] == '0'
+                        or (r, c) in seen
+                    ):
+                        continue
+                    q.append((r, c))
+                    seen.add((r, c))
 
         for r in range(ROWS):
             for c in range(COLS):
-                if grid[r][c] == '1' and (r, c) not in visited:
+                if grid[r][c] == '1' and (r, c) not in seen:
                     bfs(r, c)
-                    islands += 1
+                    count += 1
 
-        return islands
+        return count
 
     def reference(self, grid: List[List[str]]) -> int:
         if not grid or not grid[0]:
@@ -53,10 +48,12 @@ class Solution:
         ROWS, COLS = len(grid), len(grid[0])
 
         def dfs(r, c):
-            if (r not in range(ROWS) or
-                c not in range(COLS) or
-                grid[r][c] == "0" or
-                    (r, c) in visit):
+            if (
+                r not in range(ROWS)
+                or c not in range(COLS)
+                or grid[r][c] == "0"
+                or (r, c) in visit
+            ):
                 return
 
             visit.add((r, c))
@@ -72,7 +69,7 @@ class Solution:
 
         return islands
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -99,15 +96,15 @@ if __name__ == '__main__':
             ['1', '1', '1', '1', '0'],
             ['1', '1', '0', '1', '0'],
             ['1', '1', '0', '0', '0'],
-            ['0', '0', '0', '0', '0']
+            ['0', '0', '0', '0', '0'],
         ],
         [
             ['1', '1', '0', '0', '0'],
             ['1', '1', '0', '0', '0'],
             ['0', '0', '1', '0', '0'],
-            ['0', '0', '0', '1', '1']
+            ['0', '0', '0', '1', '1'],
         ],
         # Additional
-        # [['1']]
+        [['1']],
     ]
     test.quantify(test_cases)

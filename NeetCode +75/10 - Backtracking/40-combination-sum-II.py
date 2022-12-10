@@ -10,21 +10,28 @@ from typing import List
 
 
 class Solution:
-    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        candidates.sort()
+    def combinationSum2(
+        self, candidates: List[int], target: int
+    ) -> List[List[int]]:
         res = []
+        candidates.sort()
 
-        def dfs(cand: List[int], combo: List[int], total: int):
-            if total == target:
-                res.append(combo[:])
-            if total >= target:
+        def dfs(i, subset):
+            if sum(subset) == target:
+                res.append(subset[:])
                 return
-            for i in range(len(cand)):
-                if i == 0 or cand[i] != cand[i - 1]:
-                    dfs(cand[i + 1:], combo +
-                        [cand[i]], total + cand[i])
+            if sum(subset) > target:
+                return
 
-        dfs(candidates, [], 0)
+            prev = None
+            for j in range(i, len(candidates)):
+                # Skip element if same as previous or if over target
+                if candidates[j] == prev or candidates[j] > target:
+                    continue
+                dfs(j + 1, subset + [candidates[j]])
+                prev = candidates[j]
+
+        dfs(0, [])
         return res
 
     def reference(self, candidates: List[int], target: int) -> List[List[int]]:
@@ -50,7 +57,7 @@ class Solution:
         backtrack([], 0, target)
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -72,8 +79,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ([10, 1, 2, 7, 6, 1, 5], 8),
-        ([2, 5, 2, 1, 2], 5)
-    ]
+    test_cases = [([10, 1, 2, 7, 6, 1, 5], 8), ([2, 5, 2, 1, 2], 5)]
     test.quantify(test_cases)

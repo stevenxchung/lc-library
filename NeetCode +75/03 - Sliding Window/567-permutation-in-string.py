@@ -8,6 +8,9 @@ from time import time
 
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s2) < len(s1):
+            return False
+
         p1, p2 = 0, len(s1) - 1
         s1_count = {}
         for c in s1:
@@ -15,9 +18,6 @@ class Solution:
                 s1_count[c] = 1
             else:
                 s1_count[c] += 1
-
-        if len(s2) < len(s1):
-            return False
 
         while p2 < len(s2):
             word_count = {}
@@ -67,7 +67,7 @@ class Solution:
             l += 1
         return matches == 26
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:

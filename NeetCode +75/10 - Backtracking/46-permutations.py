@@ -14,7 +14,7 @@ class Solution:
                 res.append(path)
                 return
             for i in range(len(nums_list)):
-                dfs(path + [nums_list[i]], nums_list[:i] + nums_list[i + 1:])
+                dfs(path + [nums_list[i]], nums_list[:i] + nums_list[i + 1 :])
 
         dfs([], nums)
         return res
@@ -22,21 +22,22 @@ class Solution:
     def reference(self, nums: List[int]) -> List[List[int]]:
         res = []
 
-        # base case
+        # Base case
         if len(nums) == 1:
             return [nums[:]]  # nums[:] is a deep copy
 
         for i in range(len(nums)):
             n = nums.pop(0)
-            perms = self.permute(nums)
+            perms = self.reference(nums)
 
             for perm in perms:
                 perm.append(n)
             res.extend(perms)
             nums.append(n)
+
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -58,9 +59,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [1, 2, 3],
-        [0, 1],
-        [1]
-    ]
+    test_cases = [[1, 2, 3], [0, 1], [1]]
     test.quantify(test_cases)

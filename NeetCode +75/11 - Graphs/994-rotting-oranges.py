@@ -10,6 +10,7 @@ Every minute, any fresh orange that is 4-directionally adjacent to a rotten oran
 Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
 '''
 import collections
+from copy import deepcopy
 from time import time
 from typing import List
 
@@ -27,17 +28,21 @@ class Solution:
                 if grid[r][c] == 2:
                     queue.append((r, c))
 
-        dir = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         while queue and fresh > 0:
             # Start with rotten oranges
             for i in range(len(queue)):
                 r, c = queue.pop(0)
 
                 # Check adjacent oranges
-                for dr, dc in dir:
+                for dr, dc in directions:
                     row = r + dr
                     col = c + dc
-                    if row in range(ROWS) and col in range(COLS) and grid[row][col] == 1:
+                    if (
+                        row in range(ROWS)
+                        and col in range(COLS)
+                        and grid[row][col] == 1
+                    ):
                         grid[row][col] = 2
                         queue.append((row, col))
                         fresh -= 1
@@ -64,7 +69,7 @@ class Solution:
 
                 for dr, dc in directions:
                     row, col = r + dr, c + dc
-                    # if in bounds and nonrotten, make rotten
+                    # If in bounds and not rotten, make rotten
                     # and add to q
                     if (
                         row in range(len(grid))
@@ -77,41 +82,35 @@ class Solution:
             time += 1
         return time if fresh == 0 else -1
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.orangesRotting(case))
+                    print(self.orangesRotting(copy))
                 else:
-                    self.orangesRotting(case)
+                    self.orangesRotting(copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        [
-            [2, 1, 1],
-            [1, 1, 0],
-            [0, 1, 1]
-        ],
-        [
-            [2, 1, 1],
-            [0, 1, 1],
-            [1, 0, 1]
-        ],
-        [
-            [0, 2]
-        ]
+        [[2, 1, 1], [1, 1, 0], [0, 1, 1]],
+        [[2, 1, 1], [0, 1, 1], [1, 0, 1]],
+        [[0, 2]],
     ]
     test.quantify(test_cases)

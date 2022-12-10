@@ -32,7 +32,7 @@ class Solution:
         return max(nums[0], self.reference_helper(nums[1:]),
                    self.reference_helper(nums[:-1]))
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:

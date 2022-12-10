@@ -8,12 +8,15 @@ from typing import List
 
 
 class Solution:
-
     def letterCombinations(self, digits: str) -> List[str]:
         phone_map = {
-            '2': ['a', 'b', 'c'], '3': ['d', 'e', 'f'],
-            '4': ['g', 'h', 'i'], '5': ['j', 'k', 'l'], '6': ['m', 'n', 'o'],
-            '7': ['p', 'q', 'r', 's'], '8': ['t', 'u', 'v'],
+            '2': ['a', 'b', 'c'],
+            '3': ['d', 'e', 'f'],
+            '4': ['g', 'h', 'i'],
+            '5': ['j', 'k', 'l'],
+            '6': ['m', 'n', 'o'],
+            '7': ['p', 'q', 'r', 's'],
+            '8': ['t', 'u', 'v'],
             '9': ['w', 'x', 'y', 'z'],
         }
         res = []
@@ -57,7 +60,7 @@ class Solution:
 
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -79,9 +82,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        '23',
-        '',
-        '2'
-    ]
+    test_cases = ['23', '', '2']
     test.quantify(test_cases)

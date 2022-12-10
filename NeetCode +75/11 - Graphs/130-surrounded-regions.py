@@ -25,8 +25,9 @@ class Solution:
         # Capture border: O -> T
         for r in range(ROWS):
             for c in range(COLS):
-                if board[r][c] == 'O' \
-                        and (r in [0, ROWS - 1] or c in [0, COLS - 1]):
+                if board[r][c] == 'O' and (
+                    r in [0, ROWS - 1] or c in [0, COLS - 1]
+                ):
                     dfs(r, c)
 
         # Capture surrounded: O -> X
@@ -58,7 +59,9 @@ class Solution:
         # 1. (DFS) Capture unsurrounded regions (O -> T)
         for r in range(ROWS):
             for c in range(COLS):
-                if board[r][c] == "O" and (r in [0, ROWS - 1] or c in [0, COLS - 1]):
+                if board[r][c] == "O" and (
+                    r in [0, ROWS - 1] or c in [0, COLS - 1]
+                ):
                     capture(r, c)
 
         # 2. Capture surrounded regions (O -> X)
@@ -75,7 +78,7 @@ class Solution:
 
         return board
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -102,10 +105,8 @@ if __name__ == '__main__':
             ['X', 'X', 'X', 'X'],
             ['X', 'O', 'O', 'X'],
             ['X', 'X', 'O', 'X'],
-            ['X', 'O', 'X', 'X']
+            ['X', 'O', 'X', 'X'],
         ],
-        [
-            [['X']]
-        ]
+        [[['X']]],
     ]
     test.quantify(test_cases)

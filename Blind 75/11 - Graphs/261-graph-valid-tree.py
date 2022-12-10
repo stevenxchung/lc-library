@@ -58,7 +58,7 @@ class Solution:
 
         return dfs(0, -1) and n == len(visit)
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -81,21 +81,8 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        (5,
-         [
-             [0, 1],
-             [0, 2],
-             [0, 3],
-             [1, 4]
-         ]),
+        (5, [[0, 1], [0, 2], [0, 3], [1, 4]]),
         # Additional
-        (7,
-         [
-             [0, 1],
-             [0, 2],
-             [3, 5],
-             [5, 6],
-             [1, 4]
-         ])
+        (7, [[0, 1], [0, 2], [3, 5], [5, 6], [1, 4]]),
     ]
     test.quantify(test_cases)

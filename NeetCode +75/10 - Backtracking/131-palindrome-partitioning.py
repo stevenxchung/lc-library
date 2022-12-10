@@ -17,16 +17,18 @@ class Solution:
         return True
 
     def partition(self, s: str) -> List[List[str]]:
-        res = []
-        temp = []
+        res, temp = [], []
 
         def dfs(i: int):
             if i >= len(s):
                 res.append(temp[:])
                 return
+            # Expand window on each iteration
             for j in range(i, len(s)):
                 if self.is_palindrome(s, i, j):
-                    temp.append(s[i:j + 1])
+                    # Add partition if palindrome
+                    temp.append(s[i : j + 1])
+                    # Repeat for each window size
                     dfs(j + 1)
                     temp.pop()
 
@@ -42,14 +44,14 @@ class Solution:
                 return
             for j in range(i, len(s)):
                 if self.is_palindrome(s, i, j):
-                    part.append(s[i: j + 1])
+                    part.append(s[i : j + 1])
                     dfs(j + 1)
                     part.pop()
 
         dfs(0)
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -71,8 +73,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        'aab',
-        'a'
-    ]
+    test_cases = ['aab', 'a']
     test.quantify(test_cases)

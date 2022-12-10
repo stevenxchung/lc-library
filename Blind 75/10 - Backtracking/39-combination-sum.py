@@ -10,7 +10,9 @@ from typing import List
 
 
 class Solution:
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+    def combinationSum(
+        self, candidates: List[int], target: int
+    ) -> List[List[int]]:
         """
         :type candidates: List[int]
         :type target: int
@@ -50,7 +52,7 @@ class Solution:
         dfs(0, [], 0)
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -72,18 +74,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (
-            [2, 3, 6, 7],
-            7
-        ),
-        (
-            [2, 3, 5],
-            8
-        ),
-        (
-            [2],
-            1
-        )
-    ]
+    test_cases = [([2, 3, 6, 7], 7), ([2, 3, 5], 8), ([2], 1)]
     test.quantify(test_cases)

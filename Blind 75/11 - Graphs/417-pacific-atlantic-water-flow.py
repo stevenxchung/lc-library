@@ -23,9 +23,12 @@ class Solution:
             land.add((r, c))
             directions = [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]
             for r_next, c_next in directions:
-                if r_next in range(ROWS) and c_next in range(COLS) \
-                        and heights[r_next][c_next] >= heights[r][c] \
-                        and (r_next, c_next) not in land:
+                if (
+                    r_next in range(ROWS)
+                    and c_next in range(COLS)
+                    and heights[r_next][c_next] >= heights[r][c]
+                    and (r_next, c_next) not in land
+                ):
                     dfs(r_next, c_next, land)
 
         # Scan through bordering rows top to bottom
@@ -47,9 +50,11 @@ class Solution:
 
         def dfs(r, c, visited, previous_height):
             is_in_bounds = r in range(ROWS) and c in range(COLS)
-            if (r, c) in visited \
-                or not is_in_bounds \
-                    or heights[r][c] < previous_height:
+            if (
+                (r, c) in visited
+                or not is_in_bounds
+                or heights[r][c] < previous_height
+            ):
                 return
 
             visited.add((r, c))
@@ -73,7 +78,7 @@ class Solution:
 
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -101,8 +106,9 @@ if __name__ == '__main__':
             [3, 2, 3, 4, 4],
             [2, 4, 5, 3, 1],
             [6, 7, 1, 4, 5],
-            [5, 1, 1, 2, 4]
+            [5, 1, 1, 2, 4],
         ],
-        [[2, 1], [1, 2]]
+        [[2, 1], [1, 2]],
+        [[1]],
     ]
     test.quantify(test_cases)

@@ -11,7 +11,6 @@ from time import time
 
 
 class TimeMap:
-
     def __init__(self, debug=False):
         # Consists of key: [(value_i, timestamp_i)...]
         self.map = {}

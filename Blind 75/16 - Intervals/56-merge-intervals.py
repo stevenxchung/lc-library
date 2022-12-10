@@ -7,13 +7,13 @@ from typing import List
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        out = []
+        res = []
         for interval in sorted(intervals, key=lambda i: i[0]):
-            if out and interval[0] <= out[-1][1]:
-                out[-1][1] = max(out[-1][1], interval[1])
+            if res and interval[0] <= res[-1][1]:
+                res[-1][1] = max(res[-1][1], interval[1])
             else:
-                out += interval,
-        return out
+                res.append(interval)
+        return res
 
     def reference(self, intervals: List[List[int]]) -> List[List[int]]:
         intervals.sort(key=lambda pair: pair[0])
@@ -23,13 +23,13 @@ class Solution:
             lastEnd = output[-1][1]
 
             if start <= lastEnd:
-                # merge
+                # Merge
                 output[-1][1] = max(lastEnd, end)
             else:
                 output.append([start, end])
         return output
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:

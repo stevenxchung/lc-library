@@ -7,7 +7,6 @@ Koko likes to eat slowly but still wants to finish eating all the bananas before
 
 Return the minimum integer k such that she can eat all the bananas within h hours.
 '''
-import math
 from time import time
 from typing import List
 
@@ -21,10 +20,10 @@ class Solution:
             k = (l + r) // 2
             time_to_eat = 0
             for bananas in piles:
-                time_to_eat += math.ceil(bananas / k)
+                time_to_eat += -(bananas // -k)
             if time_to_eat <= h:
                 # Koko ate faster than expected, select lower values
-                res = min(res, k)
+                res = k
                 r = k - 1
             else:
                 # Koko ate slower than expected, select higher values
@@ -49,7 +48,7 @@ class Solution:
                 l = m + 1
         return k
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:

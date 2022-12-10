@@ -76,7 +76,7 @@ class Solution:
             res -= union(n1, n2)
         return res
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -98,12 +98,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (5,
-         [
-             [0, 1],
-             [1, 2],
-             [3, 4]
-         ])
-    ]
+    test_cases = [(5, [[0, 1], [1, 2], [3, 4]])]
     test.quantify(test_cases)

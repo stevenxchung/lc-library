@@ -17,7 +17,7 @@ from typing import List
 
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
-        # Since a car cannot overtake another car, a car at front always remain car at front and car at back always remains a car at back
+        # Since a car cannot overtake another car, a car in front always remains car in front and car in back always remains a car in back
         arr = [(position[i], speed[i]) for i in range(len(position))]
         arr.sort(reverse=True)
 
@@ -43,23 +43,23 @@ class Solution:
                 stack.pop()
         return len(stack)
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.carFleet(case[0], case[1], case[2]))
+                    print(self.carFleet(*case))
                 else:
-                    self.carFleet(case[0], case[1], case[2])
+                    self.carFleet(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1], case[2]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1], case[2])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

@@ -13,7 +13,8 @@ from typing import List
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        if n == 0:  # cooling period is zero
+        # Cooling period is zero
+        if n == 0:
             return len(tasks)
 
         task_dict = Counter(tasks)
@@ -50,7 +51,7 @@ class Solution:
 
         return time
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
