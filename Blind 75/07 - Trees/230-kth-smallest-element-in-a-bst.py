@@ -13,7 +13,6 @@ class TreeNode:
 
 
 class Solution:
-
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         res, kth = [0], [0]
 
@@ -45,7 +44,7 @@ class Solution:
                 return curr.val
             curr = curr.right
 
-    def quantify(self, test_cases, runs=100000):
+    def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
@@ -68,21 +67,14 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
+        (TreeNode(3, TreeNode(1, None, TreeNode(2)), TreeNode(4)), 1),
         (
-            TreeNode(3,
-                     TreeNode(1, None, TreeNode(2)),
-                     TreeNode(4)
-                    ),
-            1
+            TreeNode(
+                5,
+                TreeNode(3, TreeNode(2, TreeNode(1)), TreeNode(4)),
+                TreeNode(6),
+            ),
+            3,
         ),
-        (
-            TreeNode(5,
-                     TreeNode(3,
-                              TreeNode(2, TreeNode(1)),
-                              TreeNode(4)),
-                     TreeNode(6)
-                    ),
-            3
-        )
     ]
     test.quantify(test_cases)
