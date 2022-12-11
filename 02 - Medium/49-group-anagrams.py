@@ -16,6 +16,6 @@ class Solution:
         return kVStore.values()
 
 
-input = ["eat", "tea", "tan", "ate", "nat", "bat"]
+input = ['eat', 'tea', 'tan', 'ate', 'nat', 'bat']
 sol = Solution()
 print(sol.groupAnagrams(input))

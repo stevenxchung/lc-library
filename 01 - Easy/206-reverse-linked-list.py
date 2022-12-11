@@ -8,6 +8,7 @@ class ListNode:
         self.val = x
         self.next = None
 
+
 # Iterative
 # class Solution:
 #     def reverseList(self, head: ListNode) -> ListNode:
@@ -30,7 +31,7 @@ class ListNode:
 #         return p
 
 
-class LinkedList():
+class LinkedList:
     def __init__(self):
         self.head = None
 
@@ -52,7 +53,7 @@ class LinkedList():
         current = self.head
         while current:
             if current.next:
-                print(current.val, end="->")
+                print(current.val, end='->')
             else:
                 print(current.val)
             current = current.next

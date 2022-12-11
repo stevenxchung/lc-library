@@ -15,7 +15,7 @@ class Node:
         queue = []
         queue.append(node)
 
-        print("Printing BST:", end=' ')
+        print('Printing BST:', end=' ')
         while len(queue) > 0:
 
             print(queue[0].val, end=' ')
@@ -30,7 +30,7 @@ class Node:
         queue.append(node)
         count = 0
 
-        print("Printing BST:", end=' ')
+        print('Printing BST:', end=' ')
         while len(queue) > 0:
 
             # Initial print at head node
