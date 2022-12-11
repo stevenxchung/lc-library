@@ -1,0 +1,77 @@
+const { performance } = require('perf_hooks');
+
+class Solution {
+  method(nums) {
+    let res = Math.max(...nums);
+    let [currMin, currMax] = [1, 1];
+
+    for (const n of nums) {
+      if (n === 0) {
+        [currMin, currMax] = [1, 1];
+        continue;
+      }
+      [currMin, currMax] = [
+        Math.min(n * currMax, n * currMin, n),
+        Math.max(n * currMax, n * currMin, n),
+      ];
+      res = Math.max(res, currMax);
+    }
+
+    return res;
+  }
+
+  reference(nums) {
+    const isEmpty = nums.length === 0;
+    if (isEmpty) return 0;
+
+    return this.greedySearch(nums); /* Time O(N) */
+  }
+
+  greedySearch = (nums) => {
+    let [min, max, product] = [nums[0], nums[0], nums[0]];
+
+    for (let num = 1; num < nums.length; num++) {
+      /* Time O(N) */
+      const [minProduct, maxProduct] = [min * nums[num], max * nums[num]];
+
+      min = Math.min(maxProduct, minProduct, nums[num]);
+      max = Math.max(maxProduct, minProduct, nums[num]);
+
+      product = Math.max(product, max);
+    }
+
+    return product;
+  };
+
+  quantify(testCases, runs = 100000) {
+    const runsArr = Array.from({ length: runs });
+    const solStart = performance.now();
+    runsArr.map((run, i) => {
+      testCases.map((input) => {
+        if (i === 0) console.log(this.method(input));
+        else this.method(input);
+      });
+    });
+    console.log(
+      `Runtime for solution: ${(performance.now() - solStart) / 1000}\n`
+    );
+
+    const refStart = performance.now();
+    runsArr.map((run, i) => {
+      testCases.map((input) => {
+        if (i === 0) console.log(this.reference(input));
+        else this.reference(input);
+      });
+    });
+    console.log(
+      `Runtime for reference: ${(performance.now() - refStart) / 1000}`
+    );
+  }
+}
+
+const test = new Solution();
+const testCases = [
+  [2, 3, -2, 4],
+  [-2, 0, -1],
+];
+test.quantify(testCases);

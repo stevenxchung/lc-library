@@ -1,0 +1,57 @@
+const { performance } = require('perf_hooks');
+
+class Solution {
+  method(a, b) {
+    const mask = 0xffffffff;
+    while ((b & mask) > 0) {
+      let carry = (a & b) << 1;
+      a = a ^ b;
+      b = carry;
+    }
+
+    return b > 0 ? a & mask : a;
+  }
+
+  reference(a, b) {
+    while (b !== 0) {
+      const [xor, carry] = [a ^ b, (a & b) << 1];
+
+      a = xor;
+      b = carry;
+    }
+
+    return a;
+  }
+
+  quantify(testCases, runs = 100000) {
+    const runsArr = Array.from({ length: runs });
+    const solStart = performance.now();
+    runsArr.map((run, i) => {
+      testCases.map((input) => {
+        if (i === 0) console.log(this.method(...input));
+        else this.method(...input);
+      });
+    });
+    console.log(
+      `Runtime for solution: ${(performance.now() - solStart) / 1000}\n`
+    );
+
+    const refStart = performance.now();
+    runsArr.map((run, i) => {
+      testCases.map((input) => {
+        if (i === 0) console.log(this.reference(...input));
+        else this.reference(...input);
+      });
+    });
+    console.log(
+      `Runtime for reference: ${(performance.now() - refStart) / 1000}`
+    );
+  }
+}
+
+const test = new Solution();
+const testCases = [
+  [1, 2],
+  [2, 3],
+];
+test.quantify(testCases);
