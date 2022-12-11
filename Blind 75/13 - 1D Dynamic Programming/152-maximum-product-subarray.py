@@ -11,10 +11,10 @@ from typing import List
 
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        """
+        '''
         :type nums: List[int]
         :rtype: int
-        """
+        '''
         res = nums[0]
         current = 1
         # Left to right pass. Captures all potential subarrays containing first odd n negative numbers
@@ -68,8 +68,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [2, 3, -2, 4],
-        [-2, 0, -1]
-    ]
+    test_cases = [[2, 3, -2, 4], [-2, 0, -1]]
     test.quantify(test_cases)

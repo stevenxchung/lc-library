@@ -9,7 +9,9 @@ from typing import List
 
 
 class Solution:
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+    def findMedianSortedArrays(
+        self, nums1: List[int], nums2: List[int]
+    ) -> float:
         # Ensure that length of nums1 < nums2
         if len(nums1) > len(nums2):
             nums1, nums2 = nums2, nums1
@@ -31,8 +33,11 @@ class Solution:
             # Check around midpoints
             if n1_L <= n2_R and n2_L <= n1_R:
                 # Even result, otherwise odd
-                return (max(n1_L, n2_L) + min(n1_R, n2_R)) / 2 \
-                    if (n1_len + n2_len) % 2 == 0 else min(n1_R, n2_R)
+                return (
+                    (max(n1_L, n2_L) + min(n1_R, n2_R)) / 2
+                    if (n1_len + n2_len) % 2 == 0
+                    else min(n1_R, n2_R)
+                )
             elif n1_L > n2_R:
                 r = p1 - 1
             else:
@@ -51,10 +56,10 @@ class Solution:
             i = (l + r) // 2  # A
             j = half - i - 2  # B
 
-            Aleft = A[i] if i >= 0 else float("-infinity")
-            Aright = A[i + 1] if (i + 1) < len(A) else float("infinity")
-            Bleft = B[j] if j >= 0 else float("-infinity")
-            Bright = B[j + 1] if (j + 1) < len(B) else float("infinity")
+            Aleft = A[i] if i >= 0 else float('-infinity')
+            Aright = A[i + 1] if (i + 1) < len(A) else float('infinity')
+            Bleft = B[j] if j >= 0 else float('-infinity')
+            Bright = B[j + 1] if (j + 1) < len(B) else float('infinity')
 
             # Partition is correct
             if Aleft <= Bright and Bleft <= Aright:
@@ -90,8 +95,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ([1, 3], [2]),
-        ([1, 2], [3, 4])
-    ]
+    test_cases = [([1, 3], [2]), ([1, 2], [3, 4])]
     test.quantify(test_cases)

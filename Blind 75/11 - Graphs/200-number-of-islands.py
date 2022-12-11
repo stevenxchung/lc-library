@@ -51,7 +51,7 @@ class Solution:
             if (
                 r not in range(ROWS)
                 or c not in range(COLS)
-                or grid[r][c] == "0"
+                or grid[r][c] == '0'
                 or (r, c) in visit
             ):
                 return
@@ -63,7 +63,7 @@ class Solution:
 
         for r in range(ROWS):
             for c in range(COLS):
-                if grid[r][c] == "1" and (r, c) not in visit:
+                if grid[r][c] == '1' and (r, c) not in visit:
                     dfs(r, c)
                     islands += 1
 

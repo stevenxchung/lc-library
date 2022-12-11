@@ -6,17 +6,17 @@ from time import time
 
 class Solution:
     def encode(self, strs):
-        """
+        '''
         @param: strs: a list of strings
         @return: encodes a list of strings to a single string.
-        """
+        '''
         return ''.join([f'{len(s)}#{s}' for s in strs])
 
     def decode(self, str):
-        """
+        '''
         @param: str: A string
         @return: decodes a single string to a list of strings
-        """
+        '''
         res = []
         length = 0
         i1, i2 = 0, 0
@@ -28,7 +28,7 @@ class Solution:
 
             i1 = i2 + 1
             length = int(prefix)
-            res.append(str[i1:i1 + length])
+            res.append(str[i1 : i1 + length])
 
             i1 += length
             i2 = i1
@@ -36,9 +36,9 @@ class Solution:
         return res
 
     def encode_reference(self, strs):
-        res = ""
+        res = ''
         for s in strs:
-            res += str(len(s)) + "#" + s
+            res += str(len(s)) + '#' + s
         return res
 
     def decode_reference(self, str):
@@ -46,10 +46,10 @@ class Solution:
 
         while i < len(str):
             j = i
-            while str[j] != "#":
+            while str[j] != '#':
                 j += 1
             length = int(str[i:j])
-            res.append(str[j + 1: j + 1 + length])
+            res.append(str[j + 1 : j + 1 + length])
             i = j + 1 + length
         return res
 
@@ -75,8 +75,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ['lint', 'code', 'love', 'you'],
-        ['we', 'say', ':', 'yes']
-    ]
+    test_cases = [['lint', 'code', 'love', 'you'], ['we', 'say', ':', 'yes']]
     test.quantify(test_cases)

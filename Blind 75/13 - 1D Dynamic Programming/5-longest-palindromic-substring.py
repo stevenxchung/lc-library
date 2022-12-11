@@ -9,7 +9,7 @@ class Solution:
         while l >= 0 and r < len(s) and s[l] == s[r]:
             l -= 1
             r += 1
-        return s[l + 1: r]
+        return s[l + 1 : r]
 
     def longestPalindrome(self, s: str) -> str:
         res = ''
@@ -26,7 +26,7 @@ class Solution:
         return res
 
     def reference(self, s: str) -> str:
-        res = ""
+        res = ''
         resLen = 0
 
         for i in range(len(s)):
@@ -34,7 +34,7 @@ class Solution:
             l, r = i, i
             while l >= 0 and r < len(s) and s[l] == s[r]:
                 if (r - l + 1) > resLen:
-                    res = s[l: r + 1]
+                    res = s[l : r + 1]
                     resLen = r - l + 1
                 l -= 1
                 r += 1
@@ -43,7 +43,7 @@ class Solution:
             l, r = i, i + 1
             while l >= 0 and r < len(s) and s[l] == s[r]:
                 if (r - l + 1) > resLen:
-                    res = s[l: r + 1]
+                    res = s[l : r + 1]
                     resLen = r - l + 1
                 l -= 1
                 r += 1
@@ -72,8 +72,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        'babad',
-        'cbbd'
-    ]
+    test_cases = ['babad', 'cbbd']
     test.quantify(test_cases)

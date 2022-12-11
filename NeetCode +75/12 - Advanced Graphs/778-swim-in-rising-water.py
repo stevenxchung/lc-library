@@ -13,7 +13,7 @@ from typing import List
 
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
-        # Djikstra's/A* (note that there is always a solution, so "while True" is acceptable)
+        # Djikstra's/A* (note that there is always a solution, so 'while True' is acceptable)
         n = len(grid) - 1
         # (time, distance from finish, row, col)
         queue = [(grid[n][n], 2 * n, 0, 0)]

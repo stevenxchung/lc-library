@@ -3,7 +3,7 @@ Given two strings text1 and text2, return the length of their longest common sub
 
 A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
 
-- For example, "ace" is a subsequence of "abcde".
+- For example, 'ace' is a subsequence of 'abcde'.
 
 A common subsequence of two strings is a subsequence that is common to both strings.
 '''
@@ -27,8 +27,7 @@ class Solution:
         return cache[-1][-1]
 
     def reference(self, text1: str, text2: str) -> int:
-        dp = [[0 for j in range(len(text2) + 1)]
-              for i in range(len(text1) + 1)]
+        dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]
 
         for i in range(len(text1) - 1, -1, -1):
             for j in range(len(text2) - 1, -1, -1):
@@ -61,9 +60,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ('abcde', 'ace'),
-        ('abc', 'abc'),
-        ('abc', 'def')
-    ]
+    test_cases = [('abcde', 'ace'), ('abc', 'abc'), ('abc', 'def')]
     test.quantify(test_cases)

@@ -27,11 +27,11 @@ class Codec:
         self.dfs_helper_serialize(node.right, res)
 
     def serialize(self, root):
-        """Encodes a tree to a single string.
+        '''Encodes a tree to a single string.
 
         :type root: TreeNode
         :rtype: str
-        """
+        '''
         res = []
         self.dfs_helper_serialize(root, res)
         return ','.join(res)
@@ -48,11 +48,11 @@ class Codec:
         return node
 
     def deserialize(self, data):
-        """Decodes your encoded data to tree.
+        '''Decodes your encoded data to tree.
 
         :type data: str
         :rtype: TreeNode
-        """
+        '''
         tree_as_str = data.split(',')
         position = [0]
 
@@ -63,21 +63,21 @@ class Codec:
 
         def dfs(node):
             if not node:
-                res.append("N")
+                res.append('N')
                 return
             res.append(str(node.val))
             dfs(node.left)
             dfs(node.right)
 
         dfs(root)
-        return ",".join(res)
+        return ','.join(res)
 
     def deserialize_reference(self, root: Optional[TreeNode]) -> int:
-        vals = root.split(",")
+        vals = root.split(',')
         self.i = 0
 
         def dfs():
-            if vals[self.i] == "N":
+            if vals[self.i] == 'N':
                 self.i += 1
                 return None
             node = TreeNode(int(vals[self.i]))

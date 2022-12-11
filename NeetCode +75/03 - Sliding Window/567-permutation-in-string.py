@@ -21,7 +21,7 @@ class Solution:
 
         while p2 < len(s2):
             word_count = {}
-            for c in s2[p1:p2 + 1]:
+            for c in s2[p1 : p2 + 1]:
                 if c not in word_count:
                     word_count[c] = 1
                 else:
@@ -39,8 +39,8 @@ class Solution:
 
         s1Count, s2Count = [0] * 26, [0] * 26
         for i in range(len(s1)):
-            s1Count[ord(s1[i]) - ord("a")] += 1
-            s2Count[ord(s2[i]) - ord("a")] += 1
+            s1Count[ord(s1[i]) - ord('a')] += 1
+            s2Count[ord(s2[i]) - ord('a')] += 1
 
         matches = 0
         for i in range(26):
@@ -51,14 +51,14 @@ class Solution:
             if matches == 26:
                 return True
 
-            index = ord(s2[r]) - ord("a")
+            index = ord(s2[r]) - ord('a')
             s2Count[index] += 1
             if s1Count[index] == s2Count[index]:
                 matches += 1
             elif s1Count[index] + 1 == s2Count[index]:
                 matches -= 1
 
-            index = ord(s2[l]) - ord("a")
+            index = ord(s2[l]) - ord('a')
             s2Count[index] -= 1
             if s1Count[index] == s2Count[index]:
                 matches += 1
@@ -93,6 +93,6 @@ if __name__ == '__main__':
         ('ab', 'eidbaooo'),
         ('ab', 'eidboaoo'),
         # Additional
-        ('hello', 'ooolleoooleh')
+        ('hello', 'ooolleoooleh'),
     ]
     test.quantify(test_cases)

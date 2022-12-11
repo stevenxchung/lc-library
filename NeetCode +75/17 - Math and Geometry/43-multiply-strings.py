@@ -11,8 +11,8 @@ class Solution:
         return str(int(num1) * int(num2))
 
     def reference(self, num1: str, num2: str) -> str:
-        if "0" in [num1, num2]:
-            return "0"
+        if '0' in [num1, num2]:
+            return '0'
 
         res = [0] * (len(num1) + len(num2))
         num1, num2 = num1[::-1], num2[::-1]
@@ -27,7 +27,7 @@ class Solution:
         while beg < len(res) and res[beg] == 0:
             beg += 1
         res = map(str, res[beg:])
-        return "".join(res)
+        return ''.join(res)
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()

@@ -35,10 +35,10 @@ class Solution:
         return res
 
     def reference(self, matrix: List[List[int]]) -> List[int]:
-        """
+        '''
         :type matrix: List[List[int]]
         :rtype: List[int]
-        """
+        '''
         res = []
         while matrix:
             res += matrix.pop(0)
@@ -70,6 +70,6 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
-        [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+        [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],
     ]
     test.quantify(test_cases)
