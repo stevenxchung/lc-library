@@ -16,7 +16,9 @@ from typing import List
 
 
 class Solution:
-    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+    def carFleet(
+        self, target: int, position: List[int], speed: List[int]
+    ) -> int:
         # Since a car cannot overtake another car, a car in front always remains car in front and car in back always remains a car in back
         arr = [(position[i], speed[i]) for i in range(len(position))]
         arr.sort(reverse=True)
@@ -24,16 +26,18 @@ class Solution:
         # Using stack to capture unique number of fleets
         stack = []
         for x, x_prime in arr:
-            x_new = (target - x) / x_prime
+            t = (target - x) / x_prime
             # When stack is empty or car at back is slower than car at front then it will become a new fleet
-            if len(stack) == 0 or x_new > stack[-1]:
-                stack.append(x_new)
-           # There is no need to handle else case, if car at back is faster they become part of the fleet,
-           # Hence no need to insert.
+            if len(stack) == 0 or t > stack[-1]:
+                stack.append(t)
+        # There is no need to handle else case, if car at back is faster they become part of the fleet,
+        # Hence no need to insert.
 
         return len(stack)
 
-    def reference(self, target: int, position: List[int], speed: List[int]) -> int:
+    def reference(
+        self, target: int, position: List[int], speed: List[int]
+    ) -> int:
         pair = [(p, s) for p, s in zip(position, speed)]
         pair.sort(reverse=True)
         stack = []
@@ -68,6 +72,6 @@ if __name__ == '__main__':
     test_cases = [
         (12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3]),
         (10, [3], [3]),
-        (100, [0, 2, 4], [4, 2, 1])
+        (100, [0, 2, 4], [4, 2, 1]),
     ]
     test.quantify(test_cases)
