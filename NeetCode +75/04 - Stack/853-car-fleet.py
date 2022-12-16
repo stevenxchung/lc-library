@@ -19,19 +19,18 @@ class Solution:
     def carFleet(
         self, target: int, position: List[int], speed: List[int]
     ) -> int:
-        # Since a car cannot overtake another car, a car in front always remains car in front and car in back always remains a car in back
+        # A car in front always remains ahead and car in back always remains behind
         arr = [(position[i], speed[i]) for i in range(len(position))]
         arr.sort(reverse=True)
 
-        # Using stack to capture unique number of fleets
+        # Stack to capture unique number of fleets
         stack = []
         for x, x_prime in arr:
+            # Time it takes to get to target given position and speed
             t = (target - x) / x_prime
-            # When stack is empty or car at back is slower than car at front then it will become a new fleet
+            # When stack is empty or car behind slower than car in front
             if len(stack) == 0 or t > stack[-1]:
                 stack.append(t)
-        # There is no need to handle else case, if car at back is faster they become part of the fleet,
-        # Hence no need to insert.
 
         return len(stack)
 
