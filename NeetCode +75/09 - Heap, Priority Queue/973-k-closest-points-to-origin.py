@@ -13,8 +13,9 @@ from typing import List
 
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        min_heap = [(math.sqrt(pair[0]**2 + pair[1]**2), pair)
-                    for pair in points]
+        min_heap = [
+            (math.sqrt(pair[0] ** 2 + pair[1] ** 2), pair) for pair in points
+        ]
         heapq.heapify(min_heap)
         res = []
         while len(res) < k:
@@ -61,6 +62,6 @@ if __name__ == '__main__':
         ([[1, 3], [-2, 2]], 1),
         ([[3, 3], [5, -1], [-2, 4]], 2),
         # Additional
-        ([[1, 3], [-2, 2], [2, -2]], 2)
+        ([[1, 3], [-2, 2], [2, -2]], 2),
     ]
     test.quantify(test_cases)
