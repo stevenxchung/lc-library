@@ -66,6 +66,6 @@ if __name__ == '__main__':
         [2, 7, 4, 1, 8, 1],
         [1],
         # Additional
-        [3, 7, 2]
+        [3, 7, 2],
     ]
     test.quantify(test_cases)
