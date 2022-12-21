@@ -13,22 +13,12 @@ from typing import List
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        # Cooling period is zero
-        if n == 0:
-            return len(tasks)
-
-        task_dict = Counter(tasks)
-
-        max_occ = max(task_dict.values())
-
-        total_max_occ = 0
-        for occ in task_dict.values():
-            if occ == max_occ:
-                total_max_occ += 1
-
-        interval = (max_occ - 1) * (n + 1) + total_max_occ
-
-        return max(interval, len(tasks))
+        counts = list(Counter(tasks).values())
+        max_freq = max(counts)
+        # Number of times max frequency occurs
+        n_max_freq = counts.count(max_freq)
+        # Unit of time cannot be less than number of tasks
+        return max(len(tasks), (max_freq - 1) * (n + 1) + n_max_freq)
 
     def reference(self, tasks: List[str], n: int) -> int:
         count = Counter(tasks)
@@ -76,6 +66,6 @@ if __name__ == '__main__':
     test_cases = [
         (['A', 'A', 'A', 'B', 'B', 'B'], 2),
         (['A', 'A', 'A', 'B', 'B', 'B'], 0),
-        (['A', 'A', 'A', 'A', 'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G'], 2)
+        (['A', 'A', 'A', 'A', 'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G'], 2),
     ]
     test.quantify(test_cases)
