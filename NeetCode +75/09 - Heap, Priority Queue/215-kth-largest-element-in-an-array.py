@@ -12,11 +12,15 @@ from typing import List
 
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        new_nums = [-n for n in nums]
+        nums = [-n for n in nums]
         heapq.heapify(nums)
-        res = heapq.nsmallest(k, new_nums)
 
-        return -res[-1]
+        n, res = 0, 0
+        while n < k:
+            res = -heapq.heappop(nums)
+            n += 1
+
+        return res
 
     def partition(self, nums: List[int], left: int, right: int) -> int:
         pivot, fill = nums[right], left
@@ -72,6 +76,6 @@ if __name__ == '__main__':
         ([3, 2, 1, 5, 6, 4], 2),
         ([3, 2, 3, 1, 2, 4, 5, 5, 6], 4),
         # Additional
-        ([-1, -1], 2)
+        ([-1, -1], 2),
     ]
     test.quantify(test_cases)
