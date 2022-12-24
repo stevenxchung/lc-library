@@ -17,8 +17,9 @@ class ListNode:
 
 
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode],
-                      list2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(
+        self, list1: Optional[ListNode], list2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         node = ListNode()
         p1 = node
         while list1 and list2:
@@ -37,8 +38,9 @@ class Solution:
 
         return node.next
 
-    def reference(self, list1: Optional[ListNode],
-                  list2: Optional[ListNode]) -> Optional[ListNode]:
+    def reference(
+        self, list1: Optional[ListNode], list2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         dummy = ListNode()
         tail = dummy
 
@@ -87,9 +89,9 @@ if __name__ == '__main__':
     test_cases = [
         (
             ListNode(1, ListNode(2, ListNode(4))),
-            ListNode(1, ListNode(3, ListNode(4)))
+            ListNode(1, ListNode(3, ListNode(4))),
         ),
         (None, None),
-        (None, ListNode(0))
+        (None, ListNode(0)),
     ]
     test.quantify(test_cases)
