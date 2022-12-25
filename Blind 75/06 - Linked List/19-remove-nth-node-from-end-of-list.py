@@ -13,7 +13,9 @@ class ListNode:
 
 
 class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+    def removeNthFromEnd(
+        self, head: Optional[ListNode], n: int
+    ) -> Optional[ListNode]:
         node = ListNode(0, head)
         p1, p2 = node, head
         # Adjust gap between pointers
