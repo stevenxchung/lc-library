@@ -117,9 +117,5 @@ if __name__ == '__main__':
     input3_2.random = input3_1
     input3_3.random = None
 
-    test_cases = [
-        input1_1,
-        input2_1,
-        input3_1
-    ]
+    test_cases = [input1_1, input2_1, input3_1]
     test.quantify(test_cases)
