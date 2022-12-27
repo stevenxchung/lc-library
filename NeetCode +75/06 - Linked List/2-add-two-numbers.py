@@ -14,7 +14,9 @@ class ListNode:
 
 
 class Solution:
-    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def addTwoNumbers(
+        self, l1: Optional[ListNode], l2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         node = ListNode()
         res = node
         carry = 0
@@ -33,7 +35,9 @@ class Solution:
 
         return res.next
 
-    def reference(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def reference(
+        self, l1: Optional[ListNode], l2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         dummy = ListNode()
         cur = dummy
 
@@ -80,16 +84,20 @@ if __name__ == '__main__':
     test_cases = [
         (
             ListNode(2, ListNode(4, ListNode(3))),
-            ListNode(5, ListNode(6, ListNode(4)))
+            ListNode(5, ListNode(6, ListNode(4))),
         ),
+        (ListNode(0), ListNode(0)),
         (
-            ListNode(0),
-            ListNode(0)
+            ListNode(
+                9,
+                ListNode(
+                    9,
+                    ListNode(
+                        9, ListNode(9, ListNode(9, ListNode(9, ListNode(9))))
+                    ),
+                ),
+            ),
+            ListNode(9, ListNode(9, ListNode(9, ListNode(9)))),
         ),
-        (
-            ListNode(9, ListNode(9, ListNode(9, ListNode(
-                9, ListNode(9, ListNode(9, ListNode(9))))))),
-            ListNode(9, ListNode(9, ListNode(9, ListNode(9))))
-        )
     ]
     test.quantify(test_cases)
