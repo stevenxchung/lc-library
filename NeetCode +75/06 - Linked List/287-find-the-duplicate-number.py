@@ -58,8 +58,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [1, 3, 4, 2, 2],
-        [3, 1, 3, 4, 2]
-    ]
+    test_cases = [[1, 3, 4, 2, 2], [3, 1, 3, 4, 2]]
     test.quantify(test_cases)
