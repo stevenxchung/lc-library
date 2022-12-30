@@ -22,34 +22,33 @@ class LRUCache:
     def __init__(self, capacity: int, debug=False):
         self.debug = debug
         self.capacity = capacity
-        # Consists of {key: Node}
+        # Consists of {key: Node()}
         self.cache = {}
+        # LRU is head and MRU is tail of list
+        # Note: LRU and MRU are dummy nodes that point to actual LRU and MRU
         self.lru, self.mru = Node(), Node()
         self.lru.next, self.mru.prev = self.mru, self.lru
 
     def remove(self, node: Node):
-        # Remove linking
-        prev, next = node.prev, node.next
-        prev.next, next.prev = next, prev
+        # Remove node by Linking neighboring nodes
+        l, r = node.prev, node.next
+        l.next, r.prev = r, l
 
     def insert(self, node: Node):
-        # Add to front of list
-        prev, next = self.mru.prev, self.mru
-        prev.next = next.prev = node
-        node.next, node.prev = next, prev
+        # Add to tail of list (MRU)
+        l, r = self.mru.prev, self.mru
+        # Neighbors link to node then node links to neighbors
+        l.next = r.prev = node
+        node.prev, node.next = l, r
 
     def get(self, key: int) -> int:
-        res = None
+        res = -1
         if key in self.cache:
-            # Move to front of list
+            # Move to tail of list (MRU)
             self.remove(self.cache[key])
             self.insert(self.cache[key])
-            res = self.cache[key]
-            if self.debug:
-                print(f'Return: {res.val}')
-            return res
+            res = key
 
-        res = -1
         if self.debug:
             print(f'Return: {res}')
         return res
@@ -70,17 +69,20 @@ class LRUCache:
                 print(f'Removing LRU: {lru.val}')
             del self.cache[lru.key]
 
+        if self.debug:
+            print(self.cache.keys())
+
 
 if __name__ == '__main__':
     test = LRUCache(2, debug=True)
     sol_start = time()
     test.put(1, 1)  # Cache is {1=1}
     test.put(2, 2)  # Cache is {1=1, 2=2}
-    test.get(1)    # Return 1
+    test.get(1)  # Return 1
     test.put(3, 3)  # LRU key was 2, evicts key 2, cache is {1=1, 3=3}
-    test.get(2)    # Returns -1 (not found)
+    test.get(2)  # Returns -1 (not found)
     test.put(4, 4)  # LRU key was 1, evicts key 1, cache is {4=4, 3=3}
-    test.get(1)    # Return -1 (not found)
-    test.get(3)    # Return 3
-    test.get(4)    # Return 4
+    test.get(1)  # Return -1 (not found)
+    test.get(3)  # Return 3
+    test.get(4)  # Return 4
     print(f'Runtime for our solution: {time() - sol_start}')
