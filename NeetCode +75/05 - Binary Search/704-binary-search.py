@@ -57,8 +57,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ([-1, 0, 3, 5, 9, 12], 9),
-        ([-1, 0, 3, 5, 9, 12], 2)
-    ]
+    test_cases = [([-1, 0, 3, 5, 9, 12], 9), ([-1, 0, 3, 5, 9, 12], 2)]
     test.quantify(test_cases)
