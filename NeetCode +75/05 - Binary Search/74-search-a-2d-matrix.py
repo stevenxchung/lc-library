@@ -4,7 +4,6 @@ Write an efficient algorithm that searches for a value target in an m x n intege
 - Integers in each row are sorted from left to right.
 - The first integer of each row is greater than the last integer of the previous row.
 '''
-import numpy as np
 from time import time
 from typing import List
 
@@ -95,6 +94,6 @@ if __name__ == '__main__':
         ([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 13),
         # Additional
         ([[1], [3]], 1),
-        ([[1], [3], [5]], 3)
+        ([[1], [3], [5]], 3),
     ]
     test.quantify(test_cases)
