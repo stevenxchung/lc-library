@@ -7,6 +7,7 @@ Koko likes to eat slowly but still wants to finish eating all the bananas before
 
 Return the minimum integer k such that she can eat all the bananas within h hours.
 '''
+import math
 from time import time
 from typing import List
 
@@ -33,20 +34,20 @@ class Solution:
 
     def reference(self, piles: List[int], h: int) -> int:
         l, r = 1, max(piles)
-        k = 0
+        res = max(piles)
 
         while l <= r:
-            m = (l + r) // 2
+            k = (l + r) // 2
 
             totalTime = 0
             for p in piles:
-                totalTime += ((p - 1) // m) + 1
+                totalTime += math.ceil(p / k)
             if totalTime <= h:
-                k = m
-                r = m - 1
+                res = min(res, k)
+                r = k - 1
             else:
-                l = m + 1
-        return k
+                l = k + 1
+        return res
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()
@@ -75,6 +76,6 @@ if __name__ == '__main__':
         ([30, 11, 23, 4, 20], 5),
         ([30, 11, 23, 4, 20], 6),
         # Additional
-        ([312884470], 312884469)
+        ([312884470], 312884469),
     ]
     test.quantify(test_cases)
