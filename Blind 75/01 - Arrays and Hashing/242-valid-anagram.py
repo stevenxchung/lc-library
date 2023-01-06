@@ -8,11 +8,18 @@ from time import time
 
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        s_hashed = set(e for e in s)
-        for e in t:
-            if e not in s_hashed:
-                return False
-        return True
+        if len(s) != len(t):
+            return False
+
+        s_table, t_table = {}, {}
+        for i in range(len(s)):
+            s_table[s[i]] = s_table.get(s[i], 0) + 1
+            t_table[t[i]] = t_table.get(t[i], 0) + 1
+
+        if s_table == t_table:
+            return True
+        else:
+            return False
 
     def reference(self, s: str, t: str) -> bool:
         if len(s) != len(t):
@@ -33,25 +40,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.isAnagram(case[0], case[1]))
+                    print(self.isAnagram(*case))
                 else:
-                    self.isAnagram(case[0], case[1])
+                    self.isAnagram(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ('anagram', 'nagaram'),
-        ('rat', 'car')
-    ]
+    test_cases = [('anagram', 'nagaram'), ('rat', 'car')]
     test.quantify(test_cases)
