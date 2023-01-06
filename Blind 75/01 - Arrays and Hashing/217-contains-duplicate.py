@@ -6,21 +6,21 @@ from time import time
 
 class Solution:
     def containsDuplicate(self, nums) -> bool:
-        table = {}
-        for e in nums:
-            if e not in table:
-                table[e] = 1
-            elif e in table:
+        seen = set()
+        for n in nums:
+            if n in seen:
                 return True
+            seen.add(n)
+
         return False
 
     def reference(self, nums) -> bool:
         hashset = set()
-
         for n in nums:
             if n in hashset:
                 return True
             hashset.add(n)
+
         return False
 
     def quantify(self, test_cases, runs=50000):
@@ -45,9 +45,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [1, 2, 3, 1],
-        [1, 2, 3, 4],
-        [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
-    ]
+    test_cases = [[1, 2, 3, 1], [1, 2, 3, 4], [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]]
     test.quantify(test_cases)
