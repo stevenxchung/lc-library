@@ -10,20 +10,14 @@ from typing import List
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        buckets = {}
-        for word in strs:
-            # Initialize map
-            a2z_hash_key = [0] * 26
-            for l in word:
-                a2z_hash_key[ord(l) - ord('a')] += 1
+        anagrams = collections.defaultdict(list)
+        for s in strs:
+            key = [0] * 26
+            for c in s:
+                key[ord(c) - ord('a')] += 1
+            anagrams[tuple(key)].append(s)
 
-            a2z_hash_key = str(a2z_hash_key)
-            if a2z_hash_key not in buckets:
-                buckets[a2z_hash_key] = [word]
-            else:
-                buckets[a2z_hash_key].append(word)
-
-        return [group for group in buckets.values()]
+        return anagrams.values()
 
     def reference(self, strs: List[str]) -> List[List[str]]:
         ans = collections.defaultdict(list)
