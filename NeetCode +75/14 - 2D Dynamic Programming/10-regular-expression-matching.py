@@ -27,7 +27,8 @@ class Solution:
                 # Don't use * (shift j + 2)
                 cache[(i, j)] = dfs(i, j + 2) or (
                     # Use * (shift i + 1)
-                    match and dfs(i + 1, j)
+                    match
+                    and dfs(i + 1, j)
                 )
                 return cache[(i, j)]
             if match:
@@ -63,26 +64,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.isMatch(case[0], case[1]))
+                    print(self.isMatch(*case))
                 else:
-                    self.isMatch(case[0], case[1])
+                    self.isMatch(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ('aa', 'a'),
-        ('aa', 'a*'),
-        ('ab', '.*')
-    ]
+    test_cases = [('aa', 'a'), ('aa', 'a*'), ('ab', '.*')]
     test.quantify(test_cases)

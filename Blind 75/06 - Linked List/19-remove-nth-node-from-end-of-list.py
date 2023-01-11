@@ -53,9 +53,9 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.removeNthFromEnd(copy[0], copy[1]))
+                    print(self.removeNthFromEnd(*copy))
                 else:
-                    self.removeNthFromEnd(copy[0], copy[1])
+                    self.removeNthFromEnd(*copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
@@ -64,9 +64,9 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(copy[0], copy[1]))
+                    print(self.reference(*copy))
                 else:
-                    self.reference(copy[0], copy[1])
+                    self.reference(*copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

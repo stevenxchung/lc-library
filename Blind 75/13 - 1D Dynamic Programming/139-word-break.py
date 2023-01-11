@@ -15,7 +15,7 @@ class Solution:
             s = queue.pop(0)
             for w in wordDict:
                 if s.startswith(w):
-                    s_new = s[len(w):]
+                    s_new = s[len(w) :]
                     if s_new == '':
                         return True
                     if s_new not in found:
@@ -30,7 +30,7 @@ class Solution:
 
         for i in range(len(s) - 1, -1, -1):
             for w in wordDict:
-                if (i + len(w)) <= len(s) and s[i: i + len(w)] == w:
+                if (i + len(w)) <= len(s) and s[i : i + len(w)] == w:
                     dp[i] = dp[i + len(w)]
                 if dp[i]:
                     break
@@ -42,18 +42,18 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.wordBreak(case[0], case[1]))
+                    print(self.wordBreak(*case))
                 else:
-                    self.wordBreak(case[0], case[1])
+                    self.wordBreak(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
@@ -66,6 +66,6 @@ if __name__ == '__main__':
         # Additional
         ('bb', ['a', 'b', 'bbb', 'bbbb']),
         ('aaaaaaa', ['aaaa', 'aaa']),
-        ('aaaaaa', ['aa', 'a'])
+        ('aaaaaa', ['aa', 'a']),
     ]
     test.quantify(test_cases)

@@ -64,18 +64,18 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.addTwoNumbers(case[0], case[1]).__dict__)
+                    print(self.addTwoNumbers(*case).__dict__)
                 else:
-                    self.addTwoNumbers(case[0], case[1])
+                    self.addTwoNumbers(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]).__dict__)
+                    print(self.reference(*case).__dict__)
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

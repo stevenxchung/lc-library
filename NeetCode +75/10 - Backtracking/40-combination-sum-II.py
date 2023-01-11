@@ -62,18 +62,18 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.combinationSum2(case[0], case[1]))
+                    print(self.combinationSum2(*case))
                 else:
-                    self.combinationSum2(case[0], case[1])
+                    self.combinationSum2(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

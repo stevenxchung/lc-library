@@ -12,7 +12,9 @@ from typing import List
 
 
 class Solution:
-    def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
+    def minInterval(
+        self, intervals: List[List[int]], queries: List[int]
+    ) -> List[int]:
         res = [-1] * len(queries)
         # Sort intervals by size
         intervals.sort(key=lambda i: i[1] - i[0])
@@ -28,7 +30,9 @@ class Solution:
 
         return res
 
-    def reference(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
+    def reference(
+        self, intervals: List[List[int]], queries: List[int]
+    ) -> List[int]:
         intervals.sort()
         minHeap = []
         res = {}
@@ -49,31 +53,25 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.minInterval(case[0], case[1]))
+                    print(self.minInterval(*case))
                 else:
-                    self.minInterval(case[0], case[1])
+                    self.minInterval(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        (
-            [[1, 4], [2, 4], [3, 6], [4, 4]],
-            [2, 3, 4, 5]
-        ),
-        (
-            [[2, 3], [2, 5], [1, 8], [20, 25]],
-            [2, 19, 5, 22]
-        )
+        ([[1, 4], [2, 4], [3, 6], [4, 4]], [2, 3, 4, 5]),
+        ([[2, 3], [2, 5], [1, 8], [20, 25]], [2, 19, 5, 22]),
     ]
     test.quantify(test_cases)

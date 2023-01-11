@@ -36,9 +36,14 @@ class Solution:
         res = set()
 
         def dfs(r, c, node, word):
-            if (r < 0 or c < 0
-                or r >= ROWS or c >= COLS
-                    or board[r][c] not in node.children or board[r][c] == '#'):
+            if (
+                r < 0
+                or c < 0
+                or r >= ROWS
+                or c >= COLS
+                or board[r][c] not in node.children
+                or board[r][c] == '#'
+            ):
                 return
 
             # Add letter to word and increment node
@@ -74,10 +79,14 @@ class Solution:
         res, visit = set(), set()
 
         def dfs_reference(r, c, node, word):
-            if (r < 0 or c < 0
-                or r == ROWS or c == COLS
-                    or (r, c) in visit
-                    or board[r][c] not in node.children):
+            if (
+                r < 0
+                or c < 0
+                or r == ROWS
+                or c == COLS
+                or (r, c) in visit
+                or board[r][c] not in node.children
+            ):
                 return
 
             visit.add((r, c))
@@ -103,18 +112,18 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.findWords(case[0], case[1]))
+                    print(self.findWords(*case))
                 else:
-                    self.findWords(case[0], case[1])
+                    self.findWords(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
@@ -122,13 +131,14 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         (
-            [['o', 'a', 'a', 'n'], ['e', 't', 'a', 'e'],
-             ['i', 'h', 'k', 'r'], ['i', 'f', 'l', 'v']],
+            [
+                ['o', 'a', 'a', 'n'],
+                ['e', 't', 'a', 'e'],
+                ['i', 'h', 'k', 'r'],
+                ['i', 'f', 'l', 'v'],
+            ],
             ['oath', 'pea', 'eat', 'rain'],
         ),
-        (
-            [['a', 'b'], ['c', 'd']],
-            ['abcb']
-        )
+        ([['a', 'b'], ['c', 'd']], ['abcb']),
     ]
     test.quantify(test_cases)

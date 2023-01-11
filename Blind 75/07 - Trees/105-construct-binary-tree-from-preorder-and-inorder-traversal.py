@@ -50,9 +50,9 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.buildTree(copy[0], copy[1]).__dict__)
+                    print(self.buildTree(*copy).__dict__)
                 else:
-                    self.buildTree(copy[0], copy[1])
+                    self.buildTree(*copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
@@ -61,9 +61,9 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(copy[0], copy[1]).__dict__)
+                    print(self.reference(*copy).__dict__)
                 else:
-                    self.reference(copy[0], copy[1])
+                    self.reference(*copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 

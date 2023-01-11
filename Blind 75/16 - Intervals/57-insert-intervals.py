@@ -10,7 +10,9 @@ from typing import List
 
 
 class Solution:
-    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+    def insert(
+        self, intervals: List[List[int]], newInterval: List[int]
+    ) -> List[List[int]]:
         res = []
         for i in range(len(intervals)):
             if newInterval[1] < intervals[i][0]:
@@ -22,13 +24,17 @@ class Solution:
                 res.append(intervals[i])
             else:
                 # Otherwise, interval overlaps
-                newInterval = [min(newInterval[0], intervals[i][0]),
-                               max(newInterval[1], intervals[i][1])]
+                newInterval = [
+                    min(newInterval[0], intervals[i][0]),
+                    max(newInterval[1], intervals[i][1]),
+                ]
 
         res.append(newInterval)
         return res
 
-    def reference(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+    def reference(
+        self, intervals: List[List[int]], newInterval: List[int]
+    ) -> List[List[int]]:
         res = []
 
         for i in range(len(intervals)):
@@ -50,18 +56,18 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.insert(case[0], case[1]))
+                    print(self.insert(*case))
                 else:
-                    self.insert(case[0], case[1])
+                    self.insert(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
@@ -69,6 +75,6 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         ([[1, 3], [6, 9]], [2, 5]),
-        ([[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [4, 8])
+        ([[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [4, 8]),
     ]
     test.quantify(test_cases)

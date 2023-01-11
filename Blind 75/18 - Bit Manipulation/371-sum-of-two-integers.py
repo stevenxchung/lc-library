@@ -7,12 +7,12 @@ from time import time
 class Solution:
     def getSum(self, a: int, b: int) -> int:
         # 32 bit mask in hexadecimal
-        mask = 0xffffffff
+        mask = 0xFFFFFFFF
 
         # Works both as while loop and single value check
         while (b & mask) > 0:
             carry = (a & b) << 1
-            a = (a ^ b)
+            a = a ^ b
             b = carry
 
         # Handles overflow e.g., -1 or 1
@@ -39,25 +39,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.getSum(case[0], case[1]))
+                    print(self.getSum(*case))
                 else:
-                    self.getSum(case[0], case[1])
+                    self.getSum(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (1, 2),
-        (2, 3)
-    ]
+    test_cases = [(1, 2), (2, 3)]
     test.quantify(test_cases)

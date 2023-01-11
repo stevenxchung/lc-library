@@ -17,7 +17,9 @@ class ListNode:
 
 
 class Solution:
-    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+    def reverseKGroup(
+        self, head: Optional[ListNode], k: int
+    ) -> Optional[ListNode]:
         node = jump = ListNode(0)
         node.next = l = r = head
 
@@ -76,9 +78,9 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.reverseKGroup(copy[0], copy[1]).__dict__)
+                    print(self.reverseKGroup(*copy).__dict__)
                 else:
-                    self.reverseKGroup(copy[0], copy[1])
+                    self.reverseKGroup(*copy)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
@@ -87,22 +89,16 @@ class Solution:
                 # Create deep copy
                 copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(copy[0], copy[1]).__dict__)
+                    print(self.reference(*copy).__dict__)
                 else:
-                    self.reference(copy[0], copy[1])
+                    self.reference(*copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        (
-            ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))),
-            2
-        ),
-        (
-            ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))),
-            3
-        )
+        (ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2),
+        (ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 3),
     ]
     test.quantify(test_cases)

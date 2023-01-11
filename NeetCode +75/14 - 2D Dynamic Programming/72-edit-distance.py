@@ -19,8 +19,11 @@ class Solution:
             cur = [i for _ in range(w)]
             for j in range(1, w):
                 # Sub-operation is based on min of previous operations
-                cur[j] = min(cache[j - 1] + (word1[i - 1] != word2[j - 1]),
-                             cache[j] + 1, cur[j - 1] + 1)
+                cur[j] = min(
+                    cache[j - 1] + (word1[i - 1] != word2[j - 1]),
+                    cache[j] + 1,
+                    cur[j - 1] + 1,
+                )
             # Update cache after each loop
             cache = cur
 
@@ -39,8 +42,9 @@ class Solution:
                 if word1[i] == word2[j]:
                     dp[i][j] = dp[i + 1][j + 1]
                 else:
-                    dp[i][j] = 1 + min(dp[i + 1][j], dp[i]
-                                       [j + 1], dp[i + 1][j + 1])
+                    dp[i][j] = 1 + min(
+                        dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1]
+                    )
         return dp[0][0]
 
     def quantify(self, test_cases, runs=50000):
@@ -48,25 +52,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.minDistance(case[0], case[1]))
+                    print(self.minDistance(*case))
                 else:
-                    self.minDistance(case[0], case[1])
+                    self.minDistance(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ('horse', 'ros'),
-        ('intention', 'execution')
-    ]
+    test_cases = [('horse', 'ros'), ('intention', 'execution')]
     test.quantify(test_cases)

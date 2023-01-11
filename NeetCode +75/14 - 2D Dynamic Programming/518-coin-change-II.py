@@ -41,35 +41,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.change(case[0], case[1]))
+                    print(self.change(*case))
                 else:
-                    self.change(case[0], case[1])
+                    self.change(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (
-            5,
-            [1, 2, 5]
-        ),
-        (
-            3,
-            [2]
-        ),
-        (
-            10,
-            [10]
-        )
-    ]
+    test_cases = [(5, [1, 2, 5]), (3, [2]), (10, [10])]
     test.quantify(test_cases)

@@ -40,7 +40,7 @@ class Solution:
                 l += 1
 
         l, r = p_window
-        return s[l: r + 1] if minLen != inf else ''
+        return s[l : r + 1] if minLen != inf else ''
 
     def reference(self, s: str, t: str) -> str:
         if t == '':
@@ -72,33 +72,29 @@ class Solution:
                 l += 1
 
         l, r = res
-        return s[l: r + 1] if resLen != float('infinity') else ''
+        return s[l : r + 1] if resLen != float('infinity') else ''
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.minWindow(case[0], case[1]))
+                    print(self.minWindow(*case))
                 else:
-                    self.minWindow(case[0], case[1])
+                    self.minWindow(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ('ADOBECODEBANC', 'ABC'),
-        ('a', 'a'),
-        ('a', 'aa')
-    ]
+    test_cases = [('ADOBECODEBANC', 'ABC'), ('a', 'a'), ('a', 'aa')]
     test.quantify(test_cases)

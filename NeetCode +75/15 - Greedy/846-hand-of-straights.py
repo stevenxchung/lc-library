@@ -62,31 +62,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.isNStraightHand(case[0], case[1]))
+                    print(self.isNStraightHand(*case))
                 else:
-                    self.isNStraightHand(case[0], case[1])
+                    self.isNStraightHand(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        (
-            [1, 2, 3, 6, 2, 3, 4, 7, 8],
-            3
-        ),
-        (
-            [1, 2, 3, 4, 5],
-            4
-        )
-    ]
+    test_cases = [([1, 2, 3, 6, 2, 3, 4, 7, 8], 3), ([1, 2, 3, 4, 5], 4)]
     test.quantify(test_cases)

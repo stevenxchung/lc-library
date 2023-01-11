@@ -41,26 +41,22 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.twoSum(case[0], case[1]))
+                    print(self.twoSum(*case))
                 else:
-                    self.twoSum(case[0], case[1])
+                    self.twoSum(*case)
         print(f'Runtime for our solution: {time() - sol_start}')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.reference(case[0], case[1]))
+                    print(self.reference(*case))
                 else:
-                    self.reference(case[0], case[1])
+                    self.reference(*case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ([2, 7, 11, 15], 9),
-        ([2, 3, 4], 6),
-        ([-1, 0], -1)
-    ]
+    test_cases = [([2, 7, 11, 15], 9), ([2, 3, 4], 6), ([-1, 0], -1)]
     test.quantify(test_cases)
