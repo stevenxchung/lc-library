@@ -63,7 +63,7 @@ class Solution:
                     print(self.generateParenthesis(case))
                 else:
                     self.generateParenthesis(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):

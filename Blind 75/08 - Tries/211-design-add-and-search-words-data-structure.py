@@ -17,7 +17,6 @@ class TrieNode:
 
 
 class WordDictionary:
-
     def __init__(self):
         self.root = TrieNode()
 
@@ -31,7 +30,6 @@ class WordDictionary:
         node.is_end = True
 
     def search(self, word: str) -> bool:
-
         def dfs(word, start, curr):
             node = curr
             for i in range(start, len(word)):
@@ -63,4 +61,4 @@ if __name__ == '__main__':
     test.search('bad')  # return True
     test.search('.ad')  # return True
     test.search('b..')  # return True
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

@@ -36,7 +36,7 @@ class Solution:
                     print(self.dailyTemperatures(case))
                 else:
                     self.dailyTemperatures(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -55,6 +55,6 @@ if __name__ == '__main__':
         [30, 40, 50, 60],
         [30, 60, 90],
         # Additional
-        [89, 62, 70, 58, 47, 47, 46, 76, 100, 70]
+        [89, 62, 70, 58, 47, 47, 46, 76, 100, 70],
     ]
     test.quantify(test_cases)

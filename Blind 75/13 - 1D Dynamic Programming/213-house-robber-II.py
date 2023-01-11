@@ -15,8 +15,9 @@ class Solution:
         return curr
 
     def rob(self, nums: List[int]) -> int:
-        return max(nums[0], self.rob_helper(nums[1:]),
-                   self.rob_helper(nums[:-1]))
+        return max(
+            nums[0], self.rob_helper(nums[1:]), self.rob_helper(nums[:-1])
+        )
 
     def reference_helper(self, nums: List[int]) -> int:
         plan_a, plan_b = 0, 0
@@ -29,8 +30,11 @@ class Solution:
         return plan_b
 
     def reference(self, nums: List[int]) -> int:
-        return max(nums[0], self.reference_helper(nums[1:]),
-                   self.reference_helper(nums[:-1]))
+        return max(
+            nums[0],
+            self.reference_helper(nums[1:]),
+            self.reference_helper(nums[:-1]),
+        )
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()
@@ -40,7 +44,7 @@ class Solution:
                     print(self.rob(case))
                 else:
                     self.rob(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -59,6 +63,6 @@ if __name__ == '__main__':
         [1, 2, 3, 1],
         [1, 2, 3],
         # Additional
-        [1]
+        [1],
     ]
     test.quantify(test_cases)

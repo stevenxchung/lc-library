@@ -50,6 +50,6 @@ if __name__ == '__main__':
     test.push(-3)
     test.getMin()  # return -3
     test.pop()
-    test.top()    # return 0
+    test.top()  # return 0
     test.getMin()  # return -2
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

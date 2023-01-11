@@ -47,7 +47,7 @@ class Solution:
                     print(self.trap(case))
                 else:
                     self.trap(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -61,8 +61,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
-        [4, 2, 0, 3, 2, 5]
-    ]
+    test_cases = [[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], [4, 2, 0, 3, 2, 5]]
     test.quantify(test_cases)

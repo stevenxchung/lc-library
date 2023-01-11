@@ -85,4 +85,4 @@ if __name__ == '__main__':
     test.get(1)  # Return -1 (not found)
     test.get(3)  # Return 3
     test.get(4)  # Return 4
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

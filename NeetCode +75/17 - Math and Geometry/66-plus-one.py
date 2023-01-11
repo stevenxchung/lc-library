@@ -53,7 +53,7 @@ class Solution:
                     print(self.plusOne(case))
                 else:
                     self.plusOne(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -67,9 +67,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [1, 2, 3],
-        [4, 3, 2, 1],
-        [9]
-    ]
+    test_cases = [[1, 2, 3], [4, 3, 2, 1], [9]]
     test.quantify(test_cases)

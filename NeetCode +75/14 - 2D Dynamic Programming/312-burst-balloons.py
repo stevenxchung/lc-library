@@ -23,14 +23,18 @@ class Solution:
             coins = 0
             # Find the last ballon at j = n - 1
             for k in range(i + 1, j):
-                coins = max(coins, nums[i] * nums[k] *
-                            nums[j] + calculate(i, k) + calculate(k, j))
+                coins = max(
+                    coins,
+                    nums[i] * nums[k] * nums[j]
+                    + calculate(i, k)
+                    + calculate(k, j),
+                )
             cache[i][j] = coins
 
             return coins
 
         # Start from i = 0 and j = n - 1
-        return calculate(0, n-1)
+        return calculate(0, n - 1)
 
     def reference(self, nums: List[int]) -> int:
         cache = {}
@@ -41,10 +45,12 @@ class Solution:
                 right = left + offset
                 for pivot in range(left + 1, right):
                     coins = nums[left] * nums[pivot] * nums[right]
-                    coins += cache.get((left, pivot), 0) + \
-                        cache.get((pivot, right), 0)
+                    coins += cache.get((left, pivot), 0) + cache.get(
+                        (pivot, right), 0
+                    )
                     cache[(left, right)] = max(
-                        coins, cache.get((left, right), 0))
+                        coins, cache.get((left, right), 0)
+                    )
         return cache.get((0, len(nums) - 1), 0)
 
     def quantify(self, test_cases, runs=50000):
@@ -55,7 +61,7 @@ class Solution:
                     print(self.maxCoins(case))
                 else:
                     self.maxCoins(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -69,8 +75,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [3, 1, 5, 8],
-        [1, 5]
-    ]
+    test_cases = [[3, 1, 5, 8], [1, 5]]
     test.quantify(test_cases)

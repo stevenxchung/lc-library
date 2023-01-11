@@ -20,12 +20,14 @@ class Solution:
                 val = matrix[i][j]
 
                 # Map out directions
-                top = dfs(i + 1, j) if i < M - \
-                    1 and val > matrix[i + 1][j] else 0
+                top = (
+                    dfs(i + 1, j) if i < M - 1 and val > matrix[i + 1][j] else 0
+                )
                 bottom = dfs(i - 1, j) if i and val > matrix[i - 1][j] else 0
                 left = dfs(i, j - 1) if j and val > matrix[i][j - 1] else 0
-                right = dfs(i, j + 1) if j < N - \
-                    1 and val > matrix[i][j + 1] else 0
+                right = (
+                    dfs(i, j + 1) if j < N - 1 and val > matrix[i][j + 1] else 0
+                )
                 # Update cache by selecting max path
                 cache[i][j] = 1 + max(top, bottom, left, right)
 
@@ -39,7 +41,13 @@ class Solution:
         dp = {}  # (r, c) -> LIP
 
         def dfs(r, c, prevVal):
-            if r < 0 or r == ROWS or c < 0 or c == COLS or matrix[r][c] <= prevVal:
+            if (
+                r < 0
+                or r == ROWS
+                or c < 0
+                or c == COLS
+                or matrix[r][c] <= prevVal
+            ):
                 return 0
             if (r, c) in dp:
                 return dp[(r, c)]
@@ -65,7 +73,7 @@ class Solution:
                     print(self.longestIncreasingPath(case))
                 else:
                     self.longestIncreasingPath(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -80,15 +88,7 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        [
-            [9, 9, 4],
-            [6, 6, 8],
-            [2, 1, 1]
-        ],
-        [
-            [3, 4, 5],
-            [3, 2, 6],
-            [2, 2, 1]
-        ]
+        [[9, 9, 4], [6, 6, 8], [2, 1, 1]],
+        [[3, 4, 5], [3, 2, 6], [2, 2, 1]],
     ]
     test.quantify(test_cases)

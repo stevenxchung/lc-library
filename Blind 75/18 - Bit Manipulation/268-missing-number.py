@@ -26,7 +26,7 @@ class Solution:
                     print(self.missingNumber(case))
                 else:
                     self.missingNumber(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -40,9 +40,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [3, 0, 1],
-        [0, 1],
-        [9, 6, 4, 2, 3, 5, 7, 0, 1]
-    ]
+    test_cases = [[3, 0, 1], [0, 1], [9, 6, 4, 2, 3, 5, 7, 0, 1]]
     test.quantify(test_cases)

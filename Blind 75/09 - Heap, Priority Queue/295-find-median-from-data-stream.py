@@ -55,9 +55,9 @@ class MedianFinder:
 if __name__ == '__main__':
     test = MedianFinder(debug=True)
     sol_start = time()
-    test.addNum(1)    # arr = [1]
-    test.addNum(2)    # arr = [1, 2]
+    test.addNum(1)  # arr = [1]
+    test.addNum(2)  # arr = [1, 2]
     test.findMedian()  # return 1.5 (i.e., (1 + 2) / 2)
-    test.addNum(3)    # arr[1, 2, 3]
+    test.addNum(3)  # arr[1, 2, 3]
     test.findMedian()  # return 2.0
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

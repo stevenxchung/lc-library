@@ -60,7 +60,7 @@ class Solution:
                     print(self.minCostConnectPoints(case))
                 else:
                     self.minCostConnectPoints(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):

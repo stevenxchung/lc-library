@@ -37,7 +37,7 @@ class Solution:
                     print(self.merge(case))
                 else:
                     self.merge(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -55,6 +55,6 @@ if __name__ == '__main__':
         [[1, 3], [2, 6], [8, 10], [15, 18]],
         [[1, 4], [4, 5]],
         # Additional
-        [[1, 4], [0, 4]]
+        [[1, 4], [0, 4]],
     ]
     test.quantify(test_cases)

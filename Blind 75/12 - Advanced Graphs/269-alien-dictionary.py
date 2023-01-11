@@ -89,7 +89,7 @@ class Solution:
                     print(self.alienOrder(case))
                 else:
                     self.alienOrder(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -103,7 +103,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        ['wrt', 'wrf', 'er', 'ett', 'rftt']
-    ]
+    test_cases = [['wrt', 'wrf', 'er', 'ett', 'rftt']]
     test.quantify(test_cases)

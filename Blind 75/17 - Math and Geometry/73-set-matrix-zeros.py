@@ -83,7 +83,7 @@ class Solution:
                     print(self.setZeroes(copy))
                 else:
                     self.setZeroes(copy)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -101,6 +101,6 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         [[1, 1, 1], [1, 0, 1], [1, 1, 1]],
-        [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]]
+        [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]],
     ]
     test.quantify(test_cases)

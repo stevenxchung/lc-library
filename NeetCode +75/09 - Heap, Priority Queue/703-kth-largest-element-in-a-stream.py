@@ -37,4 +37,4 @@ if __name__ == '__main__':
     test.add(10)  # return 5
     test.add(9)  # return 8
     test.add(4)  # return 8
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

@@ -40,7 +40,7 @@ class Solution:
                     print(self.lengthOfLIS(case))
                 else:
                     self.lengthOfLIS(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -57,6 +57,6 @@ if __name__ == '__main__':
     test_cases = [
         [10, 9, 2, 5, 3, 7, 101, 18],
         [0, 1, 0, 3, 2, 3],
-        [7, 7, 7, 7, 7, 7, 7]
+        [7, 7, 7, 7, 7, 7, 7],
     ]
     test.quantify(test_cases)

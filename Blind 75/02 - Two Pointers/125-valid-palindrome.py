@@ -35,9 +35,11 @@ class Solution:
 
     # Could write own alpha-numeric function
     def alphanum(self, c):
-        return (ord('A') <= ord(c) <= ord('Z') or
-                ord('a') <= ord(c) <= ord('z') or
-                ord('0') <= ord(c) <= ord('9'))
+        return (
+            ord('A') <= ord(c) <= ord('Z')
+            or ord('a') <= ord(c) <= ord('z')
+            or ord('0') <= ord(c) <= ord('9')
+        )
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()
@@ -47,7 +49,7 @@ class Solution:
                     print(self.isPalindrome(case))
                 else:
                     self.isPalindrome(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -61,9 +63,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        'A man, a plan, a canal: Panama',
-        'race a car',
-        ' '
-    ]
+    test_cases = ['A man, a plan, a canal: Panama', 'race a car', ' ']
     test.quantify(test_cases)

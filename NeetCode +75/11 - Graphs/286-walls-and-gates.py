@@ -31,9 +31,12 @@ class Solution:
                 for dr, dc in dir:
                     r_new = r + dr
                     c_new = c + dc
-                    if r_new in range(ROWS) and c_new in range(COLS) \
-                            and (r_new, c_new) not in visited \
-                    and rooms[r_new][c_new] == inf:
+                    if (
+                        r_new in range(ROWS)
+                        and c_new in range(COLS)
+                        and (r_new, c_new) not in visited
+                        and rooms[r_new][c_new] == inf
+                    ):
                         rooms[r_new][c_new] = rooms[r][c] + 1
                         queue.append((r_new, c_new))
                         visited.add((r_new, c_new))
@@ -84,7 +87,7 @@ class Solution:
                     print(self.wallsAndGates(case))
                 else:
                     self.wallsAndGates(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -103,7 +106,7 @@ if __name__ == '__main__':
             [inf, -1, 0, inf],
             [inf, inf, inf, -1],
             [inf, -1, inf, -1],
-            [0, -1, inf, inf]
+            [0, -1, inf, inf],
         ]
     ]
     test.quantify(test_cases)

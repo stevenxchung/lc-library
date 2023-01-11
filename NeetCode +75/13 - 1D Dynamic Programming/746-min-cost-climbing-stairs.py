@@ -28,7 +28,7 @@ class Solution:
                     print(self.minCostClimbingStairs(case))
                 else:
                     self.minCostClimbingStairs(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -42,8 +42,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [10, 15, 20],
-        [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
-    ]
+    test_cases = [[10, 15, 20], [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]]
     test.quantify(test_cases)

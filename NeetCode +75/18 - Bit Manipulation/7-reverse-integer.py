@@ -9,17 +9,20 @@ from time import time
 
 class Solution:
     def reverse(self, x: int) -> int:
-        MIN = -2 ** 31
-        MAX = 2 ** 31 - 1
+        MIN = -(2**31)
+        MAX = 2**31 - 1
 
         res = 0
         while x:
             digit = int(math.fmod(x, 10))
             x = int(x / 10)
 
-            if res > MAX // 10 or res < MIN // 10 \
-                or (res == MAX // 10 and digit >= MAX % 10) \
-                    or (res == MIN // 10 and digit <= MIN % 10):
+            if (
+                res > MAX // 10
+                or res < MIN // 10
+                or (res == MAX // 10 and digit >= MAX % 10)
+                or (res == MIN // 10 and digit <= MIN % 10)
+            ):
                 return 0
             res = (res * 10) + digit
 
@@ -53,7 +56,7 @@ class Solution:
                     print(self.reverse(case))
                 else:
                     self.reverse(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -67,9 +70,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        123,
-        -123,
-        120
-    ]
+    test_cases = [123, -123, 120]
     test.quantify(test_cases)

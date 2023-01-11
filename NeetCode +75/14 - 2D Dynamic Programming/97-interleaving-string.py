@@ -53,7 +53,7 @@ class Solution:
                     print(self.isInterleave(*case))
                 else:
                     self.isInterleave(*case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -68,20 +68,8 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        (
-            'aabcc',
-            'dbbca',
-            'aadbbcbcac'
-        ),
-        (
-            'aabcc',
-            'dbbca',
-            'aadbbbaccc'
-        ),
-        (
-            '',
-            '',
-            ''
-        )
+        ('aabcc', 'dbbca', 'aadbbcbcac'),
+        ('aabcc', 'dbbca', 'aadbbbaccc'),
+        ('', '', ''),
     ]
     test.quantify(test_cases)

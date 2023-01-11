@@ -54,4 +54,4 @@ if __name__ == '__main__':
     test.get('foo', 4)
     # Return 'bar2'
     test.get('foo', 5)
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

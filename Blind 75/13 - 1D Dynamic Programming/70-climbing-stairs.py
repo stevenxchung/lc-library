@@ -12,7 +12,7 @@ class Solution:
 
     def climbStairs(self, n: int) -> int:
         if n not in self.dic:
-            self.dic[n] = self.climbStairs(n-1) + self.climbStairs(n-2)
+            self.dic[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
         return self.dic[n]
 
     def reference(self, n: int) -> int:
@@ -33,7 +33,7 @@ class Solution:
                     print(self.climbStairs(case))
                 else:
                     self.climbStairs(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -47,9 +47,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        2,
-        3,
-        4
-    ]
+    test_cases = [2, 3, 4]
     test.quantify(test_cases)

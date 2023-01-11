@@ -43,7 +43,7 @@ class Solution:
                     print(self.maxProfit(case))
                 else:
                     self.maxProfit(case)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -57,8 +57,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [
-        [7, 1, 5, 3, 6, 4],
-        [7, 6, 4, 3, 1]
-    ]
+    test_cases = [[7, 1, 5, 3, 6, 4], [7, 6, 4, 3, 1]]
     test.quantify(test_cases)

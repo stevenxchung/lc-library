@@ -15,8 +15,9 @@ class ListNode:
 
 
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode],
-                      list2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(
+        self, list1: Optional[ListNode], list2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         node = ListNode()
         p1 = node
         while list1 and list2:
@@ -35,7 +36,9 @@ class Solution:
 
         return node.next
 
-    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+    def mergeKLists(
+        self, lists: List[Optional[ListNode]]
+    ) -> Optional[ListNode]:
         # Handle edge case
         if not lists or len(lists) == 0:
             return None
@@ -73,7 +76,7 @@ class Solution:
                     print(self.mergeKLists(copy))
                 else:
                     self.mergeKLists(copy)
-        print(f'Runtime for our solution: {time() - sol_start}')
+        print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
@@ -93,9 +96,9 @@ if __name__ == '__main__':
         [
             ListNode(1, ListNode(4, ListNode(5))),
             ListNode(1, ListNode(3, ListNode(4))),
-            ListNode(2, ListNode(6))
+            ListNode(2, ListNode(6)),
         ],
         [],
-        [[]]
+        [[]],
     ]
     test.quantify(test_cases)

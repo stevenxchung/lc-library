@@ -36,16 +36,18 @@ class Twitter:
             if followee_id in self.tweets:
                 index = len(self.tweets[followee_id]) - 1
                 count, tweetId = self.tweets[followee_id][index]
-                heapq.heappush(min_heap,
-                               [count, tweetId, followee_id, index - 1])
+                heapq.heappush(
+                    min_heap, [count, tweetId, followee_id, index - 1]
+                )
 
         while min_heap and len(res) < 10:
             count, tweetId, followee_id, index = heapq.heappop(min_heap)
             res.append(tweetId)
             if index >= 0:
                 count, tweetId = self.tweets[followee_id][index]
-                heapq.heappush(min_heap,
-                               [count, tweetId, followee_id, index - 1])
+                heapq.heappush(
+                    min_heap, [count, tweetId, followee_id, index - 1]
+                )
 
         if self.debug:
             print(res)
@@ -77,4 +79,4 @@ if __name__ == '__main__':
     test.unfollow(1, 2)
     # User 1's news feed should return a list with 1 tweet id -> [5], since user 1 is no longer following user 2
     test.getNewsFeed(1)
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')

@@ -59,4 +59,4 @@ if __name__ == '__main__':
     test.add([11, 1])  # Testing, should not add another square
     test.add([3, 1])  # Testing, should not add another square
     test.count([11, 10])  # Return 2
-    print(f'Runtime for our solution: {time() - sol_start}')
+    print(f'Runtime for our solution: {time() - sol_start}\n')
