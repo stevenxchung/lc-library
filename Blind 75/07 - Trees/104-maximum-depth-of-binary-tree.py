@@ -19,7 +19,9 @@ class Solution:
         if not root:
             return 0
 
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+        return 1 + max(
+            self.recursiveDFS(root.left), self.recursiveDFS(root.right)
+        )
 
     def iterativeBFS(self, root: Optional[TreeNode]) -> int:
         if not root:
@@ -63,9 +65,9 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.maxDepth(case))
+                    print(self.recursiveDFS(case))
                 else:
-                    self.maxDepth(case)
+                    self.recursiveDFS(case)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
