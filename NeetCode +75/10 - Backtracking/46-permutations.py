@@ -7,6 +7,24 @@ from typing import List
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
+        res, seen = [], set()
+
+        def dfs(subset):
+            if len(subset) == len(nums):
+                res.append(subset[:])
+                return
+
+            for n in nums:
+                if n in seen:
+                    continue
+                seen.add(n)
+                dfs(subset + [n])
+                seen.remove(n)
+
+        dfs([])
+        return res
+
+    def reference(self, nums: List[int]) -> List[List[int]]:
         res = []
 
         def dfs(path: List[int], nums_list: List[int]):
@@ -17,24 +35,6 @@ class Solution:
                 dfs(path + [nums_list[i]], nums_list[:i] + nums_list[i + 1 :])
 
         dfs([], nums)
-        return res
-
-    def reference(self, nums: List[int]) -> List[List[int]]:
-        res = []
-
-        # Base case
-        if len(nums) == 1:
-            return [nums[:]]  # nums[:] is a deep copy
-
-        for i in range(len(nums)):
-            n = nums.pop(0)
-            perms = self.reference(nums)
-
-            for perm in perms:
-                perm.append(n)
-            res.extend(perms)
-            nums.append(n)
-
         return res
 
     def quantify(self, test_cases, runs=50000):
