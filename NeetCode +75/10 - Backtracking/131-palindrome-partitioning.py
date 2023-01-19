@@ -17,22 +17,20 @@ class Solution:
         return True
 
     def partition(self, s: str) -> List[List[str]]:
-        res, temp = [], []
+        res = []
 
-        def dfs(i: int):
-            if i >= len(s):
-                res.append(temp[:])
-                return
-            # Expand window on each iteration
+        def dfs(i, substr):
+            if i == len(s):
+                return res.append(substr[:])
+
             for j in range(i, len(s)):
-                if self.is_palindrome(s, i, j):
-                    # Add partition if palindrome
-                    temp.append(s[i : j + 1])
-                    # Repeat for each window size
-                    dfs(j + 1)
-                    temp.pop()
+                if s[i : j + 1] != s[i : j + 1][::-1]:
+                    # Skip if not palindrome
+                    continue
+                # Offset by index on each recursion
+                dfs(j + 1, substr + [s[i : j + 1]])
 
-        dfs(0)
+        dfs(0, [])
         return res
 
     def reference(self, s: str) -> List[List[str]]:
