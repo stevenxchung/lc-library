@@ -13,35 +13,33 @@ from typing import List
 
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        if not heights:
-            return []
-
         ROWS, COLS = len(heights), len(heights[0])
         pacific, atlantic = set(), set()
 
-        def dfs(r, c, land):
-            land.add((r, c))
-            directions = [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]
-            for r_next, c_next in directions:
-                if (
-                    r_next in range(ROWS)
-                    and c_next in range(COLS)
-                    and heights[r_next][c_next] >= heights[r][c]
-                    and (r_next, c_next) not in land
-                ):
-                    dfs(r_next, c_next, land)
+        def dfs(r, c, seen, prev_h):
+            # Note: from border, if new height is less then we reject
+            if (
+                r not in range(ROWS)
+                or c not in range(COLS)
+                or (r, c) in seen
+                or heights[r][c] < prev_h
+            ):
+                return
 
-        # Scan through bordering rows top to bottom
+            seen.add((r, c))
+            dfs(r + 1, c, seen, heights[r][c])
+            dfs(r - 1, c, seen, heights[r][c])
+            dfs(r, c + 1, seen, heights[r][c])
+            dfs(r, c - 1, seen, heights[r][c])
+
         for r in range(ROWS):
-            dfs(r, 0, pacific)
-            dfs(r, COLS - 1, atlantic)
+            dfs(r, 0, pacific, heights[r][0])
+            dfs(r, COLS - 1, atlantic, heights[r][COLS - 1])
 
-        # Scan through bordering cols left to right
         for c in range(COLS):
-            dfs(0, c, pacific)
-            dfs(ROWS - 1, c, atlantic)
+            dfs(0, c, pacific, heights[0][c])
+            dfs(ROWS - 1, c, atlantic, heights[ROWS - 1][c])
 
-        # If there is an intersection then path is valid
         return list(pacific.intersection(atlantic))
 
     def reference(self, heights: List[List[int]]) -> List[List[int]]:
