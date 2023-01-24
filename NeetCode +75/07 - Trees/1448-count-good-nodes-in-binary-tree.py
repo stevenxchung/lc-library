@@ -16,21 +16,20 @@ class TreeNode:
 
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        self.count = 0
+        res = [0]
 
-        def dfs(node: TreeNode, prev_val=-inf):
+        def dfs(node, prev_val):
             if not node:
                 return
-            if prev_val <= node.val:
-                self.count += 1
-                # Ensure new max is passed down
-                prev_val = node.val
 
-            dfs(node.left, prev_val)
-            dfs(node.right, prev_val)
+            if node.val >= prev_val:
+                res[0] += 1
+            max_val = max(node.val, prev_val)
+            dfs(node.left, max_val)
+            dfs(node.right, max_val)
 
-        dfs(root)
-        return self.count
+        dfs(root, -inf)
+        return res[0]
 
     def reference(self, root: TreeNode) -> int:
         def dfs(node, maxVal):
