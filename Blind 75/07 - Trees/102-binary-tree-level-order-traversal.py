@@ -18,18 +18,18 @@ class Solution:
         if not root:
             return []
 
-        res, q = [], [root]
-        while q:
+        res, queue = [], [root]
+        while queue:
             layer_values, next_layer = [], []
 
-            for node in q:
+            for node in queue:
                 layer_values.append(node.val)
                 if node.left:
                     next_layer.append(node.left)
                 if node.right:
                     next_layer.append(node.right)
 
-            q = next_layer
+            queue = next_layer
             res.append(layer_values)
 
         return res
