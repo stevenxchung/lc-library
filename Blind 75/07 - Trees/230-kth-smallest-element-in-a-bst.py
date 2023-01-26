@@ -14,21 +14,20 @@ class TreeNode:
 
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        res, kth = [0], [0]
+        res = []
 
         def dfs(node):
             if not node:
                 return
 
             dfs(node.left)
-            kth[0] += 1
-            if kth[0] == k:
-                res[0] = node.val
+            if len(res) == k:
                 return
+            res.append(node.val)
             dfs(node.right)
 
         dfs(root)
-        return res[0]
+        return res[-1]
 
     def reference(self, root: Optional[TreeNode], k: int) -> int:
         stack = []
