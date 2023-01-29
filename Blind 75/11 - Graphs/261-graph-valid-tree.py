@@ -13,26 +13,26 @@ class Solution:
 
         node_map = {i: [] for i in range(n)}
         for a, b in edges:
+            '''
+            Since we are checking if tree, assume edge is directed even though description says undirected, by doing so we do not have to track and skip previous node after visiting (false positive cycle)
+            '''
             node_map[a].append(b)
 
         visited = set()
 
-        def dfs(curr, prev):
+        def dfs(curr):
             if curr in visited:
                 return False
 
             visited.add(curr)
             for v in node_map[curr]:
-                if v == prev:
-                    # Skip if next node is prev
-                    continue
-                if not dfs(v, curr):
+                if not dfs(v):
                     # Cycle detected
                     return False
             return True
 
         # If there are more components or groups of nodes, len(visited) != n
-        return dfs(0, -1) and len(visited) == n
+        return dfs(0) and len(visited) == n
 
     def reference(self, n: int, edges: List[List[int]]) -> bool:
         if not n:
@@ -83,6 +83,8 @@ if __name__ == '__main__':
     test_cases = [
         (5, [[0, 1], [0, 2], [0, 3], [1, 4]]),
         # Additional
+        (5, [[0, 1], [0, 2], [0, 3], [1, 4], [0, 4]]),
         (7, [[0, 1], [0, 2], [3, 5], [5, 6], [1, 4]]),
+        (7, [[0, 1], [0, 2], [3, 5], [5, 6], [1, 4], [0, 4]]),
     ]
     test.quantify(test_cases)
