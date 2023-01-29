@@ -21,6 +21,15 @@ class Solution:
 
             return 1
 
+        return sum(dfs(i) for i in range(n) if i not in visited)
+
+    def countComponentsBFS(self, n: int, edges: List[List[int]]) -> int:
+        node_map = {i: [] for i in range(n)}
+        for a, b in edges:
+            node_map[a].append(b)
+
+        visited = set()
+
         def bfs(q):
             for node in q:
                 if node not in visited:
@@ -29,7 +38,6 @@ class Solution:
 
             return 1
 
-        return sum(dfs(i) for i in range(n) if i not in visited)
         return sum(bfs([i]) for i in range(n) if i not in visited)
 
     def countComponentsUnionFind(self, n: int, edges: List[List[int]]) -> int:
