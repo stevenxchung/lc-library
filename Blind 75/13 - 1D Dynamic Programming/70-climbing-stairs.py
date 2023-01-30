@@ -16,14 +16,16 @@ class Solution:
         return self.dic[n]
 
     def reference(self, n: int) -> int:
-        one, two = 1, 1
+        # Pointers will always be initialized to 1 and 1 during bottom-up
+        # as there is only 1 way to land at n when starting at n (0 step) or n - 1 (1 step)
+        p1, p2 = 1, 1
 
-        for i in range(n - 1):
-            temp = one
-            one += two
-            two = temp
+        for _ in range(n - 1):
+            temp = p1
+            p1 += p2
+            p2 = temp
 
-        return one
+        return p1
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()
