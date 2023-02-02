@@ -9,14 +9,14 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        prev = 0
-        curr = 0
-        # Every loop, calculate the maximum cumulative amount of money until current house
-        for i in nums:
-            # As the loop begins，curr represents dp[k-1]，prev represents dp[k-2]
-            # dp[k] = max{ dp[k-1], dp[k-2] + i }
-            prev, curr = curr, max(curr, prev + i)
-            # As the loop ends，curr represents dp[k]，prev represents dp[k-1]
+        # There are two choices:
+        # 1) Rob nums[i] + nums[i - 2] (current and before previous)
+        # 2) Rob nums[i - 1] (previous)
+        # The max of these two choices is the max profit
+        prev, curr = 0, 0
+        for n in nums:
+            # After optimizing for O(1) space
+            prev, curr = curr, max(curr, prev + n)
 
         return curr
 
