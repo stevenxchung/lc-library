@@ -10,8 +10,8 @@ from typing import List
 class Solution:
     def rob_helper(self, nums: List[int]) -> int:
         prev, curr = 0, 0
-        for i in nums:
-            prev, curr = curr, max(prev + i, curr)
+        for n in nums:
+            prev, curr = curr, max(prev + n, curr)
         return curr
 
     def rob(self, nums: List[int]) -> int:
