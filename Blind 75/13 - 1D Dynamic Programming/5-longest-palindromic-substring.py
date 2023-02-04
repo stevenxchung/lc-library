@@ -14,14 +14,9 @@ class Solution:
     def longestPalindrome(self, s: str) -> str:
         res = ''
         for i in range(len(s)):
-            # Odd string
-            palindrome = self.helper(s, i, i)
-            if len(palindrome) > len(res):
-                res = palindrome
-            # Even string
-            palindrome = self.helper(s, i, i + 1)
-            if len(palindrome) > len(res):
-                res = palindrome
+            res = max(
+                self.helper(s, i, i), self.helper(s, i, i + 1), res, key=len
+            )
 
         return res
 
