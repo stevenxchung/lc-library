@@ -25,14 +25,16 @@ class Solution:
         if not s or s[0] == '0':
             return 0
 
+        # The number of ways to decode at index 0 is 1
         prev, curr = 1, 1
         for i in range(1, len(s)):
             temp = curr
             if s[i] == '0':
+                # No possible decodings
                 curr = 0
             if s[i - 1] == '1' or (s[i - 1] == '2' and s[i] <= '6'):
+                # Adds n previous ways to decode
                 curr += prev
-
             prev = temp
 
         return curr
@@ -85,5 +87,7 @@ if __name__ == '__main__':
         # Additional
         '101',
         '888',
+        '2263',
+        '22226',
     ]
     test.quantify(test_cases)
