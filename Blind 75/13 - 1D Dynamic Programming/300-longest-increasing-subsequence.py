@@ -10,17 +10,18 @@ from typing import List
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         sub = []
-        for x in nums:
-            if len(sub) == 0 or sub[-1] < x:
-                sub.append(x)
+        for n in nums:
+            if len(sub) == 0 or sub[-1] < n:
+                sub.append(n)
             else:
-                # Find the index of the smallest number >= x
+                # Find the index of the smallest number >= n
                 idx = 0
-                for i, n in enumerate(sub):
-                    if sub[i] >= x:
+                for i, _ in enumerate(sub):
+                    if sub[i] >= n:
                         idx = i
                         break
-                sub[idx] = x  # Replace that number with x
+                # Replace that number with n
+                sub[idx] = n
         return len(sub)
 
     def reference(self, nums: List[int]) -> int:
@@ -58,5 +59,7 @@ if __name__ == '__main__':
         [10, 9, 2, 5, 3, 7, 101, 18],
         [0, 1, 0, 3, 2, 3],
         [7, 7, 7, 7, 7, 7, 7],
+        # Additional
+        [4, 10, 4, 3, 8, 9],
     ]
     test.quantify(test_cases)
