@@ -5,18 +5,25 @@ from time import time
 
 
 class Solution:
-    def helper(self, s: str, l: int, r: int) -> str:
-        while l >= 0 and r < len(s) and s[l] == s[r]:
-            l -= 1
-            r += 1
-        return s[l + 1 : r]
-
     def longestPalindrome(self, s: str) -> str:
-        res = ''
-        for i in range(len(s)):
-            res = max(
-                self.helper(s, i, i), self.helper(s, i, i + 1), res, key=len
-            )
+        IN_BOUNDS = range(len(s))
+        res = s[0]
+        for i in IN_BOUNDS:
+            # Odd palindromes
+            j = i
+            while i in IN_BOUNDS and j in IN_BOUNDS and s[i] == s[j]:
+                if len(s[i : j + 1]) > len(res):
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
+
+            # Even palindromes
+            j = i + 1
+            while i in IN_BOUNDS and j in IN_BOUNDS and s[i] == s[j]:
+                if len(s[i : j + 1]) > len(res):
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
 
         return res
 
