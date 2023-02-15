@@ -6,12 +6,11 @@ from time import time
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        IN_BOUNDS = range(len(s))
         res = s[0]
-        for i in IN_BOUNDS:
+        for i in range(len(s)):
             # Odd palindromes
             j = i
-            while i in IN_BOUNDS and j in IN_BOUNDS and s[i] == s[j]:
+            while i >= 0 and j < len(s) and s[i] == s[j]:
                 if len(s[i : j + 1]) > len(res):
                     res = s[i : j + 1]
                 i -= 1
@@ -19,7 +18,7 @@ class Solution:
 
             # Even palindromes
             j = i + 1
-            while i in IN_BOUNDS and j in IN_BOUNDS and s[i] == s[j]:
+            while i >= 0 and j < len(s) and s[i] == s[j]:
                 if len(s[i : j + 1]) > len(res):
                     res = s[i : j + 1]
                 i -= 1
