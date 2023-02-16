@@ -7,16 +7,15 @@ from time import time
 class Solution:
     def countSubstrings(self, s: str) -> int:
         res = 0
-        # Odds
         for i in range(len(s)):
+            # Odd palindromes
             j = i
             while i >= 0 and j < len(s) and s[i] == s[j]:
                 res += 1
                 i -= 1
                 j += 1
 
-        # Evens
-        for i in range(len(s)):
+            # Even palindromes
             j = i + 1
             while i >= 0 and j < len(s) and s[i] == s[j]:
                 res += 1
