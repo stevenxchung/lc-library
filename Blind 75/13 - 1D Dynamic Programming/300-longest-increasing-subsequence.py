@@ -11,12 +11,13 @@ class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         sub = []
         for n in nums:
-            if len(sub) == 0 or sub[-1] < n:
+            # Binary search + DP
+            if len(sub) == 0 or n > sub[-1]:
                 sub.append(n)
             else:
                 # Find the index of the smallest number >= n
                 idx = 0
-                for i, _ in enumerate(sub):
+                for i in range(len(sub)):
                     if sub[i] >= n:
                         idx = i
                         break
