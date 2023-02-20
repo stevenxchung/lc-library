@@ -12,7 +12,7 @@ from time import time
 
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        cache = [[0] * len(text2) for i in range(len(text1))]
+        cache = [[0] * len(text2) for _ in range(len(text1))]
 
         for i in range(len(text1)):
             for j in range(len(text2)):
