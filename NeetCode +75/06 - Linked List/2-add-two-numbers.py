@@ -39,7 +39,7 @@ class Solution:
         self, l1: Optional[ListNode], l2: Optional[ListNode]
     ) -> Optional[ListNode]:
         dummy = ListNode()
-        cur = dummy
+        curr = dummy
 
         carry = 0
         while l1 or l2 or carry:
@@ -50,10 +50,10 @@ class Solution:
             val = v1 + v2 + carry
             carry = val // 10
             val = val % 10
-            cur.next = ListNode(val)
+            curr.next = ListNode(val)
 
             # Update pointers
-            cur = cur.next
+            curr = curr.next
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
 
