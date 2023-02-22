@@ -31,12 +31,12 @@ class Solution:
                 count += 1
             if count == k:
                 # If size k satisfied, reverse the inner linked list
-                pre, cur = r, l
+                prev, curr = r, l
                 for _ in range(k):
                     # Reverse
-                    cur.next, pre, cur = pre, cur, cur.next
+                    curr.next, prev, curr = prev, curr, curr.next
                 # Connect two k-groups
-                jump.next, jump, l = pre, l, r
+                jump.next, jump, l = prev, l, r
             else:
                 return node.next
 
