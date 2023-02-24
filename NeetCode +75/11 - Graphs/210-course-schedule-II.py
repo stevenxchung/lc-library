@@ -14,16 +14,16 @@ class Solution:
     def findOrder(
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> List[int]:
-        preq = {i: set() for i in range(numCourses)}
+        prereq_map = {i: set() for i in range(numCourses)}
         # Create a graph for adjacency and traversing
         graph = defaultdict(set)
         for i, j in prerequisites:
-            preq[i].add(j)
+            prereq_map[i].add(j)
             graph[j].add(i)
 
         q = deque([])
         # Find starting location based on courses with no prereq
-        for k, v in preq.items():
+        for k, v in prereq_map.items():
             if len(v) == 0:
                 q.append(k)
 
@@ -36,9 +36,9 @@ class Solution:
 
             for next_course in graph[pre]:
                 # Remove prereq from the next course
-                preq[next_course].remove(pre)
+                prereq_map[next_course].remove(pre)
                 # Taken all requirements so add next course to queue
-                if not preq[next_course]:
+                if not prereq_map[next_course]:
                     q.append(next_course)
 
         return []
