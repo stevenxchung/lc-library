@@ -16,30 +16,31 @@ from typing import List
 class Solution:
     def wallsAndGates(self, rooms: List[List[int]]) -> List[List[int]]:
         ROWS, COLS = len(rooms), len(rooms[0])
-        visited = set()
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        seen = set()
         queue = []
 
         for r in range(ROWS):
             for c in range(COLS):
                 if rooms[r][c] == 0:
-                    queue.append((r, c))
+                    queue.append((r, c, 0))
 
-        dir = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         while queue:
-            for i in range(len(queue)):
-                r, c = queue.pop(0)
-                for dr, dc in dir:
-                    r_new = r + dr
-                    c_new = c + dc
+            for _ in queue:
+                r1, c1, d1 = queue.pop(0)
+                for dr, dc in directions:
+                    r2, c2 = r1 + dr, c1 + dc
                     if (
-                        r_new in range(ROWS)
-                        and c_new in range(COLS)
-                        and (r_new, c_new) not in visited
-                        and rooms[r_new][c_new] == inf
+                        r2 not in range(ROWS)
+                        or c2 not in range(COLS)
+                        or (r2, c2) in seen
+                        or rooms[r2][c2] != inf
                     ):
-                        rooms[r_new][c_new] = rooms[r][c] + 1
-                        queue.append((r_new, c_new))
-                        visited.add((r_new, c_new))
+                        continue
+                    d2 = d1 + 1
+                    rooms[r2][c2] = d2
+                    seen.add((r2, c2, d2))
+                    queue.append((r2, c2, d2))
 
         return rooms
 
