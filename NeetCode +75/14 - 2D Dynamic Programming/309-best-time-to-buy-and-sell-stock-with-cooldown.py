@@ -7,36 +7,24 @@ After you sell your stock, you cannot buy stock on the next day (i.e., cooldown 
 
 Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
 '''
+from math import inf
 from time import time
 from typing import List
 
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        if len(prices) <= 1:
-            return 0
-
-        cache = {}
-
-        def dfs(i, buying):
-            if i >= len(prices):
-                return 0
-            if (i, buying) in cache:
-                return cache[(i, buying)]
-
-            # Determine cooldown first
-            cooldown = dfs(i + 1, buying)
-            if buying:
-                buy = dfs(i + 1, not buying) - prices[i]
-                cache[(i, buying)] = max(buy, cooldown)
-            else:
-                # Otherwise selling
-                sell = dfs(i + 2, not buying) + prices[i]
-                cache[(i, buying)] = max(sell, cooldown)
-
-            return cache[(i, buying)]
-
-        return dfs(0, True)
+        # Cooldown has no stock while holding does
+        cooldown, sell, hold = 0, 0, -inf
+        for price in prices:
+            # Store previous prices for reference
+            prev_cooldown, prev_sell, prev_hold = cooldown, sell, hold
+            # New prices are based on previous prices and/or current price
+            cooldown = max(prev_cooldown, prev_sell)
+            sell = prev_hold + price
+            hold = max(prev_hold, prev_cooldown - price)
+        # Can only sell or cooldown at end state
+        return max(sell, cooldown)
 
     def reference(self, prices: List[int]) -> int:
         # State: Buying or Selling?
