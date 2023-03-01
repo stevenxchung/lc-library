@@ -7,23 +7,22 @@ from typing import List
 
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        if sum(nums) % 2:
+        total = sum(nums)
+        target = total / 2
+        if total % 2 != 0:
+            # Not possible for equal subsets to sum to odd total
             return False
 
-        cache = set()
-        cache.add(0)
-        target = sum(nums) // 2
-
-        for i in range(len(nums) - 1, -1, -1):
-            temp_cache = set()
-            for t in cache:
-                if (t + nums[i]) == target:
+        seen = set()
+        seen.add(0)
+        for n in nums:
+            for s in list(seen):
+                seen.add(s + n)
+                if target in seen:
+                    # Early exit if target found
                     return True
-                temp_cache.add(t + nums[i])
-                temp_cache.add(t)
-            cache = temp_cache
 
-        return True if target in cache else False
+        return False
 
     def reference(self, nums: List[int]) -> bool:
         if sum(nums) % 2:
