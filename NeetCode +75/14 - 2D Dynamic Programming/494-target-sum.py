@@ -7,27 +7,26 @@ You want to build an expression out of nums by adding one of the symbols '+' and
 
 Return the number of different expressions that you can build, which evaluates to target.
 '''
+from collections import defaultdict
 from time import time
 from typing import List
 
 
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        cache = {}
+        if not nums or sum(nums) < target:
+            return 0
 
-        def dfs(i, total):
-            if i == len(nums):
-                return 1 if total == target else 0
-            if (i, total) in cache:
-                return cache[(i, total)]
+        cache = {0: 1}  # {total : count}
+        for n in nums:
+            # Build new cache based on possible decisions (+ or -)
+            temp = defaultdict(int)
+            for k in cache:
+                temp[k + n] += cache[k]
+                temp[k - n] += cache[k]
+            cache = temp
 
-            cache[(i, total)] = dfs(i + 1, total + nums[i]) + dfs(
-                i + 1, total - nums[i]
-            )
-
-            return cache[(i, total)]
-
-        return dfs(0, 0)
+        return cache[target]
 
     def reference(self, nums: List[int], target: int) -> int:
         dp = {}  # (index, total) -> # of ways
