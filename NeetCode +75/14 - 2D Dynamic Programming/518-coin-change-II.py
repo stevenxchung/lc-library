@@ -15,10 +15,10 @@ class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
         cache = [0] * (amount + 1)
         cache[0] = 1
-        for coin in coins:
-            for i in range(1, amount + 1):
-                if i - coin >= 0:
-                    cache[i] += cache[i - coin]
+        for c in coins:
+            for a in range(1, amount + 1):
+                if a - c >= 0:
+                    cache[a] += cache[a - c]
 
         return cache[-1]
 
