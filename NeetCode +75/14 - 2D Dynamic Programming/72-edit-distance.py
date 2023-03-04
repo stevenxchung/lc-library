@@ -16,16 +16,16 @@ class Solution:
         h, w = len(word1) + 1, len(word2) + 1
         cache = [i for i in range(w)]
         for i in range(1, h):
-            cur = [i for _ in range(w)]
+            curr = [i for _ in range(w)]
             for j in range(1, w):
                 # Sub-operation is based on min of previous operations
-                cur[j] = min(
+                curr[j] = min(
                     cache[j - 1] + (word1[i - 1] != word2[j - 1]),
                     cache[j] + 1,
-                    cur[j - 1] + 1,
+                    curr[j - 1] + 1,
                 )
             # Update cache after each loop
-            cache = cur
+            cache = curr
 
         return cache[-1]
 
