@@ -9,32 +9,26 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        if len(nums) < 3:
-            return []
-
         res = []
-        seen = set()
         nums.sort()
-        for i, a in enumerate(nums):
-            if a in seen:
-                # Ignore same number
+        for i in range(len(nums) - 2):
+            if i > 0 and nums[i] == nums[i - 1]:
+                # Skip duplicates
                 continue
-            j, k = i + 1, len(nums) - 1
-            while j < k:
-                sum = a + nums[j] + nums[k]
-                if sum > 0:
-                    # Decrease k if greater
-                    k -= 1
-                elif sum < 0:
-                    # Increase j if less
-                    j += 1
+
+            l, r = i + 1, len(nums) - 1
+            while l < r:
+                total = nums[i] + nums[l] + nums[r]
+                if total == 0:
+                    res.append([nums[i], nums[l], nums[r]])
+                    l += 1
+                    while nums[l] == nums[l - 1] and l < r:
+                        # Skip duplicates
+                        l += 1
+                elif total < 0:
+                    l += 1
                 else:
-                    res.append([a, nums[j], nums[k]])
-                    j += 1
-                    # Additionally, increment if we encounter same number
-                    while nums[j] in seen and j < k:
-                        j += 1
-            seen.add(a)
+                    r -= 1
         return res
 
     def reference(self, nums: List[int]) -> List[List[int]]:
@@ -81,5 +75,5 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [[-1, 0, 1, 2, -1, -4], [], [0], [0, 0, 0]]
+    test_cases = [[-1, 0, 1, 2, -1, -4], [], [0], [0, 0, 0], [0, 0, 0, 0]]
     test.quantify(test_cases)
