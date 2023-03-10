@@ -12,16 +12,13 @@ from typing import List
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         max_profit = 0
-        i = 0
-        j = i + 1
-        while i < len(prices) and j < len(prices):
-            profit = prices[j] - prices[i]
-            if profit < 0:
-                i = j
+        l = 0
+        for r in range(1, len(prices)):
+            if prices[l] > prices[r]:
+                # Reset when profit negative
+                l = r
                 continue
-            elif profit > 0 and profit > max_profit:
-                max_profit = profit
-            j += 1
+            max_profit = max(max_profit, prices[r] - prices[l])
 
         return max_profit
 
