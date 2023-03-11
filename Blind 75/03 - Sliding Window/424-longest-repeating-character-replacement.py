@@ -3,22 +3,26 @@ You are given a string s and an integer k. You can choose any character of the s
 
 Return the length of the longest substring containing the same letter you can get after performing the above operations.
 '''
+from collections import defaultdict
 from time import time
 
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        l, res, most_freq_c = 0, 0, 0
-        count = {}
+        char_count = defaultdict(int)
+        most_freq_c = 0
+        res = 0
+        l = 0
         for r in range(len(s)):
-            count[s[r]] = 1 + count.get(s[r], 0)
-            most_freq_c = max(most_freq_c, count[s[r]])
+            char_count[s[r]] += 1
+            most_freq_c = max(most_freq_c, char_count[s[r]])
 
             if (r - l + 1) - most_freq_c > k:
-                count[s[l]] -= 1
+                # Shrink window if replacements exceeds limit
+                char_count[s[l]] -= 1
                 l += 1
 
-            res = max(res, r - l + 1)
+            res = r - l + 1
 
         return res
 
@@ -65,10 +69,10 @@ if __name__ == '__main__':
         ('ABAB', 2),
         ('AABABBA', 1),
         # Additional
-        # ('AAABAAABAAAB', 1),
-        # ('BBAABBAABBAA', 2),
-        # ('AAAABAAAABAA', 3),
-        # ('XXYYZZXXYYZZ', 4),
-        # ('AAABBCAAABBC', 5)
+        ('AAABAAABAAAB', 1),
+        ('BBAABBAABBAA', 2),
+        ('AAAABAAAABAA', 3),
+        ('XXYYZZXXYYZZ', 4),
+        ('AAABBCAAABBC', 5),
     ]
     test.quantify(test_cases)
