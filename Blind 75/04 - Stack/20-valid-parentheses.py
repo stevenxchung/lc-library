@@ -16,16 +16,13 @@ class Solution:
         for c in s:
             if c in pair:
                 stack.append(c)
-            elif pair[stack[-1]] == c:
-                stack.pop()
-            elif pair[stack[-1]] != c:
+                continue
+            if len(stack) == 0 or c != pair[stack[-1]]:
+                # Invalid if adding closing bracket to empty stack or if mismatched
                 return False
+            stack.pop()
 
-        # Check edge case
-        if len(stack) > 0:
-            return False
-
-        return True
+        return len(stack) == 0
 
     def reference(self, s: str) -> bool:
         bracket_map = {')': '(', ']': '[', '}': '{'}
@@ -70,5 +67,6 @@ if __name__ == '__main__':
         # Additional
         '(()',
         '[()',
+        '(])',
     ]
     test.quantify(test_cases)
