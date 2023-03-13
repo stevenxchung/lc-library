@@ -3,33 +3,29 @@ Given two strings s1 and s2, return true if s2 contains a permutation of s1, or 
 
 In other words, return true if one of s1's permutations is the substring of s2.
 '''
+from collections import defaultdict
 from time import time
 
 
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s2) < len(s1):
-            return False
-
-        p1, p2 = 0, len(s1) - 1
-        s1_count = {}
+        c1_count, c2_count = defaultdict(int), defaultdict(int)
         for c in s1:
-            if c not in s1_count:
-                s1_count[c] = 1
-            else:
-                s1_count[c] += 1
+            c1_count[c] += 1
 
-        while p2 < len(s2):
-            word_count = {}
-            for c in s2[p1 : p2 + 1]:
-                if c not in word_count:
-                    word_count[c] = 1
-                else:
-                    word_count[c] += 1
-            if s1_count == word_count:
+        l = 0
+        for r in range(len(s2)):
+            c2_count[s2[r]] += 1
+            if r >= len(s1):
+                # Shift left pointer when window length exceeded
+                c2_count[s2[l]] -= 1
+                if c2_count[s2[l]] == 0:
+                    # Remove entry if zero
+                    del c2_count[s2[l]]
+                l += 1
+
+            if c1_count == c2_count:
                 return True
-            p1 += 1
-            p2 += 1
 
         return False
 
