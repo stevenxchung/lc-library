@@ -18,8 +18,11 @@ class Solution:
     ) -> bool:
         target_placeholder = [0, 0, 0]
         for tri in triplets:
+            # Skip triplet if any number is greater than target
             if tri[0] > target[0] or tri[1] > target[1] or tri[2] > target[2]:
                 continue
+
+            # Save numbers that equal target - it's possible to make that combination
             if tri[0] == target[0]:
                 target_placeholder[0] = tri[0]
             if tri[1] == target[1]:
