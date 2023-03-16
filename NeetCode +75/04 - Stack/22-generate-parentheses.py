@@ -14,24 +14,20 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
 
-        def dfs(n_open, n_closed, s=''):
-            if n_closed == 0:
-                res.append(s)
+        def dfs(n_left, n_right, par):
+            if n_left == n_right == 0:
+                res.append(par)
                 return
+            if n_left > 0:
+                # Add left when available
+                dfs(n_left - 1, n_right, par + '(')
+            if n_left < n_right:
+                # Add right only if left was used more times
+                dfs(n_left, n_right - 1, par + ')')
 
-            elif n_open == 0:
-                # Add a closed parentheses
-                dfs(n_open, n_closed - 1, s + ')')
+            return
 
-            elif n_open == n_closed:
-                # Add an open parentheses
-                dfs(n_open - 1, n_closed, s + '(')
-            else:
-                # Add both parentheses
-                dfs(n_open - 1, n_closed, s + '(')
-                dfs(n_open, n_closed - 1, s + ')')
-
-        dfs(n, n)
+        dfs(n, n, '')
         return res
 
     def reference(self, n: int) -> List[str]:
