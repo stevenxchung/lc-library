@@ -13,17 +13,16 @@ from typing import List
 
 class Solution:
     def jump(self, nums: List[int]) -> bool:
-        N, i, j, step = len(nums), 0, 0, 0
-        while j < N - 1:
-            step += 1
-            max_jump = j + 1
-            for i in range(i, j + 1):
-                if i + nums[i] >= N - 1:
-                    return step
-                max_jump = max(max_jump, i + nums[i])
-            i, j = j + 1, max_jump
-
-        return step
+        l, r = 0, 0
+        res = 0
+        # Greedy "BFS", move l and r window to max position
+        while r < len(nums) - 1:
+            j_max = 0
+            for i in range(l, r + 1):
+                j_max = max(j_max, i + nums[i])
+            l, r = r + 1, j_max
+            res += 1
+        return res
 
     def reference(self, nums: List[int]) -> bool:
         l, r = 0, 0
