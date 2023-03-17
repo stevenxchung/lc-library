@@ -20,16 +20,18 @@ class Solution:
         self, target: int, position: List[int], speed: List[int]
     ) -> int:
         # A car in front always remains ahead and car in back always remains behind
-        arr = [(position[i], speed[i]) for i in range(len(position))]
-        arr.sort(reverse=True)
+        ordered = []  # (x, s)
+        for i, x in enumerate(position):
+            ordered.append((x, speed[i]))
+        ordered.sort(reverse=True)
 
         # Stack to capture unique number of fleets
         stack = []
-        for x, x_prime in arr:
+        for x, s in ordered:
             # Time it takes to get to target given position and speed
-            t = (target - x) / x_prime
+            t = (target - x) / s
             # When stack is empty or car behind slower than car in front
-            if len(stack) == 0 or t > stack[-1]:
+            if not stack or t > stack[-1]:
                 stack.append(t)
 
         return len(stack)
