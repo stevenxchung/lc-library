@@ -11,6 +11,7 @@ class Solution:
     def search(self, nums: List[int], target: int) -> int:
         l, r = 0, len(nums) - 1
         while l <= r:
+            # Determine middle index first then compare target
             m = (l + r) // 2
             if target > nums[m]:
                 l = m + 1
