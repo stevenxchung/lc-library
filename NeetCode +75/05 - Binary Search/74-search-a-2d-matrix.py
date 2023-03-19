@@ -10,35 +10,26 @@ from typing import List
 
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        # Find which row to do binary search on
-        row = None
-        top, bottom = 0, len(matrix) - 1
-        while top <= bottom:
-            m_row = (top + bottom) // 2
-            if target < matrix[m_row][0]:
-                bottom = m_row - 1
-            elif target > matrix[m_row][-1]:
-                top = m_row + 1
+        t_row, b_row = 0, len(matrix) - 1
+        l_col, r_col = 0, len(matrix[0]) - 1
+        while t_row <= b_row:
+            m_row = (t_row + b_row) // 2
+            if target < matrix[m_row][l_col]:
+                # Target could be in row above
+                b_row = m_row - 1
+            elif target > matrix[m_row][r_col]:
+                # Target could be in row below
+                t_row = m_row + 1
             else:
-                row = matrix[m_row]
-                break
-
-        # Target not found
-        if not row:
-            return False
-
-        # Row found, now do binary search on row
-        l, r = 0, len(matrix[0]) - 1
-        while l <= r:
-            m = (l + r) // 2
-            if target < row[m]:
-                r = m - 1
-            elif target > row[m]:
-                l = m + 1
-            else:
-                return True
-
-        return False
+                # Target could be in current row
+                while l_col <= r_col:
+                    m_col = (l_col + r_col) // 2
+                    if target < matrix[m_row][m_col]:
+                        r_col = m_col - 1
+                    elif target > matrix[m_row][m_col]:
+                        l_col = m_col + 1
+                    else:
+                        return True
 
     def reference(self, matrix: List[List[int]], target: int) -> bool:
         ROWS, COLS = len(matrix), len(matrix[0])
