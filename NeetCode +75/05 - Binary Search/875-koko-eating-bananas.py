@@ -14,7 +14,7 @@ from typing import List
 
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        # Find minimum k given h
+        # Find minimum k bananas to eat given h time to finish
         l, r = 1, max(piles)
         res = r
         while l <= r:
