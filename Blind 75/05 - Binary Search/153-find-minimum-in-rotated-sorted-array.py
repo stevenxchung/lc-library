@@ -21,10 +21,13 @@ class Solution:
         while l < r:
             m = (l + r) // 2
             if nums[m] > nums[r]:
+                # Min is on the right side
                 l = m + 1
             else:
+                # Min is on the left side
                 r = m
 
+        # Since sorted, min is always on left index
         return nums[l]
 
     def reference(self, nums: List[int]) -> int:
@@ -67,5 +70,11 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [[3, 4, 5, 1, 2], [4, 5, 6, 7, 0, 1, 2], [11, 13, 15, 17]]
+    test_cases = [
+        [3, 4, 5, 1, 2],
+        [4, 5, 6, 7, 0, 1, 2],
+        [11, 13, 15, 17],
+        # Additional
+        [4, 5, 1, 2, 3],
+    ]
     test.quantify(test_cases)
