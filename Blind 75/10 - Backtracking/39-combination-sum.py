@@ -13,25 +13,20 @@ class Solution:
     def combinationSum(
         self, candidates: List[int], target: int
     ) -> List[List[int]]:
-        '''
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
-        '''
-        res = []
         candidates.sort()
+        res = []
 
-        def dfs(target: int, index: int, path: List):
-            if target < 0:
+        def dfs(i, subset, total):
+            if total == target:
+                res.append(subset[:])
+                return
+            if total > target:
                 # Backtracking
                 return
-            if target == 0:
-                res.append(path)
-                return
-            for i in range(index, len(candidates)):
-                dfs(target - candidates[i], i, path + [candidates[i]])
+            for j in range(i, len(candidates)):
+                dfs(j, subset + [candidates[j]], total + candidates[j])
 
-        dfs(target, 0, [])
+        dfs(0, [], 0)
         return res
 
     def reference(self, candidates: List[int], target: int) -> List[List[int]]:
