@@ -13,25 +13,23 @@ class Solution:
     def combinationSum2(
         self, candidates: List[int], target: int
     ) -> List[List[int]]:
-        res = []
         candidates.sort()
+        res = []
 
-        def dfs(i, subset):
-            if sum(subset) == target:
+        def dfs(i, subset, total):
+            if total == target:
                 res.append(subset[:])
-                return
-            if sum(subset) > target:
                 return
 
             prev = None
             for j in range(i, len(candidates)):
-                # Skip element if same as previous or if over target
-                if candidates[j] == prev or candidates[j] > target:
+                if candidates[j] == prev or total + candidates[j] > target:
+                    # Skip if same as previous value or if over target
                     continue
-                dfs(j + 1, subset + [candidates[j]])
+                dfs(j + 1, subset + [candidates[j]], total + candidates[j])
                 prev = candidates[j]
 
-        dfs(0, [])
+        dfs(0, [], 0)
         return res
 
     def reference(self, candidates: List[int], target: int) -> List[List[int]]:
