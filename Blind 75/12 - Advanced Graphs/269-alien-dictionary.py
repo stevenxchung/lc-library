@@ -8,40 +8,42 @@ from typing import List
 class Solution:
     def alienOrder(self, words: List[str]) -> str:
         alien_dict = {c: set() for w in words for c in w}
-        # Build graph according to alien alphabet
-        for i in range(len(words) - 1):
-            w1, w2 = words[i], words[i + 1]
-            min_length = min(len(w1), len(w2))
-            if len(w1) > len(w2) and w1[:min_length] == w2[:min_length]:
-                # Not in sorted order
+        for i in range(1, len(words)):
+            w1, w2 = words[i - 1], words[i]
+            if w1[0] == w2[0] and len(w1) > len(w2):
+                # First word cannot start with same char and be longer
                 return ''
-            for j in range(min_length):
-                if w1[j] != w2[j]:
-                    # Add ordering
-                    alien_dict[w1[j]].add(w2[j])
+            for k in range(len(w1)):
+                if w1[k] != w2[k]:
+                    alien_dict[w1[k]].add(w2[k])
                     break
 
-        # False == visited, True == current path
-        visited = {}
+        # True == current path, False == visited
+        path_map = {}
         res = []
 
         def dfs(c):
-            if c in visited:
-                return visited[c]
+            if c in path_map:
+                return path_map[c]
 
-            visited[c] = True
-            for neighbor in alien_dict[c]:
-                if dfs(neighbor):
+            path_map[c] = True
+            for nei in alien_dict[c]:
+                if dfs(nei):
                     # Loop exists
                     return True
-            visited[c] = False
+            path_map[c] = False
             res.append(c)
 
+            return False
+
         for c in alien_dict:
+            if c in path_map:
+                continue
             if dfs(c):
+                # Loop exists
                 return ''
 
-        # Since we did post-order DFS
+        # Reverse due to post-order DFS
         res.reverse()
         return ''.join(res)
 
