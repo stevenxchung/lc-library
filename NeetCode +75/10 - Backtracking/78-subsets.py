@@ -13,7 +13,7 @@ class Solution:
 
         def dfs(i: int, subset: List[int]):
             if i == len(nums):
-                res.append(subset.copy())
+                res.append(subset[:])
                 return
 
             dfs(i + 1, subset + [nums[i]])
