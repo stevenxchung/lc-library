@@ -14,21 +14,19 @@ class Solution:
         self, intervals: List[List[int]], newInterval: List[int]
     ) -> List[List[int]]:
         res = []
-        for i in range(len(intervals)):
-            if newInterval[1] < intervals[i][0]:
-                # New interval is less than upcoming interval
+        for i, (s, e) in enumerate(intervals):
+            if newInterval[-1] < s:
+                # New interval comes before current
                 res.append(newInterval)
                 return res + intervals[i:]
-            elif newInterval[0] > intervals[i][1]:
-                # New interval is greater than upcoming interval
-                res.append(intervals[i])
+            elif e < newInterval[0]:
+                # Current comes before new interval
+                res.append([s, e])
             else:
-                # Otherwise, interval overlaps
-                newInterval = [
-                    min(newInterval[0], intervals[i][0]),
-                    max(newInterval[1], intervals[i][1]),
-                ]
+                # Redefine new interval
+                newInterval = [min(s, newInterval[0]), max(e, newInterval[-1])]
 
+        # New interval is at the end
         res.append(newInterval)
         return res
 
