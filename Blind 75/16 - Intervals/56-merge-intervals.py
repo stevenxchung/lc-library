@@ -8,11 +8,13 @@ from typing import List
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         res = []
-        for interval in sorted(intervals, key=lambda i: i[0]):
-            if res and interval[0] <= res[-1][1]:
-                res[-1][1] = max(res[-1][1], interval[1])
+        for start, end in intervals:
+            if res and res[-1][1] >= start:
+                # Only need to merge with last added interval
+                res[-1][1] = max(res[-1][1], end)
             else:
-                res.append(interval)
+                res.append([start, end])
+
         return res
 
     def reference(self, intervals: List[List[int]]) -> List[List[int]]:
