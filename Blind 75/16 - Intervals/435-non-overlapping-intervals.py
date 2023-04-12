@@ -8,17 +8,20 @@ from typing import List
 
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
-        count = 0
-        prev_end = -inf
         intervals.sort()
-        for (start, end) in intervals:
-            if prev_end and prev_end > start:
-                count += 1
-                prev_end = min(prev_end, end)
-            else:
+        res = 0
+        prev_end = intervals[0][-1]
+        for i in range(1, len(intervals)):
+            start, end = intervals[i][0], intervals[i][-1]
+            if prev_end <= start:
+                # There is no overlap
                 prev_end = end
+            else:
+                # There is an overlap, take the minimum of endpoints
+                prev_end = min(prev_end, end)
+                res += 1
 
-        return count
+        return res
 
     def reference(self, intervals: List[List[int]]) -> int:
         intervals.sort()
