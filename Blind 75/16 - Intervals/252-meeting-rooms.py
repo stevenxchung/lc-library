@@ -3,14 +3,14 @@
 '''
 from math import inf
 from time import time
-from typing import List
+from typing import List, Tuple
 
 
 class Solution:
-    def canAttendMeetings(self, intervals: List[List[int]]) -> int:
+    def canAttendMeetings(self, intervals: List[Tuple[int, int]]) -> bool:
         prev_end = -inf
         intervals.sort()
-        for start, end in intervals:
+        for _, end in intervals:
             if prev_end > end:
                 return False
             else:
@@ -18,7 +18,7 @@ class Solution:
 
         return True
 
-    def reference(self, intervals: List[List[int]]) -> int:
+    def reference(self, intervals: List[Tuple[int, int]]) -> bool:
         intervals.sort(key=lambda i: i[0])
 
         for i in range(1, len(intervals)):
@@ -52,8 +52,8 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        # [(0, 30), (5, 10), (15, 20)],
+        [(0, 30), (5, 10), (15, 20)],
         # Additional
-        [(5, 10), (15, 20), (0, 30)]
+        [(5, 10), (15, 20), (0, 30)],
     ]
     test.quantify(test_cases)
