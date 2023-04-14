@@ -2,25 +2,26 @@
 *LeetCode premium problem
 '''
 from time import time
-from typing import List
+from typing import List, Tuple
 
 
 class Solution:
-    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        # We always need at least one room
-        rooms = 1
+    def minMeetingRooms(self, intervals: List[Tuple[int, int]]) -> int:
+        if not intervals:
+            return 0
+
         intervals.sort()
+        # If there are meetings we always need at least one room
+        res = 1
         for i in range(1, len(intervals)):
-            i1 = intervals[i - 1]
-            i2 = intervals[i]
+            prev, curr = intervals[i - 1], intervals[i]
+            if prev[-1] > curr[0]:
+                # Need new conference room if overlap found
+                res += 1
 
-            if i1[1] > i2[0]:
-                # Need new meeting room if overlapping
-                rooms += 1
+        return res
 
-        return rooms
-
-    def reference(self, intervals: List[List[int]]) -> int:
+    def reference(self, intervals: List[Tuple[int, int]]) -> int:
         start = sorted([i[0] for i in intervals])
         end = sorted([i[1] for i in intervals])
 
@@ -59,8 +60,10 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        # [(0, 30), (5, 10), (15, 20)],
+        [(0, 30), (5, 10), (15, 20)],
         # Additional
-        [(5, 10), (15, 20), (0, 30)]
+        [(5, 10), (15, 20), (0, 30)],
+        [(0, 1)],
+        [],
     ]
     test.quantify(test_cases)
