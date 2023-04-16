@@ -14,17 +14,20 @@ class Solution:
         self, intervals: List[List[int]], newInterval: List[int]
     ) -> List[List[int]]:
         res = []
-        for i, (s, e) in enumerate(intervals):
-            if newInterval[-1] < s:
+        for i, (start, end) in enumerate(intervals):
+            if newInterval[-1] < start:
                 # New interval comes before current
                 res.append(newInterval)
                 return res + intervals[i:]
-            elif e < newInterval[0]:
+            elif end < newInterval[0]:
                 # Current comes before new interval
-                res.append([s, e])
+                res.append([start, end])
             else:
                 # Redefine new interval
-                newInterval = [min(s, newInterval[0]), max(e, newInterval[-1])]
+                newInterval = [
+                    min(start, newInterval[0]),
+                    max(end, newInterval[-1]),
+                ]
 
         # New interval is at the end
         res.append(newInterval)
