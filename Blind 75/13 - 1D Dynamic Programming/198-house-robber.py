@@ -16,7 +16,7 @@ class Solution:
         prev, curr = 0, 0
         for n in nums:
             # After optimizing for O(1) space
-            prev, curr = curr, max(curr, prev + n)
+            prev, curr = curr, max(curr, n + prev)
 
         return curr
 
