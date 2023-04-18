@@ -12,10 +12,12 @@ from typing import List
 
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        for i in range(len(cost) - 3, -1, -1):
-            cost[i] += min(cost[i + 1], cost[i + 2])
+        arr = cost[:]
+        for i in range(len(arr) - 3, -1, -1):
+            # Cost at index only depends on previous two cumulative costs
+            arr[i] += min(arr[i + 1], arr[i + 2])
 
-        return min(cost[0], cost[1])
+        return min(arr[0], arr[1])
 
     def reference(self, cost: List[int]) -> int:
         for i in range(len(cost) - 3, -1, -1):
@@ -27,11 +29,10 @@ class Solution:
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
-                copy = deepcopy(case)
                 if i == 0:
-                    print(self.minCostClimbingStairs(copy))
+                    print(self.minCostClimbingStairs(case))
                 else:
-                    self.minCostClimbingStairs(copy)
+                    self.minCostClimbingStairs(case)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
