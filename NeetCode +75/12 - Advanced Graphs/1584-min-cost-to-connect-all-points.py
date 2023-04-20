@@ -5,25 +5,39 @@ The cost of connecting two points [x_i, y_i] and [x_j, y_j] is the manhattan dis
 
 Return the minimum cost to make all points connected. All points are connected if there is exactly one simple path between any two points.
 '''
+from collections import defaultdict
 import heapq
-import math
 from time import time
 from typing import List
 
 
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        min_total_cost = 0
-        for p1 in points:
-            costs = []
-            for p2 in points:
-                if p1 == p2:
-                    continue
-                dist = math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
-                costs.append(dist)
-            min_total_cost += min(costs)
+        # Build adjacency list of (cost, index)
+        N = len(points)
+        cost_map = {i: [] for i in range(N)}
+        for i in range(N):
+            x1, y1 = points[i]
+            for j in range(i + 1, N):
+                x2, y2 = points[j]
+                cost = abs(x1 - x2) + abs(y1 - y2)
+                cost_map[i].append((cost, j))
+                cost_map[j].append((cost, i))
 
-        return math.ceil(min_total_cost)
+        total_cost = 0
+        seen = set()
+        heap = [(0, 0)]  # (cost, index)
+        while len(seen) < N:
+            cost, idx = heapq.heappop(heap)
+            if idx in seen:
+                continue
+            total_cost += cost
+            seen.add(idx)
+            for nei_cost, nei in cost_map[idx]:
+                if nei not in seen:
+                    heapq.heappush(heap, (nei_cost, nei))
+
+        return total_cost
 
     def reference(self, points: List[List[int]]) -> int:
         # Create adjacency list for all points with (cost, points[i])
@@ -77,5 +91,7 @@ if __name__ == '__main__':
     test_cases = [
         [[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]],
         [[3, 12], [-2, 5], [-4, 1]],
+        # Additional
+        [[0, 0], [1, 1], [1, 0], [-1, 1]],
     ]
     test.quantify(test_cases)
