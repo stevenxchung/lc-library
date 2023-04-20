@@ -9,18 +9,17 @@ class Solution:
         res = 0
         for i in range(len(s)):
             # Odd palindromes
-            j = i
-            while i >= 0 and j < len(s) and s[i] == s[j]:
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
                 res += 1
-                i -= 1
-                j += 1
-
+                l -= 1
+                r += 1
             # Even palindromes
-            j = i + 1
-            while i >= 0 and j < len(s) and s[i] == s[j]:
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
                 res += 1
-                i -= 1
-                j += 1
+                l -= 1
+                r += 1
 
         return res
 
