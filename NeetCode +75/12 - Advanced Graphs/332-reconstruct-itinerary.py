@@ -20,7 +20,7 @@ class Solution:
             targets[a] += (b,)
         route = []
 
-        # Find end node first and backtrack
+        # Find end node first
         def visit(airport):
             while targets[airport]:
                 visit(targets[airport].pop())
