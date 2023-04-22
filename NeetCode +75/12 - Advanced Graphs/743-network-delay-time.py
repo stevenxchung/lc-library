@@ -13,31 +13,30 @@ class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         # Build adjacency list
         adj = {}
-        for u, v, w in times:
+        for u, v, t in times:
             if u not in adj:
-                adj[u] = [(v, w)]
+                adj[u] = [(t, v)]
             else:
-                adj[u].append((v, w))
+                adj[u].append((t, v))
 
-        time, seen, min_heap = 0, set(), [(0, k)]
+        t, seen, min_heap = 0, set(), [(0, k)]
         while min_heap:
             # Prioritize shortest path first
-            w1, u1 = heapq.heappop(min_heap)
+            t1, u1 = heapq.heappop(min_heap)
             if u1 in seen:
                 continue
             seen.add(u1)
             # Set time to latest update
-            time = max(time, w1)
+            t = max(t, t1)
 
             # Dijkstra's BFS
             if u1 in adj:
-                for u2, w2 in adj[u1]:
+                for t2, u2 in adj[u1]:
                     if u2 not in seen:
                         # Path is cumulative
-                        path = w1 + w2
-                        heapq.heappush(min_heap, (path, u2))
+                        heapq.heappush(min_heap, (t1 + t2, u2))
 
-        return time if len(seen) == n else -1
+        return t if len(seen) == n else -1
 
     def reference(self, times: List[List[int]], n: int, k: int) -> int:
         edges = collections.defaultdict(list)
