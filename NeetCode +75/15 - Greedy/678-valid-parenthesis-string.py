@@ -17,24 +17,24 @@ class Solution:
             s = s.replace('()', '')
 
         # Check if ')' before '('
-        q = []
+        queue = []
         for i in range(len(s)):
             if s[i] in ['(', '*']:
-                q.append(1)
+                queue.append(1)
             else:
-                if q:
-                    q.pop()
+                if queue:
+                    queue.pop()
                 else:
                     return False
 
         # Check if '(' after ')'
-        q = []
+        queue = []
         for i in range(len(s) - 1, -1, -1):
             if s[i] in [')', '*']:
-                q.append(1)
+                queue.append(1)
             else:
-                if q:
-                    q.pop()
+                if queue:
+                    queue.pop()
                 else:
                     return False
 
@@ -85,5 +85,7 @@ if __name__ == '__main__':
         # Additional
         '(()))(',
         '))((',
+        '(',
+        '(*)(',
     ]
     test.quantify(test_cases)
