@@ -30,10 +30,10 @@ class Solution:
         for i in range(1, len(s)):
             temp = curr
             if s[i] == '0':
-                # No possible decodings
+                # Skip by setting to 0 since there's only 1 way to decode
                 curr = 0
             if s[i - 1] == '1' or (s[i - 1] == '2' and s[i] <= '6'):
-                # Adds n previous ways to decode
+                # Adds n previous ways to decode if in a-z range
                 curr += prev
             prev = temp
 
