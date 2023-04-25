@@ -9,20 +9,19 @@ from typing import List
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        q = [s]
-        seen = set()
-        while q:
-            s = q.pop()
+        def dfs(substr):
+            if not substr:
+                return True
+
             for w in wordDict:
-                if s.startswith(w):
-                    s_new = s[len(w) :]
-                    if s_new == '':
-                        # True if we get to empty string
-                        return True
-                    if s_new not in seen:
-                        q.append(s_new)
-                        seen.add(s_new)
-        return False
+                if substr[: len(w)] == w and dfs(substr[len(w) :]):
+                    # Word matches at each level
+                    return True
+
+            # Otherwise, match not found
+            return False
+
+        return dfs(s)
 
     def reference(self, s: str, wordDict: List[str]) -> bool:
         dp = [False] * (len(s) + 1)
