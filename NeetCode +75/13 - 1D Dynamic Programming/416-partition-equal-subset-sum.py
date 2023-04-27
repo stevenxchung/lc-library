@@ -8,7 +8,7 @@ from typing import List
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         total = sum(nums)
-        target = total / 2
+        target = total // 2
         if total % 2 != 0:
             # Not possible for equal subsets to sum to odd total
             return False
@@ -64,5 +64,10 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [[1, 5, 11, 5], [1, 2, 3, 5]]
+    test_cases = [
+        [1, 5, 11, 5],
+        [1, 2, 3, 5],
+        # Additional
+        [2, 2, 1, 1],
+    ]
     test.quantify(test_cases)
