@@ -15,9 +15,9 @@ class Solution:
 
         seen = set()
         seen.add(0)
-        for n in nums:
-            for s in list(seen):
-                seen.add(s + n)
+        for n_curr in nums:
+            for n_prev in list(seen):
+                seen.add(n_prev + n_curr)
                 if target in seen:
                     # Early exit if target found
                     return True
