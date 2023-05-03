@@ -26,8 +26,11 @@ class Solution:
                 if candidates[j] == prev or total + candidates[j] > target:
                     # Skip if same as previous value or if over target
                     continue
+                # Next index cannot be the same so use j + 1
                 dfs(j + 1, subset + [candidates[j]], total + candidates[j])
                 prev = candidates[j]
+
+            return
 
         dfs(0, [], 0)
         return res
