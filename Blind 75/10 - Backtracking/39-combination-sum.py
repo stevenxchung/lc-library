@@ -23,8 +23,11 @@ class Solution:
             if total > target:
                 # Backtracking
                 return
+
             for j in range(i, len(candidates)):
                 dfs(j, subset + [candidates[j]], total + candidates[j])
+
+            return
 
         dfs(0, [], 0)
         return res
