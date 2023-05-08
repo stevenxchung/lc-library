@@ -23,9 +23,11 @@ class Solution:
 
             prev = None
             for j in range(i, len(candidates)):
-                if candidates[j] == prev or total + candidates[j] > target:
+                if candidates[j] == prev:
                     # Skip if same as previous value or if over target
                     continue
+                if total + candidates[j] > target:
+                    break
                 # Next index cannot be the same so use j + 1
                 dfs(j + 1, subset + [candidates[j]], total + candidates[j])
                 prev = candidates[j]
