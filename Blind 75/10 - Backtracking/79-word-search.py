@@ -23,7 +23,7 @@ class Solution:
                 or board[r][c] != word[i]
                 or board[r][c] == '#'
             ):
-                return
+                return False
 
             temp, board[r][c] = board[r][c], '#'
             res = (
