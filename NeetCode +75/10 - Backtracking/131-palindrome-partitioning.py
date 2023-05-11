@@ -30,6 +30,8 @@ class Solution:
                 # Offset by index on each recursion
                 dfs(j + 1, substr + [s[i : j + 1]])
 
+            return
+
         dfs(0, [])
         return res
 
