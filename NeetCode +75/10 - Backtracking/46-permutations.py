@@ -27,14 +27,19 @@ class Solution:
     def reference(self, nums: List[int]) -> List[List[int]]:
         res = []
 
-        def dfs(path: List[int], nums_list: List[int]):
-            if not nums_list:
-                res.append(path)
+        def dfs(temp, subset):
+            if not temp:
+                # Ran out of numbers to select
+                res.append(subset[:])
                 return
-            for i in range(len(nums_list)):
-                dfs(path + [nums_list[i]], nums_list[:i] + nums_list[i + 1 :])
 
-        dfs([], nums)
+            for i in range(len(temp)):
+                # Select from reduced copy of integers
+                dfs(temp[:i] + temp[i + 1 :], subset + [temp[i]])
+
+            return
+
+        dfs(nums, [])
         return res
 
     def quantify(self, test_cases, runs=50000):
