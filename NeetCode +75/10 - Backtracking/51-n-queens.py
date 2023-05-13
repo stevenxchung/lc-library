@@ -26,6 +26,8 @@ class Solution:
                     # Recurse where there is no overlap in columns or diagonals
                     dfs(indexes + [c], xy_diff + [r - c], xy_sum + [r + c])
 
+            return
+
         dfs([], [], [])
         return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
 
