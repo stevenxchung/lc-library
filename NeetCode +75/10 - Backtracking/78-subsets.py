@@ -19,6 +19,8 @@ class Solution:
             dfs(i + 1, subset + [nums[i]])
             dfs(i + 1, subset)
 
+            return
+
         dfs(0, [])
         return res
 
