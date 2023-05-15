@@ -21,6 +21,8 @@ class Solution:
                     continue
                 dfs(i2 + 1, subset + [nums[i2]])
 
+            return
+
         dfs(0, [])
         return res
 
