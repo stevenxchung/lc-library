@@ -12,25 +12,25 @@ from typing import List
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
         ROWS, COLS = len(grid), len(grid[0])
-        visited = set()
+        directions = [[1, 0], [-1, 0], [0, -1], [0, 1]]
+        seen = set()
 
         def bfs(r, c):
             queue = [(r, c)]
-            visited.add((r, c))
+            seen.add((r, c))
             area = 1
 
             while queue:
                 row, col = queue.pop(0)
-                directions = [[1, 0], [-1, 0], [0, -1], [0, 1]]
                 for dr, dc in directions:
                     r_new, c_new = (row + dr), (col + dc)
-                    is_in_bounds = r_new in range(ROWS) and c_new in range(COLS)
                     if (
-                        is_in_bounds
+                        0 <= r_new < ROWS
+                        and 0 <= c_new < COLS
                         and grid[r_new][c_new] == 1
-                        and (r_new, c_new) not in visited
+                        and (r_new, c_new) not in seen
                     ):
-                        visited.add((r_new, c_new))
+                        seen.add((r_new, c_new))
                         queue.append((r_new, c_new))
                         area += 1
 
@@ -39,7 +39,7 @@ class Solution:
         max_area = 0
         for r in range(ROWS):
             for c in range(COLS):
-                if grid[r][c] == 1 and (r, c) not in visited:
+                if grid[r][c] == 1 and (r, c) not in seen:
                     max_area = max(max_area, bfs(r, c))
 
         return max_area
