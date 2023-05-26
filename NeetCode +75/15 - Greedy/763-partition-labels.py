@@ -11,21 +11,20 @@ from typing import List
 
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
-        # Build last occurrence table
-        last_occur = {}
-        for i, c in enumerate(s):
-            last_occur[c] = i
-
-        res = []
-        size, end = 1, last_occur[s[0]]
-        for i in range(1, len(s)):
-            if size == 0 or last_occur[s[i]] > end:
-                end = last_occur[s[i]]
-
-            size += 1
-            if i == end:
-                res.append(size)
-                size = 0
+        last_i_map = {s[i]: i for i in range(len(s))}
+        n, res = 0, []
+        # Loop through string for n-partitions
+        while n < len(s):
+            end, i = last_i_map[s[n]], n + 1
+            # Loop to find partition size
+            while i < end:
+                # Extend partition if character found to occur outside of boundary
+                if last_i_map[s[i]] > end:
+                    end = last_i_map[s[i]]
+                i += 1
+            # Add partition size and set to next partition
+            res.append(end - n + 1)
+            n = end + 1
 
         return res
 
@@ -72,5 +71,10 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = ['ababcbacadefegdehijhklij', 'eccbbbbdec']
+    test_cases = [
+        'ababcbacadefegdehijhklij',
+        'eccbbbbdec',
+        # Additional
+        'caedbdedda',
+    ]
     test.quantify(test_cases)
