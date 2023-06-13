@@ -9,35 +9,38 @@ from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        count = 0
-        seen = set()
-        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         ROWS, COLS = len(grid), len(grid[0])
+        seen = set()
+        coord = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
         def bfs(r, c):
-            seen.add((r, c))
             q = [(r, c)]
             while q:
-                r_curr, c_curr = q.pop()
-                for dr, dc in directions:
-                    r, c = r_curr + dr, c_curr + dc
+                r1, c1 = q.pop(0)
+                seen.add((r1, c1))
+                for dr, dc in coord:
+                    r2, c2 = r1 + dr, c1 + dc
                     if (
-                        r not in range(ROWS)
-                        or c not in range(COLS)
-                        or grid[r][c] == '0'
-                        or (r, c) in seen
+                        r2 < 0
+                        or c2 < 0
+                        or r2 >= ROWS
+                        or c2 >= COLS
+                        or (r2, c2) in seen
+                        or grid[r2][c2] == '0'
                     ):
                         continue
-                    q.append((r, c))
-                    seen.add((r, c))
+                    q.append((r2, c2))
 
+            return
+
+        res = 0
         for r in range(ROWS):
             for c in range(COLS):
-                if grid[r][c] == '1' and (r, c) not in seen:
+                if (r, c) not in seen and grid[r][c] == '1':
                     bfs(r, c)
-                    count += 1
+                    res += 1
 
-        return count
+        return res
 
     def reference(self, grid: List[List[str]]) -> int:
         if not grid or not grid[0]:
