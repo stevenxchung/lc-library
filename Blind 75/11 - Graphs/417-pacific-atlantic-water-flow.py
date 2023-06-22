@@ -14,33 +14,37 @@ from typing import List
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
         ROWS, COLS = len(heights), len(heights[0])
-        pacific, atlantic = set(), set()
+        pac_seen, atl_seen = set(), set()
 
-        def dfs(r, c, seen, prev_h):
-            # Note: from border, if new height is less then we reject
+        def dfs(r, c, prev_h, seen):
             if (
-                r not in range(ROWS)
-                or c not in range(COLS)
+                r < 0
+                or c < 0
+                or r >= ROWS
+                or c >= COLS
                 or (r, c) in seen
                 or heights[r][c] < prev_h
             ):
                 return
 
             seen.add((r, c))
-            dfs(r + 1, c, seen, heights[r][c])
-            dfs(r - 1, c, seen, heights[r][c])
-            dfs(r, c + 1, seen, heights[r][c])
-            dfs(r, c - 1, seen, heights[r][c])
+
+            dfs(r + 1, c, heights[r][c], seen)
+            dfs(r - 1, c, heights[r][c], seen)
+            dfs(r, c + 1, heights[r][c], seen)
+            dfs(r, c - 1, heights[r][c], seen)
+
+            return
 
         for r in range(ROWS):
-            dfs(r, 0, pacific, heights[r][0])
-            dfs(r, COLS - 1, atlantic, heights[r][COLS - 1])
+            dfs(r, 0, heights[r][0], pac_seen)
+            dfs(r, COLS - 1, heights[r][COLS - 1], atl_seen)
 
         for c in range(COLS):
-            dfs(0, c, pacific, heights[0][c])
-            dfs(ROWS - 1, c, atlantic, heights[ROWS - 1][c])
+            dfs(0, c, heights[0][c], pac_seen)
+            dfs(ROWS - 1, c, heights[ROWS - 1][c], atl_seen)
 
-        return list(pacific.intersection(atlantic))
+        return list(pac_seen.intersection(atl_seen))
 
     def reference(self, heights: List[List[int]]) -> List[List[int]]:
         ROWS, COLS = len(heights), len(heights[0])
@@ -57,7 +61,7 @@ class Solution:
 
             visited.add((r, c))
             directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-            for (dr, dc) in directions:
+            for dr, dc in directions:
                 dfs(r + dr, c + dc, visited, heights[r][c])
 
         for c in range(COLS):
