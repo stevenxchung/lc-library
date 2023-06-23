@@ -3,6 +3,7 @@ Given an m x n matrix board containing 'X' and 'O', capture all regions that are
 
 A region is captured by flipping all 'O's into 'X's in that surrounded region.
 '''
+from copy import deepcopy
 from time import time
 from typing import List
 
@@ -12,11 +13,7 @@ class Solution:
         ROWS, COLS = len(board), len(board[0])
 
         def dfs(r, c):
-            if (
-                r not in range(ROWS)
-                or c not in range(COLS)
-                or board[r][c] != 'O'
-            ):
+            if r < 0 or c < 0 or r >= ROWS or c >= COLS or board[r][c] != 'O':
                 return
 
             board[r][c] = '#'
@@ -26,18 +23,23 @@ class Solution:
             dfs(r, c + 1)
             dfs(r, c - 1)
 
+            return
+
+        # Find 'O' first and flip them to '#'
         for r in range(ROWS):
             for c in range(COLS):
-                if (r in [0, ROWS - 1] or c in [0, COLS - 1]) and board[r][
-                    c
-                ] == 'O':
+                if board[r][c] == 'O' and (
+                    r in {0, ROWS - 1} or c in {0, COLS - 1}
+                ):
                     dfs(r, c)
 
+        # Flip all 'O' to 'X'
         for r in range(ROWS):
             for c in range(COLS):
                 if board[r][c] == 'O':
                     board[r][c] = 'X'
 
+        # Reverse '#' back to 'O'
         for r in range(ROWS):
             for c in range(COLS):
                 if board[r][c] == '#':
@@ -83,19 +85,23 @@ class Solution:
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.solve(case))
+                    print(self.solve(copy))
                 else:
-                    self.solve(case)
+                    self.solve(copy)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
@@ -109,5 +115,11 @@ if __name__ == '__main__':
             ['X', 'O', 'X', 'X'],
         ],
         [['X']],
+        [
+            ['O', 'O', 'X', 'O'],
+            ['O', 'X', 'O', 'X'],
+            ['O', 'O', 'X', 'O'],
+            ['O', 'O', 'O', 'O'],
+        ],
     ]
     test.quantify(test_cases)
