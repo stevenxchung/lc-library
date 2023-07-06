@@ -3,6 +3,7 @@ Alice has some number of cards and she wants to rearrange the cards into groups 
 
 Given an integer array hand where hand[i] is the value written on the ith card and an integer groupSize, return true if she can rearrange the cards, or false otherwise.
 '''
+from collections import Counter
 import heapq
 from time import time
 from typing import List
@@ -10,29 +11,18 @@ from typing import List
 
 class Solution:
     def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
-        if len(hand) % groupSize:
+        if len(hand) % groupSize != 0:
             return False
 
-        count = {}
-        for n in hand:
-            count[n] = 1 + count.get(n, 0)
-
-        min_heap = list(count.keys())
-        heapq.heapify(min_heap)
-        while min_heap:
-            first = min_heap[0]
-
-            for i in range(first, first + groupSize):
-                if i not in count:
-                    # Cannot make hand
-                    return False
-
-                count[i] -= 1
-                if count[i] == 0:
-                    if i != min_heap[0]:
-                        # Also cannot make hand
+        count = Counter(hand)
+        for c in sorted(count):
+            while count[c] > 0:
+                # Decrement count as consecutive cards appear
+                for k in range(c, c + groupSize):
+                    count[k] -= 1
+                    if count[k] < 0:
+                        # False if required card does not exist
                         return False
-                    heapq.heappop(min_heap)
         return True
 
     def reference(self, hand: List[int], groupSize: int) -> bool:
