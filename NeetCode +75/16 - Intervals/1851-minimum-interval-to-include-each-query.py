@@ -5,7 +5,6 @@ You are also given an integer array queries. The answer to the jth query is the 
 
 Return an array containing the answers to the queries.
 '''
-import bisect
 import heapq
 from time import time
 from typing import List
@@ -15,20 +14,25 @@ class Solution:
     def minInterval(
         self, intervals: List[List[int]], queries: List[int]
     ) -> List[int]:
-        res = [-1] * len(queries)
-        # Sort intervals by size
-        intervals.sort(key=lambda i: i[1] - i[0])
-        # Sort queries by increasing order
-        queries = sorted([q, i] for i, q in enumerate(queries))
+        intervals.sort()
+        res = {}  # {query_value: min_size}
+        min_heap = []
+        i = 0
+        for q in sorted(queries):
+            while i < len(intervals) and intervals[i][0] <= q:
+                # Add to heap when query in range
+                start, end = intervals[i]
+                size = end - start + 1
+                heapq.heappush(min_heap, (size, end))
+                i += 1
 
-        # Binary search for queries contained in interval
-        for left, right in intervals:
-            i = bisect.bisect(queries, [left])
-            while i < len(queries) and queries[i][0] <= right:
-                # Insert minimum interval size at proper index
-                res[queries.pop(i)[1]] = right - left + 1
-
-        return res
+            while min_heap and min_heap[0][1] < q:
+                # Pop if outside of range
+                heapq.heappop(min_heap)
+            # Top of heap contains minimum interval size if not empty
+            res[q] = min_heap[0][0] if min_heap else -1
+        # Unpack minimum interval sizes
+        return [res[q] for q in queries]
 
     def reference(
         self, intervals: List[List[int]], queries: List[int]
