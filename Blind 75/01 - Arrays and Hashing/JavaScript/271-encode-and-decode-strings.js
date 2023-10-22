@@ -1,8 +1,8 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   encode(input) {
-    return input.join('#');
+    return input.join("#");
   }
 
   decode(input) {
@@ -10,7 +10,7 @@ class Solution {
 
     let [l, r] = [0, 0];
     while (r < input.length) {
-      while (input[r] !== '#' && r < input.length) {
+      while (input[r] !== "#" && r < input.length) {
         // Finds next hash
         r += 1;
       }
@@ -24,7 +24,7 @@ class Solution {
   }
 
   encodeReference(input) {
-    return input.map((str) => `${str.length}#${str}`).join('');
+    return input.map((str) => `${str.length}#${str}`).join("");
   }
 
   decodeReference(input) {
@@ -33,7 +33,7 @@ class Solution {
 
     while (i < input.length) {
       let j = i;
-      while (input[j] !== '#') {
+      while (input[j] !== "#") {
         ++j;
       }
 
@@ -48,7 +48,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         const encoded = this.encode(input);
         const decoded = this.decode(encoded);
@@ -60,7 +60,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         const encoded = this.encodeReference(input);
         const decoded = this.decodeReference(encoded);
@@ -75,7 +75,7 @@ class Solution {
 
 const test = new Solution();
 const testCases = [
-  ['lint', 'code', 'love', 'you'],
-  ['we', 'say', ':', 'yes'],
+  ["lint", "code", "love", "you"],
+  ["we", "say", ":", "yes"],
 ];
 test.quantify(testCases);
