@@ -1,14 +1,14 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(grid) {
     const [ROWS, COLS] = [grid.length, grid[0].length];
 
     const dfs = (r, c) => {
-      if (r < 0 || c < 0 || r >= ROWS || c >= COLS || grid[r][c] === '0')
+      if (r < 0 || c < 0 || r >= ROWS || c >= COLS || grid[r][c] === "0")
         return;
 
-      grid[r][c] = '0';
+      grid[r][c] = "0";
       dfs(r + 1, c);
       dfs(r - 1, c);
       dfs(r, c + 1);
@@ -18,7 +18,7 @@ class Solution {
     let count = 0;
     for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLS; j++) {
-        if (grid[i][j] === '1') {
+        if (grid[i][j] === "1") {
           dfs(i, j);
           count += 1;
         }
@@ -35,7 +35,7 @@ class Solution {
       /* Time O(ROWS) */
       for (let col = 0; col < cols; col++) {
         /* Time O(COLS) */
-        const isIsland = grid[row][col] === '1';
+        const isIsland = grid[row][col] === "1";
         if (isIsland) connectedComponents++;
 
         this.dfs(grid, row, rows, col, cols); /* Space O(ROWS * COLS) */
@@ -46,10 +46,10 @@ class Solution {
   }
 
   dfs = (grid, row, rows, col, cols) => {
-    const isBaseCase = grid[row][col] === '0';
+    const isBaseCase = grid[row][col] === "0";
     if (isBaseCase) return;
 
-    grid[row][col] = '0';
+    grid[row][col] = "0";
 
     for (const [_row, _col] of this.getNeighbors(row, rows, col, cols)) {
       this.dfs(grid, _row, rows, _col, cols); /* Space O(ROWS * COLS) */
@@ -71,7 +71,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         // Create deep copy
         const copy = JSON.parse(JSON.stringify(input));
@@ -84,7 +84,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         // Create deep copy
         const copy = JSON.parse(JSON.stringify(input));
@@ -101,18 +101,18 @@ class Solution {
 const test = new Solution();
 const testCases = [
   [
-    ['1', '1', '1', '1', '0'],
-    ['1', '1', '0', '1', '0'],
-    ['1', '1', '0', '0', '0'],
-    ['0', '0', '0', '0', '0'],
+    ["1", "1", "1", "1", "0"],
+    ["1", "1", "0", "1", "0"],
+    ["1", "1", "0", "0", "0"],
+    ["0", "0", "0", "0", "0"],
   ],
   [
-    ['1', '1', '0', '0', '0'],
-    ['1', '1', '0', '0', '0'],
-    ['0', '0', '1', '0', '0'],
-    ['0', '0', '0', '1', '1'],
+    ["1", "1", "0", "0", "0"],
+    ["1", "1", "0", "0", "0"],
+    ["0", "0", "1", "0", "0"],
+    ["0", "0", "0", "1", "1"],
   ],
   // Additional
-  [['1']],
+  [["1"]],
 ];
 test.quantify(testCases);

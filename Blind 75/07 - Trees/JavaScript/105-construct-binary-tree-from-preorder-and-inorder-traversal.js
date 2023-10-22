@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class TreeNode {
   constructor(val, left, right) {
@@ -48,7 +48,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         // Create deep copy
         const copy = JSON.parse(JSON.stringify(input));
@@ -61,7 +61,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         // Create deep copy
         const copy = JSON.parse(JSON.stringify(input));

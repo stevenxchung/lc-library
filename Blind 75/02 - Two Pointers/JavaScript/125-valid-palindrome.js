@@ -1,9 +1,9 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(s) {
     // Alphanumeric only and convert to lowercase
-    s = s.replace(/[\W_]+/g, '').toLowerCase();
+    s = s.replace(/[\W_]+/g, "").toLowerCase();
     let [l, r] = [0, s.length - 1];
     while (l < r) {
       if (s[l] !== s[r]) return false;
@@ -40,8 +40,8 @@ class Solution {
   };
 
   isNonAlphaNumeric = (char) => {
-    const isNonAlpha = char < 'a' || 'z' < char; // a(97) - z(122)
-    const isNonNumeric = char < '0' || '9' < char; // 0(48) - 9(57)
+    const isNonAlpha = char < "a" || "z" < char; // a(97) - z(122)
+    const isNonNumeric = char < "0" || "9" < char; // 0(48) - 9(57)
 
     return isNonAlpha && isNonNumeric;
   };
@@ -49,7 +49,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(input));
         else this.method(input);
@@ -60,7 +60,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(input));
         else this.reference(input);
@@ -73,5 +73,5 @@ class Solution {
 }
 
 const test = new Solution();
-const testCases = ['A man, a plan, a canal: Panama', 'race a car', ' '];
+const testCases = ["A man, a plan, a canal: Panama", "race a car", " "];
 test.quantify(testCases);

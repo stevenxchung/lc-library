@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class TreeNode {
   constructor(val, left, right) {
@@ -13,7 +13,7 @@ class Solution {
     let res = [];
     const dfs = (node) => {
       if (!node) {
-        res.push('N');
+        res.push("N");
         return;
       }
       res.push(node.val.toString());
@@ -22,12 +22,12 @@ class Solution {
     };
 
     dfs(root);
-    return res.join(',');
+    return res.join(",");
   }
 
   deserialize(data) {
     const dfs = (treeAsString, position) => {
-      if (treeAsString[position[0]] === 'N') {
+      if (treeAsString[position[0]] === "N") {
         position[0] += 1;
         return null;
       }
@@ -39,7 +39,7 @@ class Solution {
       return node;
     };
 
-    const treeAsString = data.split(',');
+    const treeAsString = data.split(",");
 
     return dfs(treeAsString, [0]);
   }
@@ -87,7 +87,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         const serialized = this.serialize(input);
         const tree = this.deserialize(serialized);
@@ -99,7 +99,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         const serialized = this.serializeReference(input);
         const tree = this.deserializeReference(serialized);

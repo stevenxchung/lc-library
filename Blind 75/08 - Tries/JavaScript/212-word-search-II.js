@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class TrieNode {
   constructor() {
@@ -10,7 +10,7 @@ class TrieNode {
 class TrieNodeRef {
   constructor() {
     this.children = {};
-    this.word = '';
+    this.word = "";
   }
 }
 
@@ -74,7 +74,7 @@ class TrieRef {
   }
 
   canSkip(char, child) {
-    const hasSeen = char === '#';
+    const hasSeen = char === "#";
     const isMissingChild = !child;
 
     return hasSeen || isMissingChild;
@@ -84,13 +84,13 @@ class TrieRef {
     if (!node.word.length) return;
 
     words.push(node.word);
-    node.word = '';
+    node.word = "";
   }
 
   backTrack(board, row, rows, col, cols, node, words) {
     const char = board[row][col];
 
-    board[row][col] = '#';
+    board[row][col] = "#";
 
     for (const [_row, _col] of this.getNeighbors(row, rows, col, cols)) {
       this.dfs(board, _row, rows, _col, cols, node, words);
@@ -133,7 +133,7 @@ class Solution {
         r >= ROWS ||
         c >= COLS ||
         !(board[r][c] in node.children) ||
-        board[r][c] === '#'
+        board[r][c] === "#"
       ) {
         return;
       }
@@ -145,7 +145,7 @@ class Solution {
       }
 
       const temp = board[r][c];
-      board[r][c] = '#';
+      board[r][c] = "#";
 
       dfs(r + 1, c, node, word);
       dfs(r - 1, c, node, word);
@@ -157,7 +157,7 @@ class Solution {
 
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        dfs(r, c, trie.root, '', board);
+        dfs(r, c, trie.root, "", board);
       }
     }
 
@@ -171,7 +171,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -182,7 +182,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);
@@ -198,19 +198,19 @@ const test = new Solution();
 const testCases = [
   [
     [
-      ['o', 'a', 'a', 'n'],
-      ['e', 't', 'a', 'e'],
-      ['i', 'h', 'k', 'r'],
-      ['i', 'f', 'l', 'v'],
+      ["o", "a", "a", "n"],
+      ["e", "t", "a", "e"],
+      ["i", "h", "k", "r"],
+      ["i", "f", "l", "v"],
     ],
-    ['oath', 'pea', 'eat', 'rain'],
+    ["oath", "pea", "eat", "rain"],
   ],
   [
     [
-      ['a', 'b'],
-      ['c', 'd'],
+      ["a", "b"],
+      ["c", "d"],
     ],
-    ['abcb'],
+    ["abcb"],
   ],
 ];
 test.quantify(testCases);

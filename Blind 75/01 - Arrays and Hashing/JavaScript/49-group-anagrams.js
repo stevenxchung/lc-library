@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 const CODES = {
   a: 0,
@@ -35,9 +35,9 @@ class Solution {
     for (const w of strs) {
       let id = new Array(26).fill(0);
       for (const c of w) {
-        id[c.charCodeAt(0) - 'a'.charCodeAt(0)] += 1;
+        id[c.charCodeAt(0) - "a".charCodeAt(0)] += 1;
       }
-      id = id.join('');
+      id = id.join("");
 
       if (id in anagrams) {
         anagrams[id].push(w);
@@ -77,7 +77,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(input));
         else this.method(input);
@@ -88,7 +88,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(input));
         else this.reference(input);
@@ -100,5 +100,5 @@ class Solution {
   }
 }
 const test = new Solution();
-const testCases = [['eat', 'tea', 'tan', 'ate', 'nat', 'bat'], [''], ['a']];
+const testCases = [["eat", "tea", "tan", "ate", "nat", "bat"], [""], ["a"]];
 test.quantify(testCases);

@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(s, k) {
@@ -66,12 +66,12 @@ class Solution {
     return map[index];
   };
 
-  getCode = (char) => char.charCodeAt(0) - 'A'.charCodeAt(0);
+  getCode = (char) => char.charCodeAt(0) - "A".charCodeAt(0);
 
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -82,7 +82,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);
@@ -96,7 +96,7 @@ class Solution {
 
 const test = new Solution();
 const testCases = [
-  ['ABAB', 2],
-  ['AABABBA', 1],
+  ["ABAB", 2],
+  ["AABABBA", 1],
 ];
 test.quantify(testCases);

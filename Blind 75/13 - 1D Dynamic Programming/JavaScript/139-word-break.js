@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(s, wordDict) {
@@ -10,7 +10,7 @@ class Solution {
       for (const w of wordDict) {
         if (s.startsWith(w)) {
           const newS = s.slice(w.length, s.length);
-          if (newS === '') return true;
+          if (newS === "") return true;
           if (!(newS in found)) {
             queue.push(newS);
             found.add(newS);
@@ -71,7 +71,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -82,7 +82,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);
@@ -96,12 +96,12 @@ class Solution {
 
 const test = new Solution();
 const testCases = [
-  ['leetcode', ['leet', 'code']],
-  ['applepenapple', ['apple', 'pen']],
-  ['catsandog', ['cats', 'dog', 'sand', 'and', 'cat']],
+  ["leetcode", ["leet", "code"]],
+  ["applepenapple", ["apple", "pen"]],
+  ["catsandog", ["cats", "dog", "sand", "and", "cat"]],
   // Additional
-  ['bb', ['a', 'b', 'bbb', 'bbbb']],
-  ['aaaaaaa', ['aaaa', 'aaa']],
-  ['aaaaaa', ['aa', 'a']],
+  ["bb", ["a", "b", "bbb", "bbbb"]],
+  ["aaaaaaa", ["aaaa", "aaa"]],
+  ["aaaaaa", ["aa", "a"]],
 ];
 test.quantify(testCases);

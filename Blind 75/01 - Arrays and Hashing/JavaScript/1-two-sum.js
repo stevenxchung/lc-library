@@ -1,12 +1,12 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(nums, target) {
-    let indicies = {};
+    let numToIndexMap = {};
     for (const [i, n] of nums.entries()) {
       const diff = target - n;
-      if (diff in indicies) return [indicies[diff], i];
-      indicies[n] = i;
+      if (diff in numToIndexMap) return [numToIndexMap[diff], i];
+      numToIndexMap[n] = i;
     }
   }
 
@@ -24,7 +24,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -35,7 +35,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);

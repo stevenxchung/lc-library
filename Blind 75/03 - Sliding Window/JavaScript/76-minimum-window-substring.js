@@ -1,8 +1,8 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(s, t) {
-    if (t.length == 0) return '';
+    if (t.length == 0) return "";
 
     // Initialize cache
     let [countT, window] = [{}, {}];
@@ -34,12 +34,12 @@ class Solution {
     }
 
     const [p1, p2] = str;
-    return strLength !== Infinity ? s.slice(p1, p2 + 1) : '';
+    return strLength !== Infinity ? s.slice(p1, p2 + 1) : "";
   }
 
   reference(s, t) {
     const isMissingArgs = !s.length || !t.length;
-    if (isMissingArgs) return '';
+    if (isMissingArgs) return "";
 
     const frequencyMap = this.getFrequencyMap(t);
     const { start, end } = this.getWindowPointers(s, t, frequencyMap);
@@ -107,12 +107,12 @@ class Solution {
   };
 
   getSubString = (s, start, end) =>
-    end <= s.length ? s.slice(start, start + end) : '';
+    end <= s.length ? s.slice(start, start + end) : "";
 
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -123,7 +123,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);
@@ -137,8 +137,8 @@ class Solution {
 
 const test = new Solution();
 const testCases = [
-  ['ADOBECODEBANC', 'ABC'],
-  ['a', 'a'],
-  ['a', 'aa'],
+  ["ADOBECODEBANC", "ABC"],
+  ["a", "a"],
+  ["a", "aa"],
 ];
 test.quantify(testCases);

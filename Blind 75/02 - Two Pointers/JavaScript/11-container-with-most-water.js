@@ -1,14 +1,14 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(height) {
     let [l, r] = [0, height.length - 1];
-    let max_area = 0;
+    let maxArea = 0;
     while (l < r) {
-      const area = Math.min(height[l], height[r]) * (r - l);
-      max_area = Math.max(max_area, area);
-      if (height[l] < height[r]) l += 1;
-      else r -= 1;
+      const area = (r - l) * Math.min(height[l], height[r]);
+      maxArea = Math.max(maxArea, area);
+      if (height[l] < height[r]) l++;
+      else r--;
     }
 
     return max_area;
@@ -46,7 +46,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(input));
         else this.method(input);
@@ -57,7 +57,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(input));
         else this.reference(input);

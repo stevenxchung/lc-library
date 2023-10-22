@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(board, word) {
@@ -11,7 +11,7 @@ class Solution {
       }
 
       const temp = board[r][c];
-      board[r][c] = '#';
+      board[r][c] = "#";
 
       const foundWord =
         dfs(r + 1, c, str.slice(1)) ||
@@ -48,7 +48,7 @@ class Solution {
     if (this.isOutOfBound(board, row, col)) return false;
     if (board[row][col] !== word[index]) return false;
 
-    board[row][col] = '*';
+    board[row][col] = "*";
 
     const hasWord = Object.values(this.directions(row, col)).filter(([r, c]) =>
       this.dfs(board, r, c, word, index + 1)
@@ -74,7 +74,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -85,7 +85,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);
@@ -101,27 +101,27 @@ const test = new Solution();
 const testCases = [
   [
     [
-      ['A', 'B', 'C', 'E'],
-      ['S', 'F', 'C', 'S'],
-      ['A', 'D', 'E', 'E'],
+      ["A", "B", "C", "E"],
+      ["S", "F", "C", "S"],
+      ["A", "D", "E", "E"],
     ],
-    'ABCCED',
+    "ABCCED",
   ],
   [
     [
-      ['A', 'B', 'C', 'E'],
-      ['S', 'F', 'C', 'S'],
-      ['A', 'D', 'E', 'E'],
+      ["A", "B", "C", "E"],
+      ["S", "F", "C", "S"],
+      ["A", "D", "E", "E"],
     ],
-    'SEE',
+    "SEE",
   ],
   [
     [
-      ['A', 'B', 'C', 'E'],
-      ['S', 'F', 'C', 'S'],
-      ['A', 'D', 'E', 'E'],
+      ["A", "B", "C", "E"],
+      ["S", "F", "C", "S"],
+      ["A", "D", "E", "E"],
     ],
-    'ABCB',
+    "ABCB",
   ],
 ];
 test.quantify(testCases);

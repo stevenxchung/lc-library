@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(words) {
@@ -15,7 +15,7 @@ class Solution {
         w1.length > w2.length &&
         w1.slice(0, minLength) === w2.slice(0, minLength)
       )
-        return '';
+        return "";
       for (let j = 0; j < minLength; j++) {
         if (w1[j] !== w2[j]) {
           alienDict[w1[j]].add(w2[j]);
@@ -39,23 +39,23 @@ class Solution {
     };
 
     for (const c of Object.keys(alienDict)) {
-      if (dfs(c)) return '';
+      if (dfs(c)) return "";
     }
 
     res.reverse();
-    return res.join('');
+    return res.join("");
   }
 
   reference(words) {
     const { graph, seen, buffer } = this.buildGraph(words);
 
-    if (!this.canBuildGraph(words, graph)) return '';
+    if (!this.canBuildGraph(words, graph)) return "";
 
     for (const [char] of graph) {
-      if (!this.dfs(char, graph, seen, buffer)) return '';
+      if (!this.dfs(char, graph, seen, buffer)) return "";
     }
 
-    return buffer.reverse().join('');
+    return buffer.reverse().join("");
   }
 
   initGraph = () => ({
@@ -124,7 +124,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(input));
         else this.method(input);
@@ -135,7 +135,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(input));
         else this.reference(input);
@@ -148,5 +148,5 @@ class Solution {
 }
 
 const test = new Solution();
-const testCases = [['wrt', 'wrf', 'er', 'ett', 'rftt']];
+const testCases = [["wrt", "wrf", "er", "ett", "rftt"]];
 test.quantify(testCases);
