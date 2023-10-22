@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Heap {
   constructor(comparator) {
@@ -93,7 +93,8 @@ Heap.maxComparator = (a, b) => {
 };
 
 class Solution {
-  constructor() {
+  constructor(debug = false) {
+    this.debug = debug;
     this.maxHeap = new Heap(Heap.maxComparator);
     this.minHeap = new Heap(Heap.minComparator);
   }
@@ -122,16 +123,16 @@ class Solution {
     } else {
       res = (this.maxHeap.peek() + this.minHeap.peek()) / 2;
     }
-    console.log(res);
+    if (this.debug) console.log(`findMedian(): ${res}`);
     return res;
   }
 }
 
-const test = new Solution();
+const test = new Solution((debug = true));
 const solStart = performance.now();
 test.addNum(1); // arr = [1]
 test.addNum(2); // arr = [1, 2]
 test.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
 test.addNum(3); // arr[1, 2, 3]
 test.findMedian(); // return 2.0
-console.log(`Runtime for solution: ${(performance.now() - solStart) / 1000}\n`);
+console.log(`Runtime for solution: ${(performance.now() - solStart) / 1000}`);

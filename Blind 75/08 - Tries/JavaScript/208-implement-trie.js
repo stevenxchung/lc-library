@@ -1,14 +1,16 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class TrieNode {
   constructor() {
     this.children = {};
+    // Converts to true once a word is added to the tree
     this.isEnd = false;
   }
 }
 
 class Solution {
-  constructor() {
+  constructor(debug = false) {
+    this.debug = debug;
     this.root = new TrieNode();
   }
 
@@ -25,12 +27,12 @@ class Solution {
     let node = this.root;
     for (const c of word) {
       if (!(c in node.children)) {
-        console.log(false);
-        return false;
+        if (this.debug) console.log(`search(): ${node.isEnd}`);
+        return node.isEnd;
       }
       node = node.children[c];
     }
-    console.log(node.isEnd);
+    if (this.debug) console.log(`search(): ${node.isEnd}`);
     return node.isEnd;
   }
 
@@ -38,22 +40,22 @@ class Solution {
     let node = this.root;
     for (const c of prefix) {
       if (!(c in node.children)) {
-        console.log(false);
+        if (this.debug) console.log(`startsWith(): ${false}`);
         return false;
       }
       node = node.children[c];
     }
-    console.log(true);
+    if (this.debug) console.log(`startsWith(): ${true}`);
     return true;
   }
 }
 
-const test = new Solution();
+const test = new Solution((debug = true));
 const solStart = performance.now();
-test.insert('apple');
-test.search('apple'); // return true
-test.search('app'); // return false
-test.startsWith('app'); // return true
-test.insert('app');
-test.search('app'); // return true
-console.log(`Runtime for solution: ${(performance.now() - solStart) / 1000}\n`);
+test.insert("apple");
+test.search("apple"); // return true
+test.search("app"); // return false
+test.startsWith("app"); // return true
+test.insert("app");
+test.search("app"); // return true
+console.log(`Runtime for solution: ${(performance.now() - solStart) / 1000}`);
