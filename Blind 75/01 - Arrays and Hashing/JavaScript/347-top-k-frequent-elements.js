@@ -1,25 +1,23 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(nums, k) {
-    let counts = {};
-    let bucket = Array.from({ length: nums.length + 1 }, () => []);
-    for (const n of nums) {
-      if (n in counts) {
-        counts[n] += 1;
-      } else {
-        counts[n] = 1;
-      }
-    }
-    for (const [v, count] of Object.entries(counts)) {
-      bucket[count].push(v);
-    }
-    const mostFrequent = bucket
-      .filter((e) => e.length > 0)
-      .slice(-k)
-      .reduce((a, b) => a.concat(b)); // Can also use flat()
+    const res = [];
+    const table = {};
+    const bucket = Array.from({ length: nums.length + 1 }, () => []);
 
-    return mostFrequent;
+    for (const n of nums) {
+      table[n] = table[n] ? table[n] + 1 : 1;
+    }
+
+    for (const [n, count] of Object.entries(table)) {
+      bucket[count].push(n);
+    }
+
+    for (let i = bucket.length - 1; i >= 0; i--) {
+      if (bucket[i].length > 0) bucket[i].map((e) => res.push(e));
+      if (k === res.length) return res;
+    }
   }
 
   reference(nums, k) {
@@ -51,7 +49,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(...input));
         else this.method(...input);
@@ -62,7 +60,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(...input));
         else this.reference(...input);
