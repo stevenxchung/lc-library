@@ -1,28 +1,30 @@
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 class Solution {
   method(nums) {
-    let res = [];
-    let seen = new Set();
-    const sortedNums = nums.sort((a, b) => a - b);
-    for (const [i, a] of sortedNums.entries()) {
-      // Skip duplicates
+    nums.sort();
+    const res = [];
+    const seen = new Set();
+
+    for (const [i, a] of nums.entries()) {
+      // Skip since value already exists
       if (seen.has(a)) continue;
 
-      let [j, k] = [i + 1, nums.length - 1];
-      while (j < k) {
-        const total = a + nums[j] + nums[k];
-        if (total > 0) k -= 1;
-        else if (total < 0) j += 1;
-        else {
-          res.push([a, nums[j], nums[k]]);
-          j += 1;
-          // Skip duplicates
-          while (seen.has(nums[j]) && j < k) {
-            j += 1;
-          }
-        }
+      // Two pointer search
+      let [l, r] = [i + 1, nums.length - 1];
+      while (l < r) {
+        const [b, c] = [nums[l], nums[r]];
+        const sum = a + b + c;
+
+        if (sum === 0) {
+          res.push([a, b, c]);
+          l++;
+          // Ensure that value is different to avoid duplicates
+          while (seen.has(b) && l < r) l++;
+        } else if (sum < 0) l++;
+        else if (sum > 0) r--;
       }
+      // Add value to seen
       seen.add(a);
     }
 
@@ -75,7 +77,7 @@ class Solution {
   quantify(testCases, runs = 1e6) {
     const runsArr = Array.from({ length: runs });
     const solStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.method(input));
         else this.method(input);
@@ -86,7 +88,7 @@ class Solution {
     );
 
     const refStart = performance.now();
-    runsArr.map((run, i) => {
+    runsArr.map((_, i) => {
       testCases.map((input) => {
         if (i === 0) console.log(this.reference(input));
         else this.reference(input);
