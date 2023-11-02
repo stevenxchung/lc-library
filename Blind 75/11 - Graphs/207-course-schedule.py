@@ -13,29 +13,30 @@ class Solution:
     def canFinish(
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> bool:
-        prereq_map = {k: [] for k in range(numCourses)}
+        adj = {i: [] for i in range(numCourses)}
         for a, b in prerequisites:
-            prereq_map[a].append(b)
+            adj[a].append(b)
 
-        cycle = set()
-
-        def dfs(course):
-            if course in cycle:
-                return False
-            if prereq_map[course] == []:
-                return True
-
-            cycle.add(course)
-            for c in prereq_map[course]:
-                if not dfs(c):
-                    return False
-            cycle.remove(course)
-            prereq_map[course] = []
+        def bfs(start):
+            q = [({start}, start)]  # (set(), course)
+            while q:
+                path, c = q.pop(0)
+                for pre in adj[c]:
+                    if pre in path:
+                        # Cycle detected
+                        return False
+                    if pre == []:
+                        continue
+                    # Copy to track separate paths when branching
+                    clone = path.copy()
+                    clone.add(pre)
+                    q.append((clone, pre))
 
             return True
 
-        for k in prereq_map.keys():
-            if not dfs(k):
+        # To capture multiple sets of unrelated courses
+        for k in adj.keys():
+            if not bfs(k):
                 return False
 
         return True
