@@ -41,7 +41,7 @@ class Solution:
         return sum(bfs([i]) for i in range(n) if i not in visited)
 
     def countComponentsUnionFind(self, n: int, edges: List[List[int]]) -> int:
-        p = range(n)
+        p = list(range(n))
 
         def find(v):
             if p[v] != v:
@@ -49,10 +49,14 @@ class Solution:
 
             return p[v]
 
+        # Assigns a parent node for each node
         for v, w in edges:
             p[find(v)] = find(w)
 
-        return len(set(map(find, p)))
+        # Finds the parent node of each group of nodes
+        res = set(map(find, p))
+
+        return len(res)
 
     def reference(self, n: int, edges: List[List[int]]) -> int:
         parent_arr = [i for i in range(n)]
@@ -89,9 +93,9 @@ class Solution:
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.countComponents(*case))
+                    print(self.countComponentsUnionFind(*case))
                 else:
-                    self.countComponents(*case)
+                    self.countComponentsUnionFind(*case)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
