@@ -9,33 +9,34 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        res = []
+        # Sorting input takes O(n*log(n)) which is fine since algorithm below takes O(n^2)
         nums.sort()
-        for i in range(len(nums) - 2):
-            if i > 0 and nums[i] == nums[i - 1]:
-                # Skip duplicates
-                continue
-
+        res = set()
+        for i in range(len(nums)):
             l, r = i + 1, len(nums) - 1
             while l < r:
-                total = nums[i] + nums[l] + nums[r]
-                if total == 0:
-                    res.append([nums[i], nums[l], nums[r]])
-                    l += 1
-                    while nums[l] == nums[l - 1] and l < r:
-                        # Skip duplicates
-                        l += 1
+                tup = (nums[i], nums[l], nums[r])
+                total = sum(tup)
+                if total == 0 and tup not in res:
+                    res.add(tup)
+                    # Break to prevent adding again
+                    break
                 elif total < 0:
                     l += 1
                 else:
                     r -= 1
-        return res
+
+        return list(res)
 
     def reference(self, nums: List[int]) -> List[List[int]]:
         res = []
         nums.sort()
 
         for i, a in enumerate(nums):
+            # Skip positive integers
+            if a > 0:
+                break
+
             if i > 0 and a == nums[i - 1]:
                 continue
 
@@ -49,8 +50,10 @@ class Solution:
                 else:
                     res.append([a, nums[l], nums[r]])
                     l += 1
+                    r -= 1
                     while nums[l] == nums[l - 1] and l < r:
                         l += 1
+
         return res
 
     def quantify(self, test_cases, runs=50000):
@@ -75,5 +78,13 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [[-1, 0, 1, 2, -1, -4], [], [0], [0, 0, 0], [0, 0, 0, 0]]
+    test_cases = [
+        [-1, 0, 1, 2, -1, -4],
+        [0, 1, 1],
+        [0, 0, 0],
+        # Additional
+        [],
+        [0],
+        [0, 0, 0, 0],
+    ]
     test.quantify(test_cases)
