@@ -16,15 +16,17 @@ class Solution:
         l = 0
         for r in range(len(s2)):
             c2_count[s2[r]] += 1
-            if r >= len(s1):
+            if r - l + 1 > len(s1):
                 # Shift left pointer when window length exceeded
                 c2_count[s2[l]] -= 1
                 if c2_count[s2[l]] == 0:
                     # Remove entry if zero
                     del c2_count[s2[l]]
+                # Increment last to avoid missing entries
                 l += 1
 
             if c1_count == c2_count:
+                # Check after logic above to ensure consistency
                 return True
 
         return False
@@ -90,5 +92,6 @@ if __name__ == '__main__':
         ('ab', 'eidboaoo'),
         # Additional
         ('hello', 'ooolleoooleh'),
+        ('adc', 'dcda'),
     ]
     test.quantify(test_cases)
