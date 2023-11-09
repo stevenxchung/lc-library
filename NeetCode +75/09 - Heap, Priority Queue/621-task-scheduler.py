@@ -13,12 +13,28 @@ from typing import List
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        counts = list(Counter(tasks).values())
-        max_freq = max(counts)
-        # Number of times max frequency occurs
-        n_max_freq = counts.count(max_freq)
-        # Unit of time cannot be less than number of tasks
-        return max(len(tasks), (max_freq - 1) * (n + 1) + n_max_freq)
+        freq_map = Counter(tasks)
+        heap = [-count for count in freq_map.values()]
+        heapq.heapify(heap)
+
+        t = 0
+        q = deque()
+        while heap or q:
+            t += 1
+            if not heap:
+                # Out of tasks, get latest time from top
+                _, t = q[0]
+            else:
+                # Reduce count for the specific task (max-heap)
+                count = heapq.heappop(heap) + 1
+                if count != 0:
+                    q.append([count, t + n])
+
+            if q and q[0][-1] == t:
+                # Add back task to heap once cooldown is over
+                heapq.heappush(heap, q.popleft()[0])
+
+        return t
 
     def reference(self, tasks: List[str], n: int) -> int:
         count = Counter(tasks)
