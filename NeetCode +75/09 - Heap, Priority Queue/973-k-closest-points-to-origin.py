@@ -13,13 +13,11 @@ from typing import List
 
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        min_heap = [
-            (math.sqrt(pair[0] ** 2 + pair[1] ** 2), pair) for pair in points
-        ]
+        min_heap = [(math.sqrt(x**2 + y**2), [x, y]) for x, y in points]
         heapq.heapify(min_heap)
         res = []
         while len(res) < k:
-            res.append(heapq.heappop(min_heap)[1])
+            res.append(heapq.heappop(min_heap)[-1])
 
         return res
 
