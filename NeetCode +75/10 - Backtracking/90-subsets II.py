@@ -13,7 +13,7 @@ class Solution:
         nums.sort()
         res = []
 
-        def dfs(i1: int, subset: List[int]):
+        def dfs(i1, subset):
             res.append(subset[:])
             for i2 in range(i1, len(nums)):
                 if i2 != i1 and nums[i2] == nums[i2 - 1]:
