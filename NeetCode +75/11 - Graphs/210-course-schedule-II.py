@@ -14,32 +14,32 @@ class Solution:
     def findOrder(
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> List[int]:
-        prereq_map = {i: set() for i in range(numCourses)}
         # Create a graph for adjacency and traversing
+        adj = {i: set() for i in range(numCourses)}
         graph = defaultdict(set)
-        for i, j in prerequisites:
-            prereq_map[i].add(j)
-            graph[j].add(i)
+        for a, b in prerequisites:
+            adj[a].add(b)
+            graph[b].add(a)
 
-        q = deque([])
         # Find starting location based on courses with no prereq
-        for k, v in prereq_map.items():
-            if len(v) == 0:
-                q.append(k)
+        q = []
+        for c, pre in adj.items():
+            if len(pre) == 0:
+                q.append(c)
 
-        taken = []
+        res = []
         while q:
-            pre = q.popleft()
-            taken.append(pre)
-            if len(taken) == numCourses:
-                return taken
+            c = q.pop(0)
+            res.append(c)
+            if len(res) == numCourses:
+                return res
 
-            for next_course in graph[pre]:
+            for next_c in graph[c]:
                 # Remove prereq from the next course
-                prereq_map[next_course].remove(pre)
-                # Taken all requirements so add next course to queue
-                if not prereq_map[next_course]:
-                    q.append(next_course)
+                adj[next_c].remove(c)
+                if len(adj[next_c]) == 0:
+                    # Taken all requirements, add next course to queue
+                    q.append(next_c)
 
         return []
 
@@ -98,5 +98,12 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [(2, [[1, 0]]), (4, [[1, 0], [2, 0], [3, 1], [3, 2]]), (1, [])]
+    test_cases = [
+        (2, [[1, 0]]),
+        (4, [[1, 0], [2, 0], [3, 1], [3, 2]]),
+        (1, []),
+        # Additional
+        (5, [[0, 1], [0, 2], [1, 3], [1, 4], [3, 4]]),
+        (3, [[0, 1], [1, 2], [2, 0]]),
+    ]
     test.quantify(test_cases)
