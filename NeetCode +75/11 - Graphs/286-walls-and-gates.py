@@ -8,6 +8,7 @@ You are given a m x n 2D grid initialized with these three possible values.
 Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
 '''
 from collections import deque
+from copy import deepcopy
 from math import inf
 from time import time
 from typing import List
@@ -16,31 +17,33 @@ from typing import List
 class Solution:
     def wallsAndGates(self, rooms: List[List[int]]) -> List[List[int]]:
         ROWS, COLS = len(rooms), len(rooms[0])
-        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         seen = set()
-        queue = []
 
+        # Get gate locations
+        q = []
         for r in range(ROWS):
             for c in range(COLS):
                 if rooms[r][c] == 0:
-                    queue.append((r, c, 0))
+                    q.append((0, r, c))
+                    seen.add((r, c))
 
-        while queue:
-            for _ in queue:
-                r1, c1, d1 = queue.pop(0)
-                for dr, dc in directions:
-                    r2, c2 = r1 + dr, c1 + dc
-                    if (
-                        r2 not in range(ROWS)
-                        or c2 not in range(COLS)
-                        or (r2, c2) in seen
-                        or rooms[r2][c2] != inf
-                    ):
-                        continue
-                    d2 = d1 + 1
-                    rooms[r2][c2] = d2
-                    seen.add((r2, c2, d2))
-                    queue.append((r2, c2, d2))
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        while q:
+            d, r1, c1 = q.pop(0)
+            for dr, dc in directions:
+                r2, c2 = r1 + dr, c1 + dc
+                if (
+                    r2 < 0
+                    or c2 < 0
+                    or r2 >= ROWS
+                    or c2 >= COLS
+                    or (r2, c2) in seen
+                    or rooms[r2][c2] == -1
+                ):
+                    continue
+                q.append((d + 1, r2, c2))
+                seen.add((r2, c2))
+                rooms[r2][c2] = d + 1
 
         return rooms
 
@@ -84,19 +87,23 @@ class Solution:
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.wallsAndGates(case))
+                    print(self.wallsAndGates(copy))
                 else:
-                    self.wallsAndGates(case)
+                    self.wallsAndGates(copy)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
+                # Create deep copy
+                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(case))
+                    print(self.reference(copy))
                 else:
-                    self.reference(case)
+                    self.reference(copy)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
