@@ -48,7 +48,7 @@ class Solution:
                 p = par[p]
             return p
 
-        # Return False if already unioned
+        # Return False if union (connected)
         def union(n1, n2):
             p1, p2 = find(n1), find(n2)
 
