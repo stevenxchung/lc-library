@@ -18,36 +18,45 @@ from typing import List
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         ROWS, COLS = len(grid), len(grid[0])
-        fresh, time = 0, 0
-        queue = []
+        seen = set()
+        # Gather rotting oranges
+        q = []
+        fresh = 0
         for r in range(ROWS):
             for c in range(COLS):
                 if grid[r][c] == 1:
                     fresh += 1
-                elif grid[r][c] == 2:
-                    queue.append((r, c))
+                if grid[r][c] == 2:
+                    q.append((0, r, c))
+                    seen.add((r, c))
 
-        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-        while queue and fresh > 0:
-            for _ in queue:
-                r1, c1 = queue.pop(0)
-                for dr, dc in directions:
-                    r2, c2 = r1 + dr, c1 + dc
-                    if (
-                        r2 not in range(ROWS)
-                        or c2 not in range(COLS)
-                        or grid[r2][c2] != 1
-                    ):
-                        continue
-                    queue.append((r2, c2))
-                    grid[r2][c2] = 2
-                    fresh -= 1
-            time += 1
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        while q:
+            t, r1, c1 = q.pop(0)
+            if fresh == 0:
+                return t
 
-        return -1 if fresh > 0 else time
+            for dr, dc in directions:
+                r2, c2 = r1 + dr, c1 + dc
+                if (
+                    r2 < 0
+                    or c2 < 0
+                    or r2 >= ROWS
+                    or c2 >= COLS
+                    or (r2, c2) in seen
+                    or grid[r2][c2] != 1
+                ):
+                    continue
+                q.append((t + 1, r2, c2))
+                seen.add((r2, c2))
+                fresh -= 1
+
+        # Handle edge case when there are no fresh oranges to start
+        return -1 if fresh > 0 else t
 
     def reference(self, grid: List[List[int]]) -> int:
         q = collections.deque()
+        seen = set()
         fresh = 0
         time = 0
 
@@ -57,11 +66,11 @@ class Solution:
                     fresh += 1
                 if grid[r][c] == 2:
                     q.append((r, c))
+                    seen.add((r, c))
 
         directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
         while fresh > 0 and q:
-            length = len(q)
-            for i in range(length):
+            for _ in range(len(q)):
                 r, c = q.popleft()
 
                 for dr, dc in directions:
@@ -71,9 +80,10 @@ class Solution:
                     if (
                         row in range(len(grid))
                         and col in range(len(grid[0]))
+                        and (row, col) not in seen
                         and grid[row][col] == 1
                     ):
-                        grid[row][col] = 2
+                        seen.add((row, col))
                         q.append((row, col))
                         fresh -= 1
             time += 1
@@ -84,23 +94,19 @@ class Solution:
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
-                # Create deep copy
-                copy = deepcopy(case)
                 if i == 0:
-                    print(self.orangesRotting(copy))
+                    print(self.orangesRotting(case))
                 else:
-                    self.orangesRotting(copy)
+                    self.orangesRotting(case)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
         for i in range(0, runs):
             for case in test_cases:
-                # Create deep copy
-                copy = deepcopy(case)
                 if i == 0:
-                    print(self.reference(copy))
+                    print(self.reference(case))
                 else:
-                    self.reference(copy)
+                    self.reference(case)
         print(f'Runtime for reference: {time() - ref_start}')
 
 
