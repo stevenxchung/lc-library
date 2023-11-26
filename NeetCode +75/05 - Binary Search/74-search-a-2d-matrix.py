@@ -21,15 +21,22 @@ class Solution:
                 # Target could be in row below
                 t_row = m_row + 1
             else:
-                # Target could be in current row
-                while l_col <= r_col:
-                    m_col = (l_col + r_col) // 2
-                    if target < matrix[m_row][m_col]:
-                        r_col = m_col - 1
-                    elif target > matrix[m_row][m_col]:
-                        l_col = m_col + 1
-                    else:
-                        return True
+                break
+
+        if t_row > b_row:
+            return False
+
+        while l_col <= r_col:
+            m_col = (l_col + r_col) // 2
+            if target < matrix[m_row][m_col]:
+                r_col = m_col - 1
+            elif target > matrix[m_row][m_col]:
+                l_col = m_col + 1
+            else:
+                # Target found
+                return True
+
+        return False
 
     def reference(self, matrix: List[List[int]], target: int) -> bool:
         ROWS, COLS = len(matrix), len(matrix[0])
@@ -86,5 +93,6 @@ if __name__ == '__main__':
         # Additional
         ([[1], [3]], 1),
         ([[1], [3], [5]], 3),
+        ([[1], [3]], 3),
     ]
     test.quantify(test_cases)
