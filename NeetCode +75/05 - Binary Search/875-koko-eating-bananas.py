@@ -15,22 +15,20 @@ from typing import List
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         # Find minimum k bananas to eat given h time to finish
+        def t_lte_h(speed):
+            return sum(math.ceil(p / speed) for p in piles) <= h
+
         l, r = 1, max(piles)
-        res = r
-        while l <= r:
+        while l < r:
             k = (l + r) // 2
-            time_to_eat = 0
-            for bananas in piles:
-                time_to_eat += -(bananas // -k)
-            if time_to_eat <= h:
-                # Koko ate faster than expected, select lower values
-                res = k
-                r = k - 1
+            if t_lte_h(k):
+                # Time to finish is <= h, set r to new k
+                r = k
             else:
-                # Koko ate slower than expected, select higher values
+                # Otherwise, move lower bound up
                 l = k + 1
 
-        return res
+        return l
 
     def reference(self, piles: List[int], h: int) -> int:
         l, r = 1, max(piles)
