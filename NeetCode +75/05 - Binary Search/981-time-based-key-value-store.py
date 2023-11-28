@@ -12,15 +12,15 @@ from time import time
 
 class TimeMap:
     def __init__(self, debug=False):
-        # Consists of key: [(value_i, timestamp_i)...]
+        # Consists of key: [(timestamp_i, value_i)...]
         self.map = {}
         self.debug = debug
 
     def set(self, key: str, value: str, timestamp: int) -> None:
         if key not in self.map:
-            self.map[key] = [(value, timestamp)]
+            self.map[key] = self.map.get(key, [(timestamp, value)])
         else:
-            self.map[key].append((value, timestamp))
+            self.map[key].append((timestamp, value))
 
     def get(self, key: str, timestamp: int) -> str:
         res, arr = '', self.map.get(key, [])
@@ -28,14 +28,15 @@ class TimeMap:
         l, r = 0, len(arr) - 1
         while l <= r:
             m = (l + r) // 2
-            if timestamp >= arr[m][1]:
-                res = arr[m][0]
+            if timestamp >= arr[m][0]:
+                res = arr[m][-1]
                 l = m + 1
-            elif timestamp < arr[m][1]:
+            elif timestamp < arr[m][0]:
                 r = m - 1
 
         if self.debug:
-            print(res)
+            if self.debug:
+                print(f'(k={key}, v={timestamp}): {res}')
         return res
 
 
@@ -54,4 +55,16 @@ if __name__ == '__main__':
     test.get('foo', 4)
     # Return 'bar2'
     test.get('foo', 5)
+
+    print('\nAdditional testing...')
+    test.set('foo', 'bar3', 7)
+    test.get('yeet', 5)  # Return ""
+    test.get('foo', 1)  # Return 'bar'
+    test.get('foo', 2)  # Return 'bar'
+    test.get('foo', 3)  # Return 'bar'
+    test.get('foo', 4)  # Return 'bar2'
+    test.get('foo', 5)  # Return 'bar2'
+    test.get('foo', 6)  # Return 'bar2'
+    test.get('foo', 7)  # Return 'bar3'
+    test.get('foo', 8)  # Return 'bar3'
     print(f'Runtime for our solution: {time() - sol_start}\n')
