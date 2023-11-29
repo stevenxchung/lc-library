@@ -13,6 +13,7 @@ class Solution:
     def combinationSum(
         self, candidates: List[int], target: int
     ) -> List[List[int]]:
+        # To exit recursion earlier
         candidates.sort()
         res = []
 
@@ -20,11 +21,11 @@ class Solution:
             if total == target:
                 res.append(subset[:])
                 return
-            if total > target:
-                # Backtracking
-                return
 
             for j in range(i, len(candidates)):
+                if total + candidates[j] > target:
+                    # Backtrack since estimate is already greater
+                    return
                 dfs(j, subset + [candidates[j]], total + candidates[j])
 
             return
