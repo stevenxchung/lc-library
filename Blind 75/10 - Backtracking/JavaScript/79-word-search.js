@@ -4,20 +4,27 @@ class Solution {
   method(board, word) {
     const [ROWS, COLS] = [board.length, board[0].length];
 
-    const dfs = (r, c, str) => {
-      if (str.length === 0) return true;
-      if (r < 0 || c < 0 || r >= ROWS || c >= COLS || board[r][c] !== str[0]) {
-        return;
+    const dfs = (i, r, c) => {
+      if (i == word.length) return true;
+      if (
+        r < 0 ||
+        c < 0 ||
+        r >= ROWS ||
+        c >= COLS ||
+        board[r][c] === "#" ||
+        board[r][c] !== word[i]
+      ) {
+        return false;
       }
 
       const temp = board[r][c];
       board[r][c] = "#";
 
       const foundWord =
-        dfs(r + 1, c, str.slice(1)) ||
-        dfs(r - 1, c, str.slice(1)) ||
-        dfs(r, c + 1, str.slice(1)) ||
-        dfs(r, c - 1, str.slice(1));
+        dfs(i + 1, r + 1, c) ||
+        dfs(i + 1, r - 1, c) ||
+        dfs(i + 1, r, c + 1) ||
+        dfs(i + 1, r, c - 1);
 
       board[r][c] = temp;
 
@@ -26,7 +33,7 @@ class Solution {
 
     for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLS; j++) {
-        if (dfs(i, j, word)) return true;
+        if (dfs(0, i, j)) return true;
       }
     }
 
