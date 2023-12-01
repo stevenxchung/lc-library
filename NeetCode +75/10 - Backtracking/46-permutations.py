@@ -16,10 +16,14 @@ class Solution:
 
             for n in nums:
                 if n in seen:
+                    # To prevent from selecting same element twice
                     continue
+
                 seen.add(n)
                 dfs(subset + [n])
                 seen.remove(n)
+
+            return
 
         dfs([])
         return res
