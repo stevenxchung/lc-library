@@ -18,7 +18,8 @@ class TrieNode:
 
 
 class Trie:
-    def __init__(self):
+    def __init__(self, debug=False):
+        self.debug = debug
         self.root = TrieNode()
 
     def insert(self, word: str) -> None:
@@ -28,6 +29,7 @@ class Trie:
             if c not in node.children:
                 node.children[c] = TrieNode()
             node = node.children[c]
+
         node.is_end = True
 
     def search(self, word: str) -> bool:
@@ -35,26 +37,33 @@ class Trie:
 
         for c in word:
             if c not in node.children:
-                print(False)
+                if self.debug:
+                    return print(f'search({word}): {False}')
                 return False
             node = node.children[c]
-        print(node.is_end)
-        return node.is_end
+
+        res = node.is_end
+        if self.debug:
+            return print(f'search({word}): {res}')
+        return res
 
     def startsWith(self, prefix: str) -> bool:
         node = self.root
 
         for c in prefix:
             if c not in node.children:
-                print(False)
+                if self.debug:
+                    return print(f'startsWith({prefix}): {False}')
                 return False
             node = node.children[c]
-        print(True)
+
+        if self.debug:
+            return print(f'startsWith({prefix}): {True}')
         return True
 
 
 if __name__ == '__main__':
-    test = Trie()
+    test = Trie(debug=True)
     sol_start = time()
     test.insert('apple')
     test.search('apple')  # return True
