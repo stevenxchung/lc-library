@@ -17,7 +17,8 @@ class TrieNode:
 
 
 class WordDictionary:
-    def __init__(self):
+    def __init__(self, debug=False):
+        self.debug = debug
         self.root = TrieNode()
 
     def addWord(self, word: str) -> None:
@@ -27,32 +28,36 @@ class WordDictionary:
             if c not in node.children:
                 node.children[c] = TrieNode()
             node = node.children[c]
+
         node.is_end = True
 
     def search(self, word: str) -> bool:
-        def dfs(word, start, curr):
-            node = curr
-            for i in range(start, len(word)):
-                c = word[i]
-                if c == '.':
-                    for child in node.children.values():
-                        if dfs(word, i + 1, child):
-                            return True
-                        return False
-                else:
-                    if c not in node.children:
-                        return False
-                node = node.children[c]
+        def dfs(i, node):
+            if i == len(word):
+                # True if end of word, false otherwise
+                return node.is_end
+            elif word[i] == ".":
+                for child in node.children.values():
+                    # Search all child nodes
+                    if dfs(i + 1, child):
+                        return True
+                # All options exhausted
+                return False
+            elif word[i] not in node.children:
+                return False
 
-            return node.is_end
+            node = node.children[word[i]]
 
-        res = dfs(word, 0, self.root)
-        print(res)
+            return dfs(i + 1, node)
+
+        res = dfs(0, self.root)
+        if self.debug:
+            return print(f'search({word}): {res}')
         return res
 
 
 if __name__ == '__main__':
-    test = WordDictionary()
+    test = WordDictionary(debug=True)
     sol_start = time()
     test.addWord('bad')
     test.addWord('dad')
