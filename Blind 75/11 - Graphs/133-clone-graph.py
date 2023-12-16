@@ -34,22 +34,22 @@ class Solution:
             return
 
         # Initialize clone and queue with first node
-        old_to_new = {node: Node(node.val)}
+        node_map = {node: Node(node.val)}
         q = [node]
         while q:
             # Set new node
             old = q.pop(0)
-            new = old_to_new[old]
+            new = node_map[old]
 
             for nei in old.neighbors:
-                if nei not in old_to_new:
-                    # For each neighbor, set old to new neighbor
-                    old_to_new[nei] = Node(nei.val)
+                # For each neighbor, map old to new node if not exist
+                if nei not in node_map:
+                    node_map[nei] = Node(nei.val)
                     q.append(nei)
                 # Add new neighbors to new node
-                new.neighbors.append(old_to_new[nei])
+                new.neighbors.append(node_map[nei])
 
-        return old_to_new[node]
+        return node_map[node]
 
     def reference(self, node: 'Node') -> 'Node':
         if not node:
