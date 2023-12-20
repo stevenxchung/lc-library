@@ -6,9 +6,9 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 
 
 class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
 
 # class Solution:
@@ -37,6 +37,7 @@ class ListNode:
 #         else:
 #             if carry:
 #                 temp.next = ListNode(carry)
+
 
 class Solution:
     def addTwoNumbers(self, l1, l2):
