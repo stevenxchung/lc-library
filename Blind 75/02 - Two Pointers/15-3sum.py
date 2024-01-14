@@ -9,24 +9,33 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        # Sorting input takes O(n*log(n)) which is fine since algorithm below takes O(n^2)
+        res = []
+        if len(nums) < 3:
+            return res
+
+        # Sorting input takes O(n*log(n)), algorithm below takes O(n^2)
         nums.sort()
-        res = set()
-        for i in range(len(nums)):
+        for i in range(len(nums) - 2):
+            if i > 0 and nums[i] == nums[i - 1]:
+                # Skip duplicates
+                continue
+
             l, r = i + 1, len(nums) - 1
             while l < r:
-                tup = (nums[i], nums[l], nums[r])
-                total = sum(tup)
-                if total == 0 and tup not in res:
-                    res.add(tup)
-                    # Break to prevent adding again
-                    break
-                elif total < 0:
+                a, b, c = nums[i], nums[l], nums[r]
+                total = a + b + c
+                if total == 0:
+                    res.append([a, b, c])
                     l += 1
-                else:
+                    while nums[l] == nums[l - 1] and l < r:
+                        # Skip duplicates
+                        l += 1
+                elif total > 0:
                     r -= 1
+                else:
+                    l += 1
 
-        return list(res)
+        return res
 
     def reference(self, nums: List[int]) -> List[List[int]]:
         res = []
@@ -86,5 +95,6 @@ if __name__ == '__main__':
         [],
         [0],
         [0, 0, 0, 0],
+        [-2, 0, 1, 1, 2],
     ]
     test.quantify(test_cases)
