@@ -9,22 +9,22 @@ from time import time
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        c_count = defaultdict(int)
-        # To compute replacements = (r - l + 1) - most_freq_c
-        most_freq_c = 0
+        count_map = defaultdict(int)
+        longest = 0
         res = 0
 
         l = 0
         for r in range(len(s)):
-            c_count[s[r]] += 1
-            most_freq_c = max(most_freq_c, c_count[s[r]])
+            count_map[s[r]] += 1
+            # Next character could be the longest
+            longest = max(longest, count_map[s[r]])
 
-            if (r - l + 1) - most_freq_c > k:
+            if k < (r - l + 1) - longest:
                 # Shrink window if replacements exceeds limit
-                c_count[s[l]] -= 1
+                count_map[s[l]] -= 1
                 l += 1
 
-            res = max(res, r - l + 1)
+            res = max(res, (r - l + 1))
 
         return res
 
