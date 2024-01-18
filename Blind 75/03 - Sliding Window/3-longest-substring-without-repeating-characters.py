@@ -7,15 +7,18 @@ from time import time
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         seen = set()
-        l, max_length = 0, 0
+        l = 0
+        longest, curr = 0, 0
         for r in range(len(s)):
             while s[r] in seen:
                 seen.remove(s[l])
                 l += 1
+                curr -= 1
             seen.add(s[r])
-            max_length = max(max_length, r - l + 1)
+            curr += 1
+            longest = max(longest, curr)
 
-        return max_length
+        return longest
 
     def reference(self, s: str) -> int:
         charSet = set()
