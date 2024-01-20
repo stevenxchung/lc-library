@@ -44,7 +44,7 @@ class Solution:
             dfs(0, c, heights[0][c], pac_seen)
             dfs(ROWS - 1, c, heights[ROWS - 1][c], atl_seen)
 
-        return list(pac_seen.intersection(atl_seen))
+        return list(pac_seen & atl_seen)
 
     def reference(self, heights: List[List[int]]) -> List[List[int]]:
         ROWS, COLS = len(heights), len(heights[0])
