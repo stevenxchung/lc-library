@@ -9,7 +9,7 @@ Every minute, any fresh orange that is 4-directionally adjacent to a rotten oran
 
 Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
 '''
-import collections
+from collections import deque
 from copy import deepcopy
 from time import time
 from typing import List
@@ -20,19 +20,19 @@ class Solution:
         ROWS, COLS = len(grid), len(grid[0])
         seen = set()
         # Gather rotting oranges
-        q = []
+        q = deque()
         fresh = 0
         for r in range(ROWS):
             for c in range(COLS):
                 if grid[r][c] == 1:
                     fresh += 1
-                if grid[r][c] == 2:
+                elif grid[r][c] == 2:
                     q.append((0, r, c))
                     seen.add((r, c))
 
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         while q:
-            t, r1, c1 = q.pop(0)
+            t, r1, c1 = q.popleft()
             if fresh == 0:
                 return t
 
@@ -55,7 +55,7 @@ class Solution:
         return -1 if fresh > 0 else t
 
     def reference(self, grid: List[List[int]]) -> int:
-        q = collections.deque()
+        q = deque()
         seen = set()
         fresh = 0
         time = 0
