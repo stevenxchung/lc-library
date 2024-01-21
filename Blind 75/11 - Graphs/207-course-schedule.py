@@ -5,6 +5,7 @@ There are a total of numCourses courses you have to take, labeled from 0 to numC
 
 Return true if you can finish all courses. Otherwise, return false.
 '''
+from collections import deque
 from time import time
 from typing import List
 
@@ -14,32 +15,29 @@ class Solution:
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> bool:
         adj = {i: [] for i in range(numCourses)}
-        for a, b in prerequisites:
-            adj[a].append(b)
+        required = [0] * numCourses
+        for c, pre in prerequisites:
+            adj[pre].append(c)
+            required[c] += 1
 
-        def bfs(start):
-            q = [({start}, start)]  # (set(), course)
-            while q:
-                path, c = q.pop(0)
-                for pre in adj[c]:
-                    if pre in path:
-                        # Cycle detected
-                        return False
-                    if pre == []:
-                        continue
-                    # Copy to track separate paths when branching
-                    clone = path.copy()
-                    clone.add(pre)
-                    q.append((clone, pre))
+        q = deque()
+        for i in range(numCourses):
+            # Start with first required courses
+            if required[i] == 0:
+                q.append(i)
 
-            return True
+        taken = []
+        while q:
+            pre = q.popleft()
+            taken.append(pre)
+            for c in adj[pre]:
+                required[c] -= 1
+                if required[c] == 0:
+                    # Only add to queue if all prerequisites taken
+                    q.append(c)
 
-        # To capture multiple sets of unrelated courses
-        for k in adj.keys():
-            if not bfs(k):
-                return False
-
-        return True
+        # If all courses were taken, length should match up
+        return len(taken) == numCourses
 
     def reference(
         self, numCourses: int, prerequisites: List[List[int]]
@@ -102,5 +100,6 @@ if __name__ == '__main__':
         # Additional
         (5, [[0, 1], [0, 2], [1, 3], [1, 4], [3, 4]]),
         (3, [[0, 1], [1, 2], [2, 0]]),
+        (3, [[0, 1], [0, 2], [1, 2], [2, 1]]),
     ]
     test.quantify(test_cases)
