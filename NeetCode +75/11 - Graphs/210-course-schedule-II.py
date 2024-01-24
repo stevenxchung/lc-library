@@ -5,7 +5,7 @@ There are a total of numCourses courses you have to take, labeled from 0 to numC
 
 Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
 '''
-from collections import defaultdict, deque
+from collections import deque
 from time import time
 from typing import List
 
@@ -14,34 +14,30 @@ class Solution:
     def findOrder(
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> List[int]:
-        # Create a graph for adjacency and traversing
-        adj = {i: set() for i in range(numCourses)}
-        graph = defaultdict(set)
-        for a, b in prerequisites:
-            adj[a].add(b)
-            graph[b].add(a)
+        adj = {i: [] for i in range(numCourses)}
+        required = [0] * numCourses
+        for c, pre in prerequisites:
+            adj[pre].append(c)
+            required[c] += 1
 
-        # Find starting location based on courses with no prereq
-        q = []
-        for c, pre in adj.items():
-            if len(pre) == 0:
-                q.append(c)
+        q = deque()
+        for i in range(numCourses):
+            # Start with first required courses
+            if required[i] == 0:
+                q.append(i)
 
-        res = []
+        taken = []
         while q:
-            c = q.pop(0)
-            res.append(c)
-            if len(res) == numCourses:
-                return res
+            c = q.popleft()
+            taken.append(c)
+            for c_next in adj[c]:
+                required[c_next] -= 1
+                if required[c_next] == 0:
+                    # Only add to queue if all prerequisites taken
+                    q.append(c_next)
 
-            for next_c in graph[c]:
-                # Remove prereq from the next course
-                adj[next_c].remove(c)
-                if len(adj[next_c]) == 0:
-                    # Taken all requirements, add next course to queue
-                    q.append(next_c)
-
-        return []
+        # If all courses were taken, length should match up
+        return taken if len(taken) == numCourses else []
 
     def reference(
         self, numCourses: int, prerequisites: List[List[int]]
