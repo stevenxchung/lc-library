@@ -28,13 +28,13 @@ class Solution:
 
         taken = []
         while q:
-            pre = q.popleft()
-            taken.append(pre)
-            for c in adj[pre]:
-                required[c] -= 1
-                if required[c] == 0:
+            c = q.popleft()
+            taken.append(c)
+            for c_next in adj[c]:
+                required[c_next] -= 1
+                if required[c_next] == 0:
                     # Only add to queue if all prerequisites taken
-                    q.append(c)
+                    q.append(c_next)
 
         # If all courses were taken, length should match up
         return len(taken) == numCourses
