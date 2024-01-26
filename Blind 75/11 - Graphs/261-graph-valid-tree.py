@@ -15,7 +15,7 @@ class Solution:
         for a, b in edges:
             '''
             Assume edge is directed even though description says undirected
-            by doing avoids tracking and skipping previous node after visiting
+            by tracking and skipping previous node after visiting
             (false positive cycle)
             '''
             node_map[a].append(b)
