@@ -5,19 +5,21 @@ You may assume that each input would have exactly one solution, and you may not 
 
 You can return the answer in any order.
 '''
+
 from time import time
 from typing import List
 
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        seen = {}
-
-        for i, e in enumerate(nums):
-            diff = target - e
-            if diff in seen:
-                return [seen[diff], i]
-            seen[e] = i
+        table = {}
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in table:
+                # Complement found
+                return [i, table[diff]]
+            # Build hashmap as we go
+            table[n] = i
 
     def reference(self, nums: List[int], target: int) -> List[int]:
         prevMap = {}  # val -> index
