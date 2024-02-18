@@ -3,25 +3,24 @@ Given an unsorted array of integers nums, return the length of the longest conse
 
 You must write an algorithm that runs in O(n) time.
 '''
+
 from time import time
 from typing import List
 
 
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        temp_set = set(nums)
-        count = 1
-        longest = 1
-        for e in nums:
-            # Only check for start of sequence
-            if e - 1 not in temp_set:
-                next_n = e + 1
-                while next_n in temp_set:
+        longest = 0
+        seen = set(nums)
+        for n in nums:
+            if n - 1 not in seen:
+                # Loop only at the beginning of a sequence
+                curr = n
+                count = 0
+                while curr in seen:
                     count += 1
-                    next_n += 1
-                if count > longest:
-                    longest = count
-            count = 1
+                    curr += 1
+                longest = max(longest, count)
 
         return longest
 
