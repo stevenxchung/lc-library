@@ -5,27 +5,26 @@ The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit int
 
 You must write an algorithm that runs in O(n) time and without using the division operation.
 '''
+
 from time import time
 from typing import List
 
 
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        prefix = 1
-        suffix = 1
+        res = [1] * len(nums)
+        pre, post = 1, 1
+        for i in range(1, len(nums)):
+            # Skip first element
+            res[i] = pre
+            pre *= nums[i]
 
-        # Forward loop
-        res = {}
-        for i, e in enumerate(nums):
-            res[i] = prefix
-            prefix *= e
+        for i in range(len(nums) - 1, -1, -1):
+            # Skip last element
+            res[i] *= post
+            post *= nums[i]
 
-        # Reverse loop
-        for i, e in reversed(list(enumerate(nums))):
-            res[i] *= suffix
-            suffix *= e
-
-        return res.values()
+        return res
 
     def reference(self, nums: List[int]) -> List[int]:
         res = [1] * (len(nums))
