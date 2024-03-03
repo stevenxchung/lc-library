@@ -1,23 +1,30 @@
 '''
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 '''
+
+from collections import defaultdict
 from time import time
 from typing import List
 
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        res, freq = [], {}
+        count_map = defaultdict(int)
+        # Where i = count and max(count) <= len(nums)
+        buckets = [[] for _ in range(len(nums) + 1)]
         for n in nums:
-            freq[n] = 1 + freq.get(n, 0)
+            count_map[n] += 1
+        for n, c in count_map.items():
+            buckets[c].append(n)
 
-        for _ in range(k):
-            # Get number corresponding to max count then delete
-            num = max(freq, key=freq.get)
-            res.append(num)
-            del freq[num]
-
-        return res
+        # Start from the largest bucket
+        res = []
+        for i in range(len(buckets) - 1, 0, -1):
+            for n in buckets[i]:
+                res.append(n)
+                if len(res) == k:
+                    # Only add up to k
+                    return res
 
     def reference(self, nums: List[int], k: int) -> List[int]:
         count = {}
