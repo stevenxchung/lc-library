@@ -3,19 +3,19 @@ A phrase is a palindrome if, after converting all uppercase letters into lowerca
 
 Given a string s, return true if it is a palindrome, or false otherwise.
 '''
+
 from time import time
 
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        s_formatted = ''.join(filter(str.isalnum, s)).lower()
-        i = 0
-        j = len(s_formatted) - 1
-        while i < j:
-            if s_formatted[i] != s_formatted[j]:
+        s_new = ''.join(filter(str.isalnum, s)).lower()
+        l, r = 0, len(s_new) - 1
+        while l < r:
+            if s_new[l] != s_new[r]:
                 return False
-            i += 1
-            j -= 1
+            l += 1
+            r -= 1
 
         return True
 
