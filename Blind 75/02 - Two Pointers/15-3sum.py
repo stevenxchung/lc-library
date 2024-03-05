@@ -3,6 +3,7 @@ Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]]
 
 Notice that the solution set must not contain duplicate triplets.
 '''
+
 from time import time
 from typing import List
 
@@ -27,7 +28,7 @@ class Solution:
                 if total == 0:
                     res.append([a, b, c])
                     l += 1
-                    while nums[l] == nums[l - 1] and l < r:
+                    while l < r and nums[l] == nums[l - 1]:
                         # Skip duplicates
                         l += 1
                 elif total > 0:
