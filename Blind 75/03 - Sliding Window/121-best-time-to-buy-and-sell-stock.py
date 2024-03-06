@@ -5,6 +5,7 @@ You want to maximize your profit by choosing a single day to buy one stock and c
 
 Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 '''
+
 from time import time
 from typing import List
 
@@ -14,7 +15,7 @@ class Solution:
         max_profit = 0
         l = 0
         for r in range(1, len(prices)):
-            if prices[l] > prices[r]:
+            if prices[r] < prices[l]:
                 # Reset when profit negative
                 l = r
                 continue
