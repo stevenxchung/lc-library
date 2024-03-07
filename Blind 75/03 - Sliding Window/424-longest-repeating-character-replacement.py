@@ -3,6 +3,7 @@ You are given a string s and an integer k. You can choose any character of the s
 
 Return the length of the longest substring containing the same letter you can get after performing the above operations.
 '''
+
 from collections import defaultdict
 from time import time
 
@@ -10,16 +11,16 @@ from time import time
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         count_map = defaultdict(int)
-        longest = 0
+        max_c_len = 0
         res = 0
 
         l = 0
         for r in range(len(s)):
             count_map[s[r]] += 1
             # Next character could be the longest
-            longest = max(longest, count_map[s[r]])
+            max_c_len = max(max_c_len, count_map[s[r]])
 
-            if k < (r - l + 1) - longest:
+            if k < (r - l + 1) - max_c_len:
                 # Shrink window if replacements exceeds limit
                 count_map[s[l]] -= 1
                 l += 1
