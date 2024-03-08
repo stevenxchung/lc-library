@@ -9,6 +9,7 @@ Given the sorted rotated array nums of unique elements, return the minimum eleme
 
 You must write an algorithm that runs in O(log n) time.
 '''
+
 from math import inf
 from time import time
 from typing import List
@@ -19,8 +20,8 @@ class Solution:
         l, r = 0, len(nums) - 1
 
         while l < r:
-            mid = (l + r) // 2
-            if nums[mid] <= nums[r]:
+            mid = l + (r - l) // 2
+            if nums[mid] < nums[r]:
                 # Min is on the left side or in the middle
                 r = mid
             else:
@@ -71,9 +72,9 @@ class Solution:
 if __name__ == '__main__':
     test = Solution()
     test_cases = [
-        # [3, 4, 5, 1, 2],
-        # [4, 5, 6, 7, 0, 1, 2],
-        # [11, 13, 15, 17],
+        [3, 4, 5, 1, 2],
+        [4, 5, 6, 7, 0, 1, 2],
+        [11, 13, 15, 17],
         # Additional
         [4, 5, 1, 2, 3],
     ]
