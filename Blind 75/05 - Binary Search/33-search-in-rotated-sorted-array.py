@@ -7,6 +7,7 @@ Given the array nums after the possible rotation and an integer target, return t
 
 You must write an algorithm with O(log n) runtime complexity.
 '''
+
 from time import time
 from typing import List
 
@@ -14,26 +15,22 @@ from typing import List
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         l, r = 0, len(nums) - 1
-        while l <= r:
-            m = (l + r) // 2
-            if nums[m] == target:
-                return m
-
-            # Check which section is sorted
+        while l < r:
+            m = l + (r - l) // 2
             if nums[l] <= nums[m]:
-                if target < nums[l] or target > nums[m]:
-                    # Target out of bounds, move left
-                    l = m + 1
+                # Left sorted
+                if nums[l] <= target <= nums[m]:
+                    r = m
                 else:
-                    r = m - 1
+                    l = m + 1
             else:
-                if target < nums[m] or target > nums[r]:
-                    # Target out of bounds, move right
-                    r = m - 1
-                else:
+                # Right sorted
+                if nums[m] < target <= nums[r]:
                     l = m + 1
+                else:
+                    r = m
 
-        return -1
+        return l if nums[l] == target else -1
 
     def reference(self, nums: List[int], target: int) -> int:
         l, r = 0, len(nums) - 1
@@ -83,5 +80,9 @@ if __name__ == '__main__':
         ([4, 5, 6, 7, 0, 1, 2], 0),
         ([4, 5, 6, 7, 0, 1, 2], 3),
         ([1], 0),
+        # Additional
+        ([3, 1], 3),
+        ([5, 1, 3], 3),
+        ([5, 1, 3], 1),
     ]
     test.quantify(test_cases)
