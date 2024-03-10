@@ -7,6 +7,7 @@ Implement the test class:
 - void addWord(word) Adds word to the data structure, it can be matched later.
 - bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise. word may contain dots '.' where dots can be matched with any letter.
 '''
+
 from time import time
 
 
@@ -23,29 +24,25 @@ class WordDictionary:
 
     def addWord(self, word: str) -> None:
         node = self.root
-
         for c in word:
             if c not in node.children:
                 node.children[c] = TrieNode()
             node = node.children[c]
-
         node.is_end = True
 
     def search(self, word: str) -> bool:
         def dfs(i, node):
             if i == len(word):
-                # True if end of word, false otherwise
+                # End of the word
                 return node.is_end
-            elif word[i] == ".":
+            elif word[i] == '.':
                 for child in node.children.values():
                     # Search all child nodes
                     if dfs(i + 1, child):
                         return True
-                # All options exhausted
-                return False
-            elif word[i] not in node.children:
-                return False
 
+            if word[i] not in node.children:
+                return False
             node = node.children[word[i]]
 
             return dfs(i + 1, node)
@@ -66,4 +63,35 @@ if __name__ == '__main__':
     test.search('bad')  # return True
     test.search('.ad')  # return True
     test.search('b..')  # return True
+    print(f'Runtime for our solution: {time() - sol_start}\n')
+
+    # Additional
+    print('\nAdditional testing...')
+    test = WordDictionary(debug=True)
+    test.addWord('a')
+    test.addWord('a')
+    # true, true, false, true, false, false
+    test.search('.')
+    test.search('a')
+    test.search('aa')
+    test.search('a')
+    test.search('.a')
+    test.search('a.')
+
+    test.addWord('at')
+    test.addWord('and')
+    test.addWord('an')
+    test.addWord('add')
+    # true, false
+    test.search('a')
+    test.search('.at')
+
+    test.addWord('bat')
+    # true, true, false, false, true, true
+    test.search('.at')
+    test.search('an.')
+    test.search('a.d.')
+    test.search('b.')
+    test.search('a.d')
+    test.search('.')
     print(f'Runtime for our solution: {time() - sol_start}\n')
