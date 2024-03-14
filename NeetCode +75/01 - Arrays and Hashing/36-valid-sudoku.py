@@ -10,47 +10,33 @@ Note:
 - A Sudoku board (partially filled) could be valid but is not necessarily solvable.
 - Only the filled cells need to be validated according to the mentioned rules.
 '''
+
 import collections
 from time import time
 from typing import List
 
 
 class Solution:
-    def isSquareValid(self, square: List[List[str]]) -> bool:
-        square_nums = set()
-        for i in range(len(square)):
-            for j in range(len(square[0])):
-                if square[i][j] == '.':
-                    continue
-                elif square[i][j] in square_nums:
-                    return False
-                else:
-                    square_nums.add(square[i][j])
-        return True
-
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        row_nums = set()
-        col_nums = {j: set() for j in range(len(board[0]))}
-        for i in range(len(board)):
-            row_nums = set()
-            for j in range(len(board[0])):
-                if board[i][j] == '.':
-                    continue
-                elif board[i][j] in row_nums or board[i][j] in col_nums[j]:
-                    return False
-                else:
-                    row_nums.add(board[i][j])
-                    col_nums[j].add(board[i][j])
+        r_map = collections.defaultdict(set)
+        c_map = collections.defaultdict(set)
+        # Key will be based on (r // n 3x3 boxes in row, c // n 3x3 boxes in column)
+        s_map = collections.defaultdict(set)
 
-        for i in (0, 3, 6):
-            for j in (0, 3, 6):
-                square = [
-                    board[x][y]
-                    for x in range(i, i + 3)
-                    for y in range(j, j + 3)
-                ]
-                if not self.isSquareValid(square):
+        ROWS, COLS = len(board), len(board[0])
+        for r in range(ROWS):
+            for c in range(COLS):
+                if board[r][c] == '.':
+                    continue
+                if (
+                    board[r][c] in r_map[r]
+                    or board[r][c] in c_map[c]
+                    or board[r][c] in s_map[(r // 3, c // 3)]
+                ):
                     return False
+                r_map[r].add(board[r][c])
+                s_map[c].add(board[r][c])
+                s_map[(r // 3, c // 3)].add(board[r][c])
 
         return True
 
