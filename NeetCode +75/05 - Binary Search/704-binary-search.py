@@ -3,6 +3,7 @@ Given an array of integers nums which is sorted in ascending order, and an integ
 
 You must write an algorithm with O(log n) runtime complexity.
 '''
+
 from time import time
 from typing import List
 
@@ -10,17 +11,14 @@ from typing import List
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         l, r = 0, len(nums) - 1
-        while l <= r:
-            # Determine middle index first then compare target
-            m = (l + r) // 2
-            if target > nums[m]:
-                l = m + 1
-            elif target < nums[m]:
-                r = m - 1
+        while l < r:
+            m = l + (r - l) // 2
+            if target <= nums[m]:
+                r = m
             else:
-                return m
+                l = m + 1
 
-        return -1
+        return l if nums[l] == target else -1
 
     def reference(self, nums: List[int], target: int) -> int:
         l, r = 0, len(nums) - 1
