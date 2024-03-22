@@ -4,39 +4,30 @@ Write an efficient algorithm that searches for a value target in an m x n intege
 - Integers in each row are sorted from left to right.
 - The first integer of each row is greater than the last integer of the previous row.
 '''
+
 from time import time
 from typing import List
 
 
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        t_row, b_row = 0, len(matrix) - 1
-        l_col, r_col = 0, len(matrix[0]) - 1
-        while t_row <= b_row:
-            m_row = (t_row + b_row) // 2
-            if target < matrix[m_row][l_col]:
-                # Target could be in row above
-                b_row = m_row - 1
-            elif target > matrix[m_row][r_col]:
-                # Target could be in row below
-                t_row = m_row + 1
+        t, b = 0, len(matrix) - 1
+        while t < b:
+            m = t + (b - t) // 2
+            if target <= matrix[m][-1]:
+                b = m
             else:
-                break
+                t = m + 1
 
-        if t_row > b_row:
-            return False
-
-        while l_col <= r_col:
-            m_col = (l_col + r_col) // 2
-            if target < matrix[m_row][m_col]:
-                r_col = m_col - 1
-            elif target > matrix[m_row][m_col]:
-                l_col = m_col + 1
+        l, r = 0, len(matrix[0]) - 1
+        while l < r:
+            m = l + (r - l) // 2
+            if target <= matrix[b][m]:
+                r = m
             else:
-                # Target found
-                return True
+                l = m + 1
 
-        return False
+        return matrix[t][l] == target
 
     def reference(self, matrix: List[List[int]], target: int) -> bool:
         ROWS, COLS = len(matrix), len(matrix[0])
