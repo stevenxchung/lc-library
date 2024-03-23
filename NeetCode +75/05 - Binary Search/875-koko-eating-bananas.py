@@ -7,6 +7,7 @@ Koko likes to eat slowly but still wants to finish eating all the bananas before
 
 Return the minimum integer k such that she can eat all the bananas within h hours.
 '''
+
 import math
 from time import time
 from typing import List
@@ -20,7 +21,7 @@ class Solution:
 
         l, r = 1, max(piles)
         while l < r:
-            k = (l + r) // 2
+            k = l + (r - l) // 2
             if t_lte_h(k):
                 # Time to finish is <= h, set r to new k
                 r = k
