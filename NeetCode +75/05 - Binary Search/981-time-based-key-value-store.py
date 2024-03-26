@@ -7,6 +7,7 @@ Implement the TimeMap class:
 - void set(String key, String value, int timestamp) Stores the key key with the value value at the given time timestamp.
 - String get(String key, int timestamp) Returns a value such that set was called previously, with timestamp_prev <= timestamp. If there are multiple such values, it returns the value associated with the largest timestamp_prev. If there are no values, it returns ''.
 '''
+
 from time import time
 
 
@@ -27,16 +28,15 @@ class TimeMap:
         # Binary search to find timestamp if exists
         l, r = 0, len(arr) - 1
         while l <= r:
-            m = (l + r) // 2
-            if timestamp >= arr[m][0]:
+            m = l + (r - l) // 2
+            if arr[m][0] <= timestamp:
                 res = arr[m][-1]
                 l = m + 1
-            elif timestamp < arr[m][0]:
+            else:
                 r = m - 1
 
         if self.debug:
-            if self.debug:
-                print(f'(k={key}, v={timestamp}): {res}')
+            print(f'get({key, timestamp}): {res}')
         return res
 
 
