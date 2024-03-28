@@ -25,7 +25,7 @@ class Solution:
                 count_map[s[l]] -= 1
                 l += 1
 
-            res = max(res, (r - l + 1))
+            res = max(res, r - l + 1)
 
         return res
 
