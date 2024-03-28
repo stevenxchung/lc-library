@@ -1,6 +1,7 @@
 '''
 Given a string s, find the length of the longest substring without repeating characters.
 '''
+
 from time import time
 
 
@@ -8,15 +9,13 @@ class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         seen = set()
         l = 0
-        longest, curr = 0, 0
+        longest = 0
         for r in range(len(s)):
             while s[r] in seen:
                 seen.remove(s[l])
                 l += 1
-                curr -= 1
             seen.add(s[r])
-            curr += 1
-            longest = max(longest, curr)
+            longest = max(longest, r - l + 1)
 
         return longest
 
