@@ -5,42 +5,41 @@ The testcases will be generated such that the answer is unique.
 
 A substring is a contiguous sequence of characters within the string.
 '''
-from math import inf
+
+from collections import Counter
 from time import time
 
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if len(s) < len(t):
-            return ''
-
-        window, t_map = {}, {}
-        for c in t:
-            t_map[c] = 1 + t_map.get(c, 0)
-
-        # Track characters
-        have, need = 0, len(t_map)
-        p_window, minLen = [0, 0], inf
+        count_map = Counter(t)
+        required = len(t)
+        start, end = 0, 0
         l = 0
-        for r in range(len(s)):
-            c = s[r]
-            window[c] = 1 + window.get(c, 0)
+        for r, c in enumerate(s, 1):
+            if count_map[c] > 0:
+                required -= 1
 
-            if c in t_map and window[c] == t_map[c]:
-                have += 1
+            # Can be negative (character is not required)
+            count_map[c] -= 1
 
-            while have == need:
-                if (r - l + 1) < minLen:
-                    p_window = [l, r]
-                    minLen = r - l + 1
-                # Remove from window and increment left pointer
-                window[s[l]] -= 1
-                if s[l] in t_map and window[s[l]] < t_map[s[l]]:
-                    have -= 1
+            # Window contains all characters, reduce window to minimum
+            if required == 0:
+                # Shrink until we reach required character
+                while l < r and count_map[s[l]] < 0:
+                    count_map[s[l]] += 1
+                    l += 1
+
+                # Update window size if smaller than existing
+                if end == 0 or r - l < end - start:
+                    start, end = l, r
+
+                # Moving right one more loses a required character
+                count_map[s[l]] += 1
+                required += 1
                 l += 1
 
-        l, r = p_window
-        return s[l : r + 1] if minLen != inf else ''
+        return s[start:end]
 
     def reference(self, s: str, t: str) -> str:
         if t == '':
