@@ -3,6 +3,7 @@ Given two strings s1 and s2, return true if s2 contains a permutation of s1, or 
 
 In other words, return true if one of s1's permutations is the substring of s2.
 '''
+
 from collections import defaultdict
 from time import time
 
@@ -22,11 +23,10 @@ class Solution:
                 if c2_count[s2[l]] == 0:
                     # Remove entry if zero
                     del c2_count[s2[l]]
-                # Increment last to avoid missing entries
                 l += 1
 
             if c1_count == c2_count:
-                # Check after logic above to ensure consistency
+                # Check before exiting loop
                 return True
 
         return False
