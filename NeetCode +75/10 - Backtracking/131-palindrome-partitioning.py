@@ -3,6 +3,7 @@ Given a string s, partition s such that every substring of the partition is a pa
 
 A palindrome string is a string that reads the same backward as forward.
 '''
+
 from time import time
 from typing import List
 
@@ -19,16 +20,16 @@ class Solution:
     def partition(self, s: str) -> List[List[str]]:
         res = []
 
-        def dfs(i, substr):
+        def dfs(i, subset):
             if i == len(s):
-                return res.append(substr[:])
+                return res.append(subset[:])
 
             for j in range(i, len(s)):
                 if s[i : j + 1] != s[i : j + 1][::-1]:
                     # Skip if not palindrome
                     continue
                 # Offset by index on each recursion
-                dfs(j + 1, substr + [s[i : j + 1]])
+                dfs(j + 1, subset + [s[i : j + 1]])
 
             return
 
