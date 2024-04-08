@@ -5,6 +5,7 @@ Each number in candidates may only be used once in the combination.
 
 Note: The solution set must not contain duplicate combinations.
 '''
+
 from time import time
 from typing import List
 
@@ -21,16 +22,14 @@ class Solution:
                 res.append(subset[:])
                 return
 
-            prev = None
             for j in range(i, len(candidates)):
-                if candidates[j] == prev:
+                if i != j and candidates[j] == candidates[j - 1]:
                     # Skip if same as previous value or if over target
                     continue
                 if total + candidates[j] > target:
                     break
                 # Next index cannot be the same so use j + 1
                 dfs(j + 1, subset + [candidates[j]], total + candidates[j])
-                prev = candidates[j]
 
             return
 
@@ -82,5 +81,10 @@ class Solution:
 
 if __name__ == '__main__':
     test = Solution()
-    test_cases = [([10, 1, 2, 7, 6, 1, 5], 8), ([2, 5, 2, 1, 2], 5)]
+    test_cases = [
+        ([10, 1, 2, 7, 6, 1, 5], 8),
+        ([2, 5, 2, 1, 2], 5),
+        # Additional
+        ([3, 1, 3, 5, 1, 1], 8),
+    ]
     test.quantify(test_cases)
