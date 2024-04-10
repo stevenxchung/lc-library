@@ -3,6 +3,7 @@ Given an integer array nums that may contain duplicates, return all possible sub
 
 The solution set must not contain duplicate subsets. Return the solution in any order.
 '''
+
 from time import time
 from typing import List
 
@@ -13,13 +14,16 @@ class Solution:
         nums.sort()
         res = []
 
-        def dfs(i1, subset):
-            res.append(subset[:])
-            for i2 in range(i1, len(nums)):
-                if i2 != i1 and nums[i2] == nums[i2 - 1]:
-                    # Skip if duplicate
-                    continue
-                dfs(i2 + 1, subset + [nums[i2]])
+        def dfs(i, subset):
+            if i == len(nums):
+                res.append(subset[:])
+                return
+
+            dfs(i + 1, subset + [nums[i]])
+            # Skip duplicates
+            while i + 1 < len(nums) and nums[i] == nums[i + 1]:
+                i += 1
+            dfs(i + 1, subset)
 
             return
 
