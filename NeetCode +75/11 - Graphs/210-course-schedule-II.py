@@ -5,6 +5,7 @@ There are a total of numCourses courses you have to take, labeled from 0 to numC
 
 Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
 '''
+
 from collections import deque
 from time import time
 from typing import List
@@ -15,15 +16,16 @@ class Solution:
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> List[int]:
         adj = {i: [] for i in range(numCourses)}
-        required = [0] * numCourses
+        # Where i = course and reqs[i] = n_courses
+        reqs = [0] * numCourses
         for c, pre in prerequisites:
             adj[pre].append(c)
-            required[c] += 1
+            reqs[c] += 1
 
         q = deque()
         for i in range(numCourses):
             # Start with first required courses
-            if required[i] == 0:
+            if reqs[i] == 0:
                 q.append(i)
 
         taken = []
@@ -31,8 +33,8 @@ class Solution:
             c = q.popleft()
             taken.append(c)
             for c_next in adj[c]:
-                required[c_next] -= 1
-                if required[c_next] == 0:
+                reqs[c_next] -= 1
+                if reqs[c_next] == 0:
                     # Only add to queue if all prerequisites taken
                     q.append(c_next)
 
