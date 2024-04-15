@@ -4,19 +4,21 @@ class Solution {
   method(nums, k) {
     const res = [];
     const table = {};
-    const bucket = Array.from({ length: nums.length + 1 }, () => []);
+    const buckets = Array.from({ length: nums.length + 1 }, () => []);
 
     for (const n of nums) {
       table[n] = table[n] ? table[n] + 1 : 1;
     }
 
     for (const [n, count] of Object.entries(table)) {
-      bucket[count].push(n);
+      buckets[count].push(n);
     }
 
-    for (let i = bucket.length - 1; i >= 0; i--) {
-      if (bucket[i].length > 0) bucket[i].map((e) => res.push(e));
-      if (k === res.length) return res;
+    for (const b of buckets.reverse()) {
+      for (const n of b) {
+        res.push(n)
+        if (res.length === k) return res;
+      }
     }
   }
 
