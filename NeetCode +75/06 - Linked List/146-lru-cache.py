@@ -9,68 +9,75 @@ Implement the LRUCache class:
 
 The functions get and put must each run in O(1) average time complexity.
 '''
+
 from time import time
 
 
 class Node:
     def __init__(self, key=0, val=0):
+        '''Doubly Linked-list Node'''
         self.key, self.val = key, val
         self.prev = self.next = None
 
 
 class LRUCache:
-    def __init__(self, capacity: int, debug=False):
+    def __init__(self, capacity=1, debug=False):
+        '''
+        - Use a doubly-linked list
+        - Pointer for MRU (most recently used) on right
+        - Pointer for LRU (least recently used) on left
+        - Check capacity and remove if needed on put()
+        - Shift node to MRU on get()
+        - Use hashmap to find nodes by key
+        '''
         self.debug = debug
         self.capacity = capacity
-        # Consists of {key: Node()}
         self.cache = {}
-        # LRU is head and MRU is tail of list
-        # Note: LRU and MRU are dummy nodes that point to actual LRU and MRU
         self.lru, self.mru = Node(), Node()
         self.lru.next, self.mru.prev = self.mru, self.lru
 
-    def remove(self, node: Node):
-        # Remove node by Linking neighboring nodes
-        l, r = node.prev, node.next
-        l.next, r.prev = r, l
+    def _remove(self, node: Node):
+        node.prev.next, node.next.prev = node.next, node.prev
+        # Remove from hashmap
+        del self.cache[node.key]
 
-    def insert(self, node: Node):
-        # Add to tail of list (MRU)
+    def _insert(self, node: Node):
         l, r = self.mru.prev, self.mru
-        # Neighbors link to node then node links to neighbors
         l.next = r.prev = node
         node.prev, node.next = l, r
+        # Add to hashmap
+        self.cache[node.key] = node
 
     def get(self, key: int) -> int:
-        res = -1
-        if key in self.cache:
-            # Move to tail of list (MRU)
-            self.remove(self.cache[key])
-            self.insert(self.cache[key])
-            res = key
+        if key not in self.cache:
+            if self.debug:
+                print(f'get({key}): not found: {-1}')
+            return -1
+
+        node = self.cache[key]
+        # Reposition node next to MRU pointer
+        self._remove(node)
+        self._insert(node)
 
         if self.debug:
-            print(f'Return: {res}')
-        return res
+            print(f'get({key}): {node.val}')
+        return node.val
 
     def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            # Remove from list if exists
-            self.remove(self.cache[key])
-
-        self.cache[key] = Node(key, value)
-        self.insert(self.cache[key])
-
-        if len(self.cache) > self.capacity:
-            # Remove LRU
-            lru = self.lru.next
-            self.remove(lru)
+        if len(self.cache) + 1 > self.capacity:
+            # Adding one will overflow so remove LRU
+            node = self.lru.next
+            self._remove(node)
             if self.debug:
-                print(f'Removing LRU: {lru.val}')
-            del self.cache[lru.key]
+                print(
+                    f'put({key, value}): Removing LRU... {(node.key, node.val)}'
+                )
 
+        node = Node(key, value)
+        self._insert(node)
         if self.debug:
-            print(self.cache.keys())
+            res = [(k, node.val) for k, node in self.cache.items()]
+            print(f'Cache after put({key, value}): {res}\n')
 
 
 if __name__ == '__main__':
