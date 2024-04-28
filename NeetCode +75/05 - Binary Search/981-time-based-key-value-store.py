@@ -31,6 +31,7 @@ class TimeMap:
             m = l + (r - l) // 2
             if arr[m][0] <= timestamp:
                 res = arr[m][-1]
+                # Close on to the latest timestamp
                 l = m + 1
             else:
                 r = m - 1
