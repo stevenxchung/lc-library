@@ -64,17 +64,26 @@ class LRUCache:
         return node.val
 
     def put(self, key: int, value: int) -> None:
-        if len(self.cache) + 1 > self.capacity:
+        if key not in self.cache and len(self.cache) + 1 > self.capacity:
             # Adding one will overflow so remove LRU
-            node = self.lru.next
-            self._remove(node)
+            lru = self.lru.next
+            self._remove(lru)
             if self.debug:
                 print(
-                    f'put({key, value}): Removing LRU... {(node.key, node.val)}'
+                    f'put({key, value}): Removing LRU... {(lru.key, lru.val)}'
                 )
 
-        node = Node(key, value)
-        self._insert(node)
+        if key in self.cache:
+            # Update existing node to new value
+            node = self.cache[key]
+            node.val = value
+            self._remove(node)
+            self._insert(node)
+        else:
+            # Add a new node
+            node = Node(key, value)
+            self._insert(node)
+
         if self.debug:
             res = [(k, node.val) for k, node in self.cache.items()]
             print(f'Cache after put({key, value}): {res}\n')
