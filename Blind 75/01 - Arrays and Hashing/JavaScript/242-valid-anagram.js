@@ -4,15 +4,15 @@ class Solution {
   method(s, t) {
     if (s.length !== t.length) return false;
 
-    let sStore = {};
-    let tStore = {};
+    let charCount = {};
 
-    for (const [i, _] of [...s].entries()) {
-      sStore[s[i]] = s[i] in sStore ? sStore[s[i]] + 1 : 1;
-      tStore[t[i]] = t[i] in tStore ? tStore[t[i]] + 1 : 1;
+    for (let i = 0; i < s.length; i++) {
+      charCount[s[i]] = (charCount[s[i]] || 0) + 1;
+      charCount[t[i]] = (charCount[t[i]] || 0) - 1;
     }
-    for (const [k, _] of Object.entries(sStore)) {
-      if (sStore[k] !== tStore[k]) return false;
+
+    for (const k in charCount) {
+      if (charCount[k] !== 0) return false;
     }
 
     return true;
