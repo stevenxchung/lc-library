@@ -3,20 +3,20 @@ const { performance } = require("perf_hooks");
 class Solution {
   method(nums, k) {
     const res = [];
-    const table = {};
+    const countMap = {};
     const buckets = Array.from({ length: nums.length + 1 }, () => []);
 
     for (const n of nums) {
-      table[n] = table[n] ? table[n] + 1 : 1;
+      countMap[n] = (countMap[n] || 0) + 1;
     }
 
-    for (const [n, count] of Object.entries(table)) {
+    for (const [n, count] of Object.entries(countMap)) {
       buckets[count].push(n);
     }
 
     for (const b of buckets.reverse()) {
       for (const n of b) {
-        res.push(n)
+        res.push(n);
         if (res.length === k) return res;
       }
     }
