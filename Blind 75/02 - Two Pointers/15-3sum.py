@@ -28,6 +28,7 @@ class Solution:
                 if total == 0:
                     res.append([a, b, c])
                     l += 1
+                    r -= 1
                     while l < r and nums[l] == nums[l - 1]:
                         # Skip duplicates
                         l += 1
