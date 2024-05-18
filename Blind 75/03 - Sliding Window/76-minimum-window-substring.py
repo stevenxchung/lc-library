@@ -12,8 +12,9 @@ from time import time
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
+        # Initialize overall count map with t
         count_map = Counter(t)
-        required = len(t)
+        required = sum(count_map.values())
         start, end = 0, 0
         l = 0
         for r, c in enumerate(s, 1):
