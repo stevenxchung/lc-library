@@ -3,6 +3,8 @@ Given the roots of two binary trees p and q, write a function to check if they a
 
 Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 '''
+
+from collections import deque
 from time import time
 from typing import Optional
 
@@ -21,9 +23,9 @@ class Solution:
         if (not p and q) or (p and not q):
             return False
 
-        q1, q2 = [p], [q]
+        q1, q2 = deque([p]), deque([q])
         while q1 and q2:
-            node1, node2 = q1.pop(0), q2.pop(0)
+            node1, node2 = q1.popleft(), q2.popleft()
 
             if (
                 node1.val != node2.val
