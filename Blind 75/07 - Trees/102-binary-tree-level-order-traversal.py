@@ -1,6 +1,7 @@
 '''
 Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
 '''
+
 import collections
 from time import time
 from typing import List, Optional
@@ -15,22 +16,24 @@ class TreeNode:
 
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        res = []
         if not root:
-            return []
+            return res
 
-        res, queue = [], [root]
-        while queue:
-            layer_values, next_layer = [], []
+        q = [root]
+        while q:
+            # Track next level to avoid mutating queue during loop
+            level, next_level = [], []
 
-            for node in queue:
-                layer_values.append(node.val)
+            for node in q:
+                level.append(node.val)
                 if node.left:
-                    next_layer.append(node.left)
+                    next_level.append(node.left)
                 if node.right:
-                    next_layer.append(node.right)
+                    next_level.append(node.right)
 
-            queue = next_layer
-            res.append(layer_values)
+            q = next_level
+            res.append(level)
 
         return res
 
