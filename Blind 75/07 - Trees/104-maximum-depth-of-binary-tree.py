@@ -3,6 +3,7 @@ Given the root of a binary tree, return its maximum depth.
 
 A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 '''
+
 from time import time
 from typing import Optional
 
@@ -15,31 +16,13 @@ class TreeNode:
 
 
 class Solution:
-    def recursiveDFS(self, root: Optional[TreeNode]) -> int:
+    def dfs(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
 
-        return 1 + max(
-            self.recursiveDFS(root.left), self.recursiveDFS(root.right)
-        )
+        return 1 + max(self.dfs(root.left), self.dfs(root.right))
 
-    def iterativeBFS(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-
-        level = 0
-        queue = [root]
-        while queue:
-            for i in range(len(queue)):
-                node = queue.pop(0)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            level += 1
-        return level
-
-    def iterativeDFS(self, root: Optional[TreeNode]) -> int:
+    def iterative_dfs(self, root: Optional[TreeNode]) -> int:
         stack = [(root, 1)]
         level = 0
         while stack:
@@ -51,23 +34,35 @@ class Solution:
 
         return level
 
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        return self.iterativeDFS(root)
-
-    def reference(self, root: Optional[TreeNode]) -> int:
+    def bfs(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
 
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+        level = 0
+        queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+            level += 1
+        return level
+
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        return self.bfs(root)
+
+    def reference(self, root: Optional[TreeNode]) -> int:
+        return self.dfs(root)
 
     def quantify(self, test_cases, runs=50000):
         sol_start = time()
         for i in range(runs):
             for case in test_cases:
                 if i == 0:
-                    print(self.recursiveDFS(case))
+                    print(self.dfs(case))
                 else:
-                    self.recursiveDFS(case)
+                    self.dfs(case)
         print(f'Runtime for our solution: {time() - sol_start}\n')
 
         ref_start = time()
