@@ -1,6 +1,7 @@
 '''
 Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
 '''
+
 from copy import deepcopy
 from time import time
 from typing import List, Optional
@@ -17,18 +18,21 @@ class Solution:
     def buildTree(
         self, preorder: List[int], inorder: List[int]
     ) -> Optional[TreeNode]:
-        if not preorder or not inorder:
-            return None
+        def dfs(pre, inord):
+            if not pre or not inord:
+                return None
 
-        # Get inorder node position based on first preorder
-        n = inorder.index(preorder.pop(0))
-        root = TreeNode(inorder[n])
-        # Left of node uses inorder up to node position
-        root.left = self.buildTree(preorder, inorder[:n])
-        # Right of node uses inorder starting from node position + 1
-        root.right = self.buildTree(preorder, inorder[n + 1 :])
+            node = TreeNode(pre[0])
+            # Get inorder node position based on preorder node
+            i = inord.index(pre[0])
+            # Left of node uses inorder up to node position
+            node.left = dfs(pre[1 : i + 1], inord[:i])
+            # Right of node uses inorder starting from node position + 1
+            node.right = dfs(pre[i + 1 :], inord[i + 1 :])
 
-        return root
+            return node
+
+        return dfs(preorder, inorder)
 
     def reference(
         self, preorder: List[int], inorder: List[int]
