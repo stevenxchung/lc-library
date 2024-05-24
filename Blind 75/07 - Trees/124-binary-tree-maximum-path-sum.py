@@ -5,6 +5,7 @@ The path sum of a path is the sum of the node's values in the path.
 
 Given the root of a binary tree, return the maximum path sum of any non-empty path.
 '''
+
 from math import inf
 from time import time
 from typing import List, Optional
@@ -25,12 +26,12 @@ class Solution:
             if not node:
                 return 0
 
-            path_left = max(0, dfs(node.left))
-            path_right = max(0, dfs(node.right))
+            path_l = dfs(node.left)
+            path_r = dfs(node.right)
             # Max path could be current node with left AND right branch
-            res[0] = max(res[0], node.val + path_left + path_right)
+            res[0] = max(res[0], node.val + path_l + path_r)
             # Recursing up, path can only include left OR right path
-            return node.val + max(path_left, path_right)
+            return max(node.val + max(path_l, path_r), 0)
 
         dfs(root)
         return res[0]
