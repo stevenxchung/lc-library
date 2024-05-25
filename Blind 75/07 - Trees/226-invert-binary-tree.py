@@ -1,6 +1,7 @@
 '''
 Given the root of a binary tree, invert the tree, and return its root.
 '''
+
 from time import time
 from typing import Optional
 
@@ -14,17 +15,15 @@ class TreeNode:
 
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root:
-            return None
+        def dfs(node):
+            if not node:
+                return
 
-        temp = root.left
-        root.left = root.right
-        root.right = temp
+            node.left, node.right = dfs(node.right), dfs(node.left)
 
-        self.invertTree(root.left)
-        self.invertTree(root.right)
+            return node
 
-        return root
+        return dfs(root)
 
     def reference(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:
