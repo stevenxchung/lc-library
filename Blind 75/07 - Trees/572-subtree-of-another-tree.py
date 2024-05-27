@@ -3,6 +3,7 @@ Given the roots of two binary trees root and subRoot, return true if there is a 
 
 A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
 '''
+
 from time import time
 from typing import Optional
 
@@ -28,13 +29,16 @@ class Solution:
     def isSubtree(
         self, root: Optional[TreeNode], subRoot: Optional[TreeNode]
     ) -> bool:
-        if not root:
-            return False
-        if self.isSameTree(root, subRoot):
-            return True
-        return self.isSubtree(root.left, subRoot) or self.isSubtree(
-            root.right, subRoot
-        )
+
+        def dfs(node1, node2):
+            if not node1:
+                return False
+            if self.isSameTree(node1, node2):
+                return True
+
+            return dfs(node1.left, node2) or dfs(node1.right, node2)
+
+        return dfs(root, subRoot)
 
     def reference(
         self, root: Optional[TreeNode], subRoot: Optional[TreeNode]
