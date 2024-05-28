@@ -8,6 +8,7 @@ Implement the Trie class:
 - boolean search(String word) Returns true if the string word is in the trie (i.e., was inserted before), and false otherwise.
 - boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.
 '''
+
 from time import time
 
 
@@ -66,9 +67,9 @@ if __name__ == '__main__':
     test = Trie(debug=True)
     sol_start = time()
     test.insert('apple')
-    test.search('apple')  # return True
-    test.search('app')  # return False
-    test.startsWith('app')  # return True
+    test.search('apple')  # Return True
+    test.search('app')  # Return False
+    test.startsWith('app')  # Return True
     test.insert('app')
-    test.search('app')  # return True
+    test.search('app')  # Return True
     print(f'Runtime for our solution: {time() - sol_start}\n')
