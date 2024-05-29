@@ -59,10 +59,10 @@ if __name__ == '__main__':
     test.addWord('bad')
     test.addWord('dad')
     test.addWord('mad')
-    test.search('pad')  # return False
-    test.search('bad')  # return True
-    test.search('.ad')  # return True
-    test.search('b..')  # return True
+    test.search('pad')  # Return False
+    test.search('bad')  # Return True
+    test.search('.ad')  # Return True
+    test.search('b..')  # Return True
     print(f'Runtime for our solution: {time() - sol_start}\n')
 
     # Additional
