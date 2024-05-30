@@ -10,6 +10,7 @@ Implement the MedianFinder class:
 - void addNum(int num) adds the integer num from the data stream to the data structure.
 - double findMedian() returns the median of all elements so far. Answers within 10^-5 of the actual answer will be accepted.
 '''
+
 import heapq
 from time import time
 
@@ -57,7 +58,7 @@ if __name__ == '__main__':
     sol_start = time()
     test.addNum(1)  # arr = [1]
     test.addNum(2)  # arr = [1, 2]
-    test.findMedian()  # return 1.5 (i.e., (1 + 2) / 2)
+    test.findMedian()  # Return 1.5 (i.e., (1 + 2) / 2)
     test.addNum(3)  # arr[1, 2, 3]
-    test.findMedian()  # return 2.0
+    test.findMedian()  # Return 2.0
     print(f'Runtime for our solution: {time() - sol_start}\n')
