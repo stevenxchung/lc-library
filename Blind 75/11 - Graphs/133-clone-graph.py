@@ -20,6 +20,7 @@ An adjacency list is a collection of unordered lists used to represent a finite 
 The given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.
 '''
 
+from collections import deque
 from time import time
 
 
@@ -36,11 +37,10 @@ class Solution:
 
         # Initialize clone and queue with first node
         node_map = {node: Node(node.val)}
-        q = [node]
+        q = deque([node])
         while q:
             # Set new node
-            old = q.pop(0)
-            new = node_map[old]
+            old = q.popleft()
 
             for nei in old.neighbors:
                 # For each neighbor, map old to new node if not exist
@@ -48,7 +48,7 @@ class Solution:
                     node_map[nei] = Node(nei.val)
                     q.append(nei)
                 # Add new neighbors to new node
-                new.neighbors.append(node_map[nei])
+                node_map[old].neighbors.append(node_map[nei])
 
         return node_map[node]
 
