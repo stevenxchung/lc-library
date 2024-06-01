@@ -2,18 +2,16 @@
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 '''
 
-from collections import defaultdict
+from collections import Counter
 from time import time
 from typing import List
 
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count_map = defaultdict(int)
+        count_map = Counter(nums)
         # Where i = count and max(count) <= len(nums)
         buckets = [[] for _ in range(len(nums) + 1)]
-        for n in nums:
-            count_map[n] += 1
         for n, c in count_map.items():
             buckets[c].append(n)
 
