@@ -3,6 +3,8 @@ Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0'
 
 An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
 '''
+
+from collections import deque
 from time import time
 from typing import List
 
@@ -11,22 +13,23 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         ROWS, COLS = len(grid), len(grid[0])
         seen = set()
-        coord = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        moves = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
         def bfs(r, c):
-            q = [(r, c)]
+            q = deque([(r, c)])
             while q:
-                r1, c1 = q.pop(0)
+                r1, c1 = q.popleft()
+                # Add to set from starting position
                 seen.add((r1, c1))
-                for dr, dc in coord:
+                for dr, dc in moves:
                     r2, c2 = r1 + dr, c1 + dc
                     if (
                         r2 < 0
                         or c2 < 0
                         or r2 >= ROWS
                         or c2 >= COLS
-                        or (r2, c2) in seen
                         or grid[r2][c2] == '0'
+                        or (r2, c2) in seen
                     ):
                         continue
                     q.append((r2, c2))
