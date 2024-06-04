@@ -16,16 +16,16 @@ class Solution:
         self, numCourses: int, prerequisites: List[List[int]]
     ) -> bool:
         adj = {i: [] for i in range(numCourses)}
-        # Where i = course and reqs[i] = n_courses
-        reqs = [0] * numCourses
+        # Where i = course and reqs_arr_map[i] = n courses
+        reqs_arr_map = [0] * numCourses
         for c, pre in prerequisites:
             adj[pre].append(c)
-            reqs[c] += 1
+            reqs_arr_map[c] += 1
 
         q = deque()
         for i in range(numCourses):
             # Start with first required courses
-            if reqs[i] == 0:
+            if reqs_arr_map[i] == 0:
                 q.append(i)
 
         taken = []
@@ -33,8 +33,8 @@ class Solution:
             c = q.popleft()
             taken.append(c)
             for c_next in adj[c]:
-                reqs[c_next] -= 1
-                if reqs[c_next] == 0:
+                reqs_arr_map[c_next] -= 1
+                if reqs_arr_map[c_next] == 0:
                     # Only add to queue if all prerequisites taken
                     q.append(c_next)
 
