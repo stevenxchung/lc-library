@@ -1,23 +1,29 @@
 '''
 *LeetCode premium problem
 '''
+
 from time import time
 from typing import List, Tuple
 
 
 class Solution:
     def minMeetingRooms(self, intervals: List[Tuple[int, int]]) -> int:
-        if not intervals:
-            return 0
+        start_times = sorted([start for start, _ in intervals])
+        end_times = sorted([end for _, end in intervals])
+        res, count = 0, 0
 
-        intervals.sort()
-        # If there are meetings we always need at least one room
-        res = 1
-        for i in range(1, len(intervals)):
-            prev, curr = intervals[i - 1], intervals[i]
-            if prev[-1] > curr[0]:
-                # Need new conference room if overlap found
-                res += 1
+        # Accumulate results with two pointers
+        i, j = 0, 0
+        while i < len(intervals):
+            if start_times[i] < end_times[j]:
+                # Number of meetings has increased
+                i += 1
+                count += 1
+            else:
+                # Number of meetings has decreased
+                j += 1
+                count -= 1
+            res = max(res, count)
 
         return res
 
