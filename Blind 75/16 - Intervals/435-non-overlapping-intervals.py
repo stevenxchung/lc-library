@@ -1,27 +1,25 @@
 '''
 Given an array of intervals intervals where intervals[i] = [start_i, end_i], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
 '''
-from math import inf
+
 from time import time
 from typing import List
 
 
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
-        intervals.sort()
-        res = 0
-        prev_end = intervals[0][-1]
-        for i in range(1, len(intervals)):
-            start, end = intervals[i][0], intervals[i][-1]
-            if prev_end <= start:
-                # There is no overlap
-                prev_end = end
-            else:
-                # There is an overlap, take the minimum of endpoints
-                prev_end = min(prev_end, end)
-                res += 1
+        intervals.sort(key=lambda x: x[1])
+        prev = 0
+        valid_intervals = 1
 
-        return res
+        for i in range(1, len(intervals)):
+            # Check how many intervals are valid
+            if intervals[prev][1] <= intervals[i][0]:
+                prev = i
+                valid_intervals += 1
+
+        # Invalid intervals is the difference
+        return len(intervals) - valid_intervals
 
     def reference(self, intervals: List[List[int]]) -> int:
         intervals.sort()
@@ -61,5 +59,34 @@ if __name__ == '__main__':
         [[1, 2], [2, 3], [3, 4], [1, 3]],
         [[1, 2], [1, 2], [1, 2]],
         [[1, 2], [2, 3]],
+        # Additional
+        [
+            [-52, 31],
+            [-73, -26],
+            [82, 97],
+            [-65, -11],
+            [-62, -49],
+            [95, 99],
+            [58, 95],
+            [-31, 49],
+            [66, 98],
+            [-63, 2],
+            [30, 47],
+            [-40, -26],
+        ],
+        [
+            [-52, 31],
+            [-73, -26],
+            [82, 97],
+            [-65, -11],
+            [-62, -49],
+            [95, 99],
+            [58, 95],
+            [-31, 49],
+            [66, 98],
+            [-63, 2],
+            [30, 47],
+            [-40, -26],
+        ],
     ]
     test.quantify(test_cases)
