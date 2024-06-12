@@ -23,21 +23,25 @@ class TimeMap:
         else:
             self.map[key].append((timestamp, value))
 
+        if self.debug:
+            print(f'set({key}, {value}, {timestamp}): OK')
+
     def get(self, key: str, timestamp: int) -> str:
         res, arr = '', self.map.get(key, [])
         # Binary search to find timestamp if exists
         l, r = 0, len(arr) - 1
         while l <= r:
             m = l + (r - l) // 2
-            if arr[m][0] <= timestamp:
-                res = arr[m][-1]
+            ts, val = arr[m]
+            if ts <= timestamp:
+                res = val
                 # Close on to the latest timestamp
                 l = m + 1
             else:
                 r = m - 1
 
         if self.debug:
-            print(f'get({key, timestamp}): {res}')
+            print(f'get({key}, {timestamp}): {res}')
         return res
 
 
