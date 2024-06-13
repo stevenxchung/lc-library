@@ -5,6 +5,7 @@ For this problem, a height-balanced binary tree is defined as:
 
 A binary tree in which the left and right subtrees of every node differ in height by no more than 1.
 '''
+
 from time import time
 from typing import Optional
 
@@ -22,8 +23,7 @@ class Solution:
             if not node:
                 return 0
 
-            left = dfs(node.left)
-            right = dfs(node.right)
+            left, right = dfs(node.left), dfs(node.right)
             if left == -1 or right == -1 or abs(left - right) > 1:
                 return -1
 
