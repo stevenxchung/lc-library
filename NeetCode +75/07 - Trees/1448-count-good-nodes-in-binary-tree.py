@@ -3,6 +3,7 @@ Given a binary tree root, a node X in the tree is named good if in the path from
 
 Return the number of good nodes in the binary tree.
 '''
+
 from math import inf
 from time import time
 
@@ -16,20 +17,17 @@ class TreeNode:
 
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        res = [0]
-
         def dfs(node, prev_val):
             if not node:
-                return
-
+                return 0
             if node.val >= prev_val:
-                res[0] += 1
-            max_val = max(node.val, prev_val)
-            dfs(node.left, max_val)
-            dfs(node.right, max_val)
+                prev_val = max(prev_val, node.val)
+                return 1 + dfs(node.left, prev_val) + dfs(node.right, prev_val)
 
-        dfs(root, -inf)
-        return res[0]
+            prev_val = max(prev_val, node.val)
+            return dfs(node.left, prev_val) + dfs(node.right, prev_val)
+
+        return dfs(root, -inf)
 
     def reference(self, root: TreeNode) -> int:
         def dfs(node, maxVal):
@@ -72,5 +70,7 @@ if __name__ == '__main__':
         ),
         TreeNode(3, TreeNode(3, TreeNode(4), TreeNode(2))),
         TreeNode(1),
+        # Additional
+        TreeNode(9, None, TreeNode(3, TreeNode(6))),
     ]
     test.quantify(test_cases)
