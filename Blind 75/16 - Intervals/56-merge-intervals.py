@@ -1,6 +1,7 @@
 '''
 Given an array of intervals where intervals[i] = [start_i, end_i], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
 '''
+
 from time import time
 from typing import List
 
@@ -8,8 +9,8 @@ from typing import List
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         res = []
-        for start, end in intervals:
-            if res and res[-1][1] >= start:
+        for start, end in sorted(intervals, key=lambda i: i[0]):
+            if res and start <= res[-1][1]:
                 # Only need to merge with last added interval
                 res[-1][1] = max(res[-1][1], end)
             else:
