@@ -11,6 +11,7 @@ Implement the MinStack class:
 
 You must implement a solution with O(1) time complexity for each function.
 '''
+
 from math import inf
 from time import time
 
@@ -48,8 +49,8 @@ if __name__ == '__main__':
     test.push(-2)
     test.push(0)
     test.push(-3)
-    test.getMin()  # return -3
+    test.getMin()  # Return -3
     test.pop()
-    test.top()  # return 0
-    test.getMin()  # return -2
+    test.top()  # Return 0
+    test.getMin()  # Return -2
     print(f'Runtime for our solution: {time() - sol_start}\n')
