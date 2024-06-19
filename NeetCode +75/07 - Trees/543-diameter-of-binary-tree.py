@@ -5,6 +5,7 @@ The diameter of a binary tree is the length of the longest path between any two 
 
 The length of a path between two nodes is represented by the number of edges between them.
 '''
+
 from time import time
 from typing import Optional
 
@@ -18,21 +19,20 @@ class TreeNode:
 
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        res = [0]
-
-        def dfs(node: Optional[TreeNode]):
+        def dfs(node):
             if not node:
-                return 0
+                return 0, 0
 
-            left = dfs(node.left)
-            right = dfs(node.right)
-            res[0] = max(res[0], left + right)
+            left_h, left_d = dfs(node.left)
+            right_h, right_d = dfs(node.right)
+            # Accumulate height and diameter at each node
+            height = max(left_h, right_h) + 1
+            diameter = max(left_h + right_h, left_d, right_d)
 
-            # Return the height
-            return 1 + max(left, right)
+            return height, diameter
 
-        dfs(root)
-        return res[0]
+        _, res = dfs(root)
+        return res
 
     def reference(self, root: Optional[TreeNode]) -> int:
         res = [0]
