@@ -5,6 +5,7 @@ Insert newInterval into intervals such that intervals is still sorted in ascendi
 
 Return intervals after the insertion.
 '''
+
 from time import time
 from typing import List
 
@@ -29,7 +30,7 @@ class Solution:
                     max(end, newInterval[-1]),
                 ]
 
-        # New interval is at the end
+        # Add captured interval at the end
         res.append(newInterval)
         return res
 
