@@ -5,6 +5,7 @@ However, there is a non-negative integer n that represents the cooldown period b
 
 Return the least number of units of times that the CPU will take to finish all the given tasks.
 '''
+
 from collections import Counter, deque
 import heapq
 from time import time
@@ -13,12 +14,11 @@ from typing import List
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        freq_map = Counter(tasks)
-        heap = [-count for count in freq_map.values()]
+        heap = [-count for count in Counter(tasks).values()]
         heapq.heapify(heap)
 
         t = 0
-        q = deque()
+        q = deque()  # {count, cooldown}
         while heap or q:
             t += 1
             if not heap:
@@ -81,7 +81,11 @@ if __name__ == '__main__':
     test = Solution()
     test_cases = [
         (['A', 'A', 'A', 'B', 'B', 'B'], 2),
+        (['A', 'C', 'A', 'B', 'D', 'B'], 1),
+        (['A', 'A', 'A', 'B', 'B', 'B'], 3),
+        # Additional
         (['A', 'A', 'A', 'B', 'B', 'B'], 0),
+        (['A', 'A', 'A', 'A', 'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G'], 1),
         (['A', 'A', 'A', 'A', 'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G'], 2),
     ]
     test.quantify(test_cases)
