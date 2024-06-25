@@ -5,6 +5,7 @@ You are also given an integer array queries. The answer to the jth query is the 
 
 Return an array containing the answers to the queries.
 '''
+
 import heapq
 from time import time
 from typing import List
