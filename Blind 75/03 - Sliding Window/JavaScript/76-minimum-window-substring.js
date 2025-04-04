@@ -2,39 +2,44 @@ const { performance } = require("perf_hooks");
 
 class Solution {
   method(s, t) {
-    if (t.length == 0) return "";
+    if (s.length < t.length) return "";
 
-    // Initialize cache
-    let [countT, window] = [{}, {}];
+    // To store frequency of characters in t
+    const charCount = new Array(128).fill(0);
     for (const c of t) {
-      countT[c] = c in countT ? countT[c] + 1 : 1;
+      charCount[c.charCodeAt(0)]++;
     }
-    let [have, need] = [0, Object.values(countT).reduce((a, b) => a + b)];
-    let [str, strLength] = [[-1, -1], Infinity];
 
+    let required = t.length;
     let l = 0;
+    let [minL, minLength] = [0, Infinity];
+
     for (let r = 0; r < s.length; r++) {
-      const c = s[r];
-      window[c] = c in window ? window[c] + 1 : 1;
+      // Expand the window by including s[r]
+      const indexR = s[r].charCodeAt(0);
 
-      if (c in countT && window[c] === countT[c]) have += 1;
+      // Decrease the required count if the character is in t
+      if (charCount[indexR] > 0) required--;
+      charCount[indexR]--;
 
-      while (have === need) {
-        // Check if we found smaller substring
-        const currStrLength = r - l + 1;
-        if (currStrLength < strLength) {
-          str = [l, r];
-          strLength = currStrLength;
+      // Once all characters are in the window, try to shrink it
+      while (required === 0) {
+        const indexL = s[l].charCodeAt(0);
+
+        // Update the minimum window if this is smaller
+        if (r - l + 1 < minLength) {
+          minLength = r - l + 1;
+          minL = l;
         }
-        // Move left pointer and decrement from cache as needed
-        window[s[l]] -= 1;
-        if (s[l] in countT && window[s[l]] < countT[s[l]]) have -= 1;
-        l += 1;
+
+        // Shrink the window by moving left pointer
+        charCount[indexL]++;
+        if (charCount[indexL] > 0) required++;
+        l++;
       }
     }
 
-    const [p1, p2] = str;
-    return strLength !== Infinity ? s.slice(p1, p2 + 1) : "";
+    return minLength === Infinity ? "" : s.substring(minL, minL + minLength);
   }
 
   reference(s, t) {
