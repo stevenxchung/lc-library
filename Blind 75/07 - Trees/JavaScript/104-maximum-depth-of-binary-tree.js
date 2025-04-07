@@ -28,7 +28,7 @@ class Solution {
 
   bfs = (queue, height = 0) => {
     while (queue.length) {
-      for (let i = queue.length - 1; 0 <= i; i--) {
+      for (let i = queue.length - 1; i >= 0; i--) {
         const [root, depth] = queue.shift();
 
         height = Math.max(height, depth + 1);
