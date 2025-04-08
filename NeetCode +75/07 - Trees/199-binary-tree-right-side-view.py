@@ -21,14 +21,13 @@ class TreeNode:
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         res = []
-        seen = set()
 
         def dfs(node, level):
-            if not node or level in seen:
+            if not node:
                 return
 
-            res.append(node.val)
-            seen.add(level)
+            if len(res) == level:
+                res.append(node.val)
             dfs(node.right, level + 1)
             dfs(node.left, level + 1)
 
@@ -80,6 +79,9 @@ if __name__ == '__main__':
     test_cases = [
         TreeNode(
             1, TreeNode(2, None, TreeNode(5)), TreeNode(3, None, TreeNode(4))
+        ),
+        TreeNode(
+            1, TreeNode(2, TreeNode(4, TreeNode(5), None), None), TreeNode(3)
         ),
         TreeNode(1, None, TreeNode(3)),
         None,
