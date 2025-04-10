@@ -23,7 +23,7 @@ class Solution:
                 return
 
             for j in range(i, len(candidates)):
-                if i != j and candidates[j] == candidates[j - 1]:
+                if j > i and candidates[j] == candidates[j - 1]:
                     # Skip if same as previous value or if over target
                     continue
                 if total + candidates[j] > target:
