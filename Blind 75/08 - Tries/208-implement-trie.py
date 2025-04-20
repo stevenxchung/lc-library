@@ -72,4 +72,4 @@ if __name__ == '__main__':
     test.startsWith('app')  # Return True
     test.insert('app')
     test.search('app')  # Return True
-    print(f'Runtime for our solution: {time() - sol_start}\n')
+    print(f'Runtime for our solution: {time() - sol_start}')
