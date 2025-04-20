@@ -40,6 +40,7 @@ class WordDictionary:
                     # Search all child nodes
                     if dfs(i + 1, child):
                         return True
+                return False
 
             if word[i] not in node.children:
                 return False
@@ -94,4 +95,4 @@ if __name__ == '__main__':
     test.search('b.')
     test.search('a.d')
     test.search('.')
-    print(f'Runtime for our solution: {time() - sol_start}\n')
+    print(f'Runtime for our solution: {time() - sol_start}')
