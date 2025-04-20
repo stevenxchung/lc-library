@@ -9,7 +9,7 @@ class TrieNode {
 }
 
 class Solution {
-  constructor(debug = false) {
+  constructor({ debug = false }) {
     this.debug = debug;
     this.root = new TrieNode();
   }
@@ -27,12 +27,12 @@ class Solution {
     let node = this.root;
     for (const c of word) {
       if (!(c in node.children)) {
-        if (this.debug) console.log(`search(): ${node.isEnd}`);
+        if (this.debug) console.log(`search(${word}): ${node.isEnd}`);
         return node.isEnd;
       }
       node = node.children[c];
     }
-    if (this.debug) console.log(`search(): ${node.isEnd}`);
+    if (this.debug) console.log(`search(${word}): ${node.isEnd}`);
     return node.isEnd;
   }
 
@@ -40,17 +40,17 @@ class Solution {
     let node = this.root;
     for (const c of prefix) {
       if (!(c in node.children)) {
-        if (this.debug) console.log(`startsWith(): ${false}`);
+        if (this.debug) console.log(`startsWith(${prefix}): ${false}`);
         return false;
       }
       node = node.children[c];
     }
-    if (this.debug) console.log(`startsWith(): ${true}`);
+    if (this.debug) console.log(`startsWith(${prefix}): ${true}`);
     return true;
   }
 }
 
-const test = new Solution((debug = true));
+const test = new Solution({ debug: true });
 const solStart = performance.now();
 test.insert("apple");
 test.search("apple"); // return true
