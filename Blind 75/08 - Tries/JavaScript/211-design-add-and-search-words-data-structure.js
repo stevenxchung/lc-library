@@ -9,7 +9,7 @@ class TrieNode {
 }
 
 class Solution {
-  constructor(debug = false) {
+  constructor({ debug = false }) {
     this.debug = debug;
     this.root = new TrieNode();
   }
@@ -24,34 +24,29 @@ class Solution {
   }
 
   search(word) {
-    const dfs = (word, start, curr) => {
-      let node = curr;
+    const dfs = (i, node) => {
+      if (i === word.length) return node.isEnd;
 
-      for (let i = start; i < word.length; i++) {
-        const c = word[i];
-        if (c === ".") {
-          for (const child of Object.values(node.children)) {
-            if (dfs(word, i + 1, child)) return true;
-            return false;
-          }
-        } else {
-          if (!(c in node.children)) {
-            return false;
-          }
-          node = node.children[c];
+      const c = word[i];
+      if (c === ".") {
+        for (const childNode of Object.values(node.children)) {
+          if (dfs(i + 1, childNode)) return true;
         }
+        return false;
       }
-      return node.isEnd;
+
+      if (!(c in node.children)) return false;
+
+      return dfs(i + 1, node.children[c]);
     };
 
-    const res = dfs(word, 0, this.root);
+    const res = dfs(0, this.root);
     if (this.debug) console.log(`search(): ${res}`);
-
     return res;
   }
 }
 
-const test = new Solution((debug = true));
+let test = new Solution({ debug: true });
 const solStart = performance.now();
 test.addWord("bad");
 test.addWord("dad");
@@ -60,4 +55,34 @@ test.search("pad"); // return false
 test.search("bad"); // return true
 test.search(".ad"); // return true
 test.search("b.."); // return true
+console.log(`Runtime for solution: ${(performance.now() - solStart) / 1000}\n`);
+
+console.log("\nAdditional testing...");
+test = new Solution({ debug: true });
+test.addWord("a");
+test.addWord("a");
+// true, true, false, true, false, false
+test.search(".");
+test.search("a");
+test.search("aa");
+test.search("a");
+test.search(".a");
+test.search("a.");
+
+test.addWord("at");
+test.addWord("and");
+test.addWord("an");
+test.addWord("add");
+// true, false
+test.search("a");
+test.search(".at");
+
+test.addWord("bat");
+// true, true, false, false, true, true
+test.search(".at");
+test.search("an.");
+test.search("a.d.");
+test.search("b.");
+test.search("a.d");
+test.search(".");
 console.log(`Runtime for solution: ${(performance.now() - solStart) / 1000}`);
