@@ -2,12 +2,13 @@ const { performance } = require("perf_hooks");
 
 class Solution {
   method(intervals) {
-    let res = [];
     intervals.sort((a, b) => a[0] - b[0]);
-    for (let i = 0; i < intervals.length; i++) {
-      if (i + 1 < intervals.length && intervals[i][1] >= intervals[i + 1][0]) {
-        res.push([intervals[i][0], intervals[i + 1][1]]);
-        i += 1;
+    let res = [intervals[0]];
+
+    for (let i = 1; i < intervals.length; i++) {
+      const lastInterval = res[res.length - 1];
+      if (lastInterval[1] >= intervals[i][0]) {
+        lastInterval[1] = Math.max(lastInterval[1], intervals[i][1]);
       } else {
         res.push(intervals[i]);
       }
