@@ -4,11 +4,10 @@ class Solution {
   method(nums) {
     nums.sort();
     const res = [];
-    const seen = new Set();
 
     for (const [i, a] of nums.entries()) {
       // Skip since value already exists
-      if (seen.has(a)) continue;
+      if (i > 0 && nums[i] === nums[i - 1]) continue;
 
       // Two pointer search
       let [l, r] = [i + 1, nums.length - 1];
@@ -20,12 +19,10 @@ class Solution {
           res.push([a, b, c]);
           l++;
           // Ensure that value is different to avoid duplicates
-          while (seen.has(b) && l < r) l++;
+          while (l < r && nums[l] === nums[l - 1]) l++;
         } else if (sum < 0) l++;
         else if (sum > 0) r--;
       }
-      // Add value to seen
-      seen.add(a);
     }
 
     return res;
@@ -105,5 +102,10 @@ const testCases = [
   [-1, 0, 1, 2, -1, -4],
   [0, 1, 1],
   [0, 0, 0],
+  // Additional
+  [],
+  [0],
+  [0, 0, 0, 0],
+  [-2, 0, 1, 1, 2],
 ];
 test.quantify(testCases);
