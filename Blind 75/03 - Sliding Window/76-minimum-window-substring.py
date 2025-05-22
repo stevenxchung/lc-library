@@ -17,7 +17,7 @@ class Solution:
         required = sum(count_map.values())
         start, end = 0, 0
         l = 0
-        for r, c in enumerate(s, 1):
+        for r, c in enumerate(s):
             if count_map[c] > 0:
                 required -= 1
 
@@ -33,7 +33,7 @@ class Solution:
 
                 # Update window size if smaller than existing
                 if end == 0 or r - l < end - start:
-                    start, end = l, r
+                    start, end = l, r + 1
 
                 # Moving right one more loses a required character
                 count_map[s[l]] += 1
