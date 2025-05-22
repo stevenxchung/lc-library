@@ -7,6 +7,7 @@ The tests are generated such that there is exactly one solution. You may not use
 
 Your solution must use only constant extra space.
 '''
+
 from time import time
 from typing import List
 
