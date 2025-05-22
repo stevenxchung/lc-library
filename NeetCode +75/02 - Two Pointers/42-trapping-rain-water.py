@@ -1,24 +1,31 @@
 '''
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
 '''
+
 from time import time
 from typing import List
 
 
 class Solution:
     def trap(self, height: List[int]) -> int:
-        l, r, res, max_h, min_h = 0, len(height) - 1, 0, 0, 0
-        while l <= r:
-            min_h = min(height[l], height[r])
-            max_h = max(max_h, min_h)
-            # Water trapped == diff between max height and min height
-            res += max_h - min_h
+        res = 0
+        leftMax, rightMax = 0, 0
+        l, r = 0, len(height) - 1
+        while l < r:
+            # Water level is limited by shorter wall
             if height[l] < height[r]:
-                # Move left pointer right if height[l] is smaller
+                if height[l] > leftMax:
+                    leftMax = height[l]
+                else:
+                    res += leftMax - height[l]
                 l += 1
             else:
-                # Otherwise right pointer left
+                if height[r] > rightMax:
+                    rightMax = height[r]
+                else:
+                    res += rightMax - height[r]
                 r -= 1
+
         return res
 
     def reference(self, height: List[int]) -> int:
