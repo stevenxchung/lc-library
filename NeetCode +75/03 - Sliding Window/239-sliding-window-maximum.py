@@ -17,17 +17,17 @@ class Solution:
         l = 0
         for r in range(len(nums)):
             # Remove smaller values from queue
-            while mono_q and nums[r] > nums[mono_q[0]]:
-                mono_q.popleft()
-            mono_q.appendleft(r)
+            while mono_q and nums[r] > nums[mono_q[-1]]:
+                mono_q.pop()
+            mono_q.append(r)
 
             # Remove element index if outside window
-            if l > mono_q[-1]:
-                mono_q.pop()
+            if l > mono_q[0]:
+                mono_q.popleft()
 
-            # Add if window has k elements
+            # Add largest if window has k elements
             if (r - l + 1) == k:
-                res.append(nums[mono_q[-1]])
+                res.append(nums[mono_q[0]])
                 l += 1
 
         return res
