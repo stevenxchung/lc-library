@@ -10,38 +10,41 @@ class TreeNode {
 
 class Solution {
   serialize(root) {
-    let res = [];
+    const res = [];
+
     const dfs = (node) => {
       if (!node) {
-        res.push("N");
+        res.push(null);
         return;
       }
-      res.push(node.val.toString());
+      res.push(node.val);
       dfs(node.left);
       dfs(node.right);
+
+      return;
     };
 
     dfs(root);
-    return res.join(",");
+    return JSON.stringify(res);
   }
 
   deserialize(data) {
-    const dfs = (treeAsString, position) => {
-      if (treeAsString[position[0]] === "N") {
-        position[0] += 1;
-        return null;
-      }
-      const node = new TreeNode(Number(treeAsString[position[0]]));
-      position[0] += 1;
-      node.left = dfs(treeAsString, position);
-      node.right = dfs(treeAsString, position);
+    const vals = JSON.parse(data);
+
+    const dfs = () => {
+      if (vals.length === 0) return null;
+
+      const val = vals.shift();
+      if (val === null) return null;
+
+      const node = new TreeNode(val);
+      node.left = dfs();
+      node.right = dfs();
 
       return node;
     };
 
-    const treeAsString = data.split(",");
-
-    return dfs(treeAsString, [0]);
+    return dfs();
   }
 
   serializeReference(root, result = []) {
