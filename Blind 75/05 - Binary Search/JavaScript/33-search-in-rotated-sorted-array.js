@@ -4,7 +4,7 @@ class Solution {
   method(nums, target) {
     let [l, r] = [0, nums.length - 1];
     while (l <= r) {
-      const m = Math.floor((l + r) / 2);
+      const m = l + Math.floor((r - l) / 2);
       if (target === nums[m]) return m;
 
       if (nums[l] <= nums[m]) {
