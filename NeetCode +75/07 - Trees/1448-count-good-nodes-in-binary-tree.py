@@ -17,15 +17,15 @@ class TreeNode:
 
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        def dfs(node, prev_val):
+        def dfs(node, max_val):
             if not node:
                 return 0
-            if node.val >= prev_val:
-                prev_val = max(prev_val, node.val)
-                return 1 + dfs(node.left, prev_val) + dfs(node.right, prev_val)
+            
+            max_val = max(max_val, node.val)
+            if node.val >= max_val:
+                return 1 + dfs(node.left, max_val) + dfs(node.right, max_val)
 
-            prev_val = max(prev_val, node.val)
-            return dfs(node.left, prev_val) + dfs(node.right, prev_val)
+            return dfs(node.left, max_val) + dfs(node.right, max_val)
 
         return dfs(root, -inf)
 
