@@ -10,23 +10,20 @@ class TreeNode {
 
 class Solution {
   method(root, k) {
-    let res = null;
-
-    const dfs = (node, kthSmallest) => {
+    const stack = [];
+    const dfs = (node) => {
       if (!node) return;
 
-      dfs(node.left, kthSmallest);
-      kthSmallest[0] += 1;
-      if (kthSmallest[0] === k) {
-        res = node.val;
-        return;
-      }
-      dfs(node.right, kthSmallest);
+      dfs(node.left);
+      if (stack.length === k) return;
+      stack.push(node.val);
+      dfs(node.right);
+
+      return;
     };
 
-    dfs(root, [0]);
-
-    return res;
+    dfs(root);
+    return stack[stack.length - 1];
   }
 
   reference(root, k, stack = []) {
