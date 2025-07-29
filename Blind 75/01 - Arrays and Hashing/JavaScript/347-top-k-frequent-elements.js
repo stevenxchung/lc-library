@@ -2,9 +2,8 @@ const { performance } = require("perf_hooks");
 
 class Solution {
   method(nums, k) {
-    const res = [];
-    const countMap = {};
     const buckets = Array.from({ length: nums.length + 1 }, () => []);
+    const countMap = {};
 
     for (const n of nums) {
       countMap[n] = (countMap[n] || 0) + 1;
@@ -14,12 +13,15 @@ class Solution {
       buckets[count].push(n);
     }
 
-    for (const b of buckets.reverse()) {
-      for (const n of b) {
-        res.push(n);
+    const res = [];
+    for (let i = buckets.length - 1; i > -1; i--) {
+      for (const n of buckets[i]) {
+        res.push(Number(n));
         if (res.length === k) return res;
       }
     }
+
+    return res;
   }
 
   reference(nums, k) {
@@ -40,7 +42,7 @@ class Solution {
 
     for (let i = bucket.length - 1; i >= 0; i--) {
       if (bucket[i].length > 0) {
-        bucket[i].forEach((elem) => res.push(elem));
+        bucket[i].forEach((elem) => res.push(Number(elem)));
         if (k == res.length) {
           return res;
         }
